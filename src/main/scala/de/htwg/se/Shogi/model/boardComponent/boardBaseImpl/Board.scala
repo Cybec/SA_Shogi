@@ -48,11 +48,11 @@ case class Board(
         val getPiece: PieceInterface = atAndAfter.head
         val newCon: List[PieceInterface] = before ::: atAndAfter.drop(1)
         Some((copy(board, newCon, containerPlayer_1), getPiece.cloneToNewPlayer(player.first)))
-        // $COVERAGE-ON$
       } else {
+        // $COVERAGE-ON$
         None
+        // $COVERAGE-OFF$
       }
-      // $COVERAGE-OFF$
     } else {
       val (before, atAndAfter) = containerPlayer_1 span (x => !pred(x))
       if (atAndAfter.nonEmpty) {
