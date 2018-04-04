@@ -1,5 +1,7 @@
 ![GitHub Logo](./cybec.png) - *Organisation design created by Dennis Baldauf* 
 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/Cybec/SA_Shogi.svg?columns=all)](https://waffle.io/Cybec/SA_Shogi)
+
 
 Repo         | Travis   | Code-Coverage
 --- | ---| ---
