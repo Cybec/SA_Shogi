@@ -4,7 +4,7 @@ version := "0.1.1"
 scalaVersion := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
-coverageExcludedPackages := "aview\\..*;zresources\\..*"
+//TODO: Coveralls exclude files
 
 resolvers += Resolver.jcenterRepo
 
