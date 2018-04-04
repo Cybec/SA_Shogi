@@ -1,17 +1,19 @@
-name          := "htwg-scala-seed"
-organization  := "de.htwg.se"
-version       := "0.0.1"
-scalaVersion  := "2.11.8"
+name := "htwg-scala-seed"
+organization := "de.htwg.se"
+version := "0.0.1"
+scalaVersion := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+
+coverageExcludedPackages := "aview\\*;zresources\\*"
 
 resolvers += Resolver.jcenterRepo
 
 libraryDependencies ++= {
-  val scalaTestV       = "3.0.1"
-  val scalaMockV       = "3.2.2"
+  val scalaTestV = "3.0.1"
+  val scalaMockV = "3.2.2"
   Seq(
-    "org.scalatest" %% "scalatest"                   % scalaTestV       % "test",
-    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV       % "test"
+    "org.scalatest" %% "scalatest" % scalaTestV % "test",
+    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV % "test"
   )
 }
 
@@ -28,3 +30,4 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.6"
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
+

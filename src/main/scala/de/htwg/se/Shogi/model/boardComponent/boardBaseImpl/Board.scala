@@ -4,16 +4,16 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 
-class BoardInj @Inject() (@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
+class BoardInj @Inject()(@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
 
 case class Board(
-    board: Vector[Vector[PieceInterface]],
-    containerPlayer_0: List[PieceInterface],
-    containerPlayer_1: List[PieceInterface]
-) extends BoardInterface {
+                  board: Vector[Vector[PieceInterface]],
+                  containerPlayer_0: List[PieceInterface],
+                  containerPlayer_1: List[PieceInterface]
+                ) extends BoardInterface {
   override def createNewBoard(): BoardInterface = new Board(size, PieceFactory.getEmptyPiece)
 
   def this(size: Int, filling: PieceInterface) =
@@ -48,9 +48,11 @@ case class Board(
         val getPiece: PieceInterface = atAndAfter.head
         val newCon: List[PieceInterface] = before ::: atAndAfter.drop(1)
         Some((copy(board, newCon, containerPlayer_1), getPiece.cloneToNewPlayer(player.first)))
+        // $COVERAGE-ON$
       } else {
         None
       }
+      // $COVERAGE-OFF$
     } else {
       val (before, atAndAfter) = containerPlayer_1 span (x => !pred(x))
       if (atAndAfter.nonEmpty) {
