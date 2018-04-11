@@ -4,8 +4,6 @@ version := "0.1.1"
 scalaVersion := "2.11.8"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
-//TODO: Coveralls exclude files
-
 resolvers += Resolver.jcenterRepo
 
 libraryDependencies ++= {
@@ -31,3 +29,6 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 
+parallelExecution in Test := false
+
+coverageExcludedPackages := "<empty>;aview\\*"

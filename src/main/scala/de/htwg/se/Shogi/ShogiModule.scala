@@ -4,8 +4,8 @@ import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
-import de.htwg.se.Shogi.model.boardComponent.{BoardInterface, boardBaseImpl}
-import de.htwg.se.Shogi.model.fileIoComponent.{FileIOInterface, fileIoJsonImpl}
+import de.htwg.se.Shogi.model.boardComponent.{ BoardInterface, boardBaseImpl }
+import de.htwg.se.Shogi.model.fileIoComponent.{ FileIOInterface, fileIoJsonImpl }
 import net.codingwell.scalaguice.ScalaModule
 
 object ShogiModuleConf {

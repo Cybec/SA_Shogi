@@ -1,11 +1,10 @@
 package de.htwg.se.Shogi
 
-import com.google.inject.{Guice, Injector}
+import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.aview.Tui
 import de.htwg.se.Shogi.aview.gui.SwingGui
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.UpdateAll
-
 
 import scala.swing.Publisher
 
