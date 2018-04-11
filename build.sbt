@@ -31,4 +31,4 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 
 parallelExecution in Test := false
 
-coverageExcludedPackages := "<empty>;aview.*"
+coverageExcludedPackages := "<empty>;.*aview.*"
