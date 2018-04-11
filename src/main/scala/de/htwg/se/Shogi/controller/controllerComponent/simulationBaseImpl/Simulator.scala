@@ -1,4 +1,6 @@
-package de.htwg.se.Shogi.controller.controllerComponent
+package de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl
+
+import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 
 object Simulator {
   val waitTime: Int = 1000

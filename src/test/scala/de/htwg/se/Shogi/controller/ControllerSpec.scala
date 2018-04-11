@@ -1,18 +1,19 @@
 package de.htwg.se.Shogi.controller
 
 import com.google.inject.name.Names
-import com.google.inject.{ Guice, Injector }
+import com.google.inject.{Guice, Injector}
 import de.htwg.se.Shogi.ShogiModule
-import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, playerOneRound, playerTwoRound }
-import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult, Simulator }
+import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{Controller, RoundState, playerOneRound, playerTwoRound}
+import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
+import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import net.codingwell.scalaguice.InjectorExtensions._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 
 import scala.language.reflectiveCalls
 
@@ -907,23 +908,23 @@ class ControllerSpec extends WordSpec with Matchers {
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
             "---------------------------------------------------------\n " +
-            "| L°  | KN° | SG° | GG° | K°  | GG° | SG° | KN° | L°  | \ta\n" +
+            "|     |     |     |     |     |     |     |     |     | \ta\n" +
             "---------------------------------------------------------\n " +
-            "|     | R°  |     |     |     |     |     | B°  |     | \tb\n" +
+            "|     |     |     |     |     |     |     |     |     | \tb\n" +
             "---------------------------------------------------------\n " +
-            "|     | P°  | P°  | P°  | P°  | P°  | P°  | P°  | P°  | \tc\n" +
+            "|     |     |     |     |     |     |     |     |     | \tc\n" +
             "---------------------------------------------------------\n " +
-            "| P°  |     |     |     |     |     |     |     |     | \td\n" +
+            "|     |     |     |     |     |     |     |     |     | \td\n" +
             "---------------------------------------------------------\n " +
             "|     |     |     |     |     |     |     |     |     | \te\n" +
             "---------------------------------------------------------\n " +
             "|     |     |     |     |     |     |     |     |     | \tf\n" +
             "---------------------------------------------------------\n " +
-            "| P   | P   | P   | P   | P   | P   | P   | P   | P   | \tg\n" +
+            "|     |     |     |     |     |     |     |     |     | \tg\n" +
             "---------------------------------------------------------\n " +
-            "|     | B   |     |     |     |     |     | R   |     | \th\n" +
+            "|     |     |     |     |     |     |     |     |     | \th\n" +
             "---------------------------------------------------------\n " +
-            "| L   | KN  | SG  | GG  | K   | GG  | SG  | KN  | L   | \ti\n" +
+            "|     |     |     |     |     |     |     |     |     | \ti\n" +
             "---------------------------------------------------------\n" +
             "Captured: \n"
         )

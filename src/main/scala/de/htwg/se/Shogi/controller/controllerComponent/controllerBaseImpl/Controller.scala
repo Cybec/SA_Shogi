@@ -1,13 +1,14 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.name.Names
-import com.google.inject.{ Guice, Inject, Injector }
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
+import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._

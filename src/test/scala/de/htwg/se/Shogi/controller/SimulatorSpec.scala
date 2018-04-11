@@ -1,8 +1,8 @@
 package de.htwg.se.Shogi.controller
 
-import de.htwg.se.Shogi.controller.controllerComponent.Simulator
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner
