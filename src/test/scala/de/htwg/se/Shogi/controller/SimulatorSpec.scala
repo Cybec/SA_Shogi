@@ -14,11 +14,8 @@ class SimulatorSpec extends WordSpec with Matchers {
     "Called Start" should {
       val controller = new Controller()
       controller.createNewBoard()
-      Simulator.start(controller, waitTime = 0)
 
-      while (!Simulator.threadEnd) {
-        Thread.sleep(1000)
-      }
+      controller.startSimulation
 
       "Change Board" in {
         val board = controller.boardToArray()
