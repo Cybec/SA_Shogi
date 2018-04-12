@@ -1,5 +1,7 @@
 package de.htwg.se.Shogi.controller
 
+import java.io.File
+
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.Shogi.ShogiModule
@@ -898,6 +900,37 @@ class ControllerSpec extends WordSpec with Matchers {
         newController.getCurrentStat() should be(playerOnesTurn)
         newController.load
         newController.getCurrentStat() should be(oldState)
+      }
+
+      "loading an empty save file" in {
+        controller.createNewBoard()
+        new File("board.json").delete()
+        new File("board.xml").delete()
+        controller.load
+        controller.boardToString() should be(
+          "Captured: \n" +
+            "    0     1     2     3     4     5     6     7     8 \n \n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \ta\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \tb\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \tc\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \td\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \te\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \tf\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \tg\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \th\n" +
+            "---------------------------------------------------------\n " +
+            "|     |     |     |     |     |     |     |     |     | \ti\n" +
+            "---------------------------------------------------------\n" +
+            "Captured: \n"
+        )
       }
 
       "loading with unrealistic boardsize" in {
