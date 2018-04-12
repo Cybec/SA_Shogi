@@ -8,6 +8,7 @@ import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Update
 
 import scala.swing.Publisher
 
+// $COVERAGE-OFF
 object Shogi extends Publisher {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
