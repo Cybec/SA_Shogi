@@ -900,36 +900,6 @@ class ControllerSpec extends WordSpec with Matchers {
         newController.getCurrentStat() should be(oldState)
       }
 
-      "not saving, loading the board changes nothing" in {
-        controller.createNewBoard()
-        controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
-        controller.load
-        controller.boardToString() should be(
-          "Captured: \n" +
-            "    0     1     2     3     4     5     6     7     8 \n \n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \ta\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tb\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tc\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \td\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \te\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tf\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tg\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \th\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \ti\n" +
-            "---------------------------------------------------------\n" +
-            "Captured: \n"
-        )
-      }
-
       "loading with unrealistic boardsize" in {
         val board: BoardInterface = new Board(60, PieceFactory.apply(PiecesEnum.EmptyPiece, false))
         val controller2: Controller = new Controller()

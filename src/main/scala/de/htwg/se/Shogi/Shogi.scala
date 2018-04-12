@@ -5,8 +5,6 @@ import de.htwg.se.Shogi.aview.Tui
 import de.htwg.se.Shogi.aview.gui.SwingGui
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.UpdateAll
-
-
 import scala.swing.Publisher
 
 object Shogi extends Publisher {
