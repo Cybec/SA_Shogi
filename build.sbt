@@ -31,8 +31,7 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 
 parallelExecution in Test := false
 
-//TODO: Shogi.scala und PieceInterface.scala ausschliesen
+//Excluded packages and files in coveralls
+coverageExcludedFiles := "Shogi.*;PieceInterface.*"
 
 coverageExcludedPackages := "<empty>;.*aview.*"
-
-coverageExcludedFiles   := "Shogi.scala;PieceInterface.scala"
