@@ -32,6 +32,4 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 parallelExecution in Test := false
 
 //Excluded packages and files in coveralls (in REGEX)
-coverageExcludedFiles := ".*Shogi.scala;.*PieceInterface.scala"
-
-coverageExcludedPackages := "<empty>;.*aview.*"
+coverageExcludedPackages := "<empty>;.*aview.*;.*Shogi.scala;.*PieceInterface.scala"
