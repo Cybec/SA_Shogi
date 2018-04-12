@@ -7,6 +7,7 @@ Repo         | Travis   | Code-Coverage
 --- | ---| ---
 Cybec/SA_Shogi | [![Build Status](https://travis-ci.org/Cybec/SA_Shogi.svg?branch=master)](https://travis-ci.org/Cybec/SA_Shogi) | [![Coverage Status](https://coveralls.io/repos/github/Cybec/SA_Shogi/badge.svg?branch=master)](https://coveralls.io/github/Cybec/SA_Shogi?branch=master)
 
+(Folgende Dateien sind nicht mit in die Code-Coverage eingeflossen: Shogi.scala, PieceInterface.scala, /aview/)
 
 # Sho - Shogi
 
