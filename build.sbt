@@ -33,4 +33,6 @@ parallelExecution in Test := false
 
 //TODO: Shogi.scala und PieceInterface.scala ausschliesen
 
-coverageExcludedPackages := "<empty>;.*aview.*;Shogi.;PieceInterface."
+coverageExcludedPackages := "<empty>;.*aview.*"
+
+coverageExcludedFiles   := "Shogi.scala;PieceInterface.scala"
