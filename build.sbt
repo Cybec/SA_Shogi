@@ -34,3 +34,5 @@ libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 libraryDependencies += "com.typesafe.akka" %% "akka-http"   % "10.1.1"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.11"
+
+libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.5.12" % Test

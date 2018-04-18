@@ -3,18 +3,22 @@ package de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import akka.actor.{Actor}
 
-class Simulator extends Actor{
+class Simulator extends Actor {
+
   import Simulator._
 
-  def receive:Receive = {
-    case Simulate(controller) => simulate(controller)
-                     sender ! Done
-    case _        => sender ! Failed
+  def receive: Receive = {
+    case Simulate(controller) => {
+      simulate(controller)
+      sender ! Done
+    }
+    case _ => sender ! Failed
   }
 
   def simulate(controller: ControllerInterface): Unit = {
     controller.movePiece((6, 2), (6, 3))
     controller.movePiece((7, 6), (7, 5))
+
     controller.movePiece((1, 2), (1, 3))
     controller.movePiece((3, 8), (2, 7))
     controller.movePiece((5, 0), (6, 1))
@@ -29,8 +33,12 @@ class Simulator extends Actor{
 
 
 object Simulator {
+
   case class Simulate(controller: ControllerInterface)
+
   case object Done
+
   case object Failed
+
 }
 
