@@ -1,7 +1,7 @@
 package de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl
 
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
-import akka.actor.{Actor}
+import akka.actor.{ Actor }
 
 class Simulator extends Actor {
 
@@ -30,7 +30,6 @@ class Simulator extends Actor {
     controller.promotePiece((6, 2))
   }
 }
-
 
 object Simulator {
 
