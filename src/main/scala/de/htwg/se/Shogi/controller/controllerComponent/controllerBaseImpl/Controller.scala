@@ -1,5 +1,6 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
+import akka.actor.{ ActorSystem, Props }
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Inject, Injector }
 import de.htwg.se.Shogi.ShogiModule
@@ -191,5 +192,9 @@ class Controller @Inject() extends RoundState with ControllerInterface {
 
   override def setCurrentStat(newState: RoundState): Unit = currentState = newState
 
-  override def startSimulation: Unit = Simulator.start(this)
+  override def startSimulation: Unit = {
+    //actor ! Simulator.Simulate(this)
+  }
+
+  override def boardToHtml: String = board.toHtml
 }

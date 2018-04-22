@@ -107,4 +107,9 @@ trait BoardInterface {
    */
   def toArray: Array[Array[PieceInterface]]
 
+  /**
+   *
+   * @return representation of Board in Html
+   */
+  def toHtml: String
 }
