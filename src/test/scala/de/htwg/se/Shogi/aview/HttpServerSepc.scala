@@ -7,7 +7,8 @@ import Directives._
 
 class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
 
-  val smallRoute =
+  val smallRoute: Route =
+
     get {
       pathSingleSlash {
         complete {
@@ -23,14 +24,14 @@ class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
     "return a greeting for GET requests to the root path" in {
       // tests:
       Get() ~> smallRoute ~> check {
-        responseAs[String] shouldEqual ("Captain on the bridge!")
+        responseAs[String] shouldEqual "Captain on the bridge!"
       }
     }
 
     "return a 'PONG! response for GET requests to /ping" in {
       // tests:
       Get("/ping") ~> smallRoute ~> check {
-        responseAs[String] shouldEqual ("PONG!")
+        responseAs[String] shouldEqual "PONG!"
       }
     }
 

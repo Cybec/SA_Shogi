@@ -8,10 +8,13 @@ import akka.http.scaladsl.server.{ Route, StandardRoute }
 import akka.stream.ActorMaterializer
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 
+import scala.concurrent.{ ExecutionContextExecutor, Future }
+
 class HttpServer(controller: ControllerInterface) {
-  implicit val system = ActorSystem("my-system")
-  implicit val materializer = ActorMaterializer()
-  implicit val executionContext = system.dispatcher
+  implicit val system: ActorSystem = ActorSystem("my-system")
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val executionContext: ExecutionContextExecutor = system.dispatcher
+
   val port = 8080
   val route: Route = get {
     path("hello") {
@@ -41,7 +44,8 @@ class HttpServer(controller: ControllerInterface) {
   def boardToHtml: StandardRoute = {
     complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + controller.boardToHtml))
   }
-  val bindingFuture = Http().bindAndHandle(route, "localhost", port)
+
+  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(route, "localhost", port)
 
   def unbind: Any = {
     bindingFuture

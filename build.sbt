@@ -37,5 +37,5 @@ libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % "10.1.1"
 
 parallelExecution in Test := false
 
-//Excluded packages and files in coveralls (in REGEX)
+//Excluded packages and files in coveralls (in REGEX) (hier nur die aview)
 coverageExcludedPackages := "<empty>;.*aview.*"

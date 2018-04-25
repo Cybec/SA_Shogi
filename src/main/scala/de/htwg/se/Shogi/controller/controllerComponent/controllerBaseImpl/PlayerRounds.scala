@@ -5,7 +5,6 @@ import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl._
 
-//noinspection ScalaStyle
 trait RoundState {
 
   def changeState()
@@ -19,31 +18,36 @@ trait RoundState {
   def getPossibleMovesConqueredPiece(piece: String): List[(Int, Int)]
 }
 
-case class playerOneRound(controller: Controller) extends RoundState {
+case class PlayerOneRound(controller: Controller) extends RoundState {
 
   override def changeState(): Unit = controller.currentState = controller.playerTwosTurn
 
   override def movePiece(currentPos: (Int, Int), destination: (Int, Int)): MoveResult.Value = {
-    if (getPossibleMoves(currentPos).contains(destination) && controller.currentState.isInstanceOf[playerOneRound]) {
+    if (!(getPossibleMoves(currentPos).contains(destination) &&
+      controller.currentState.isInstanceOf[PlayerOneRound])) {
+      MoveResult.invalidMove
+    } else {
+
       controller.saveState()
 
-      //noinspection ScalaStyle
-      val tempPieceDestination = controller.board.cell(destination._1, destination._2).getOrElse(return MoveResult.invalidMove)
-      //noinspection ScalaStyle
-      val tempPieceCurrent = controller.board.cell(currentPos._1, currentPos._2).getOrElse(return MoveResult.invalidMove)
+      //Sind die beiden Boardzellen gueltig
+      controller.board.cell(destination._1, destination._2) match {
+        case Some(tempPieceDestination) =>
+          controller.board.cell(currentPos._1, currentPos._2) match {
+            case Some(tempPieceCurrent) => {
+              val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
 
-      controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
-      controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first))
+              controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
+              controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, emptyPiece)
+              controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
 
-      controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
-
-      if (PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)) {
-        MoveResult.kingSlain
-      } else {
-        MoveResult.validMove
+              val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
+              if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
+            }
+            case None => MoveResult.invalidMove
+          }
+        case None => MoveResult.invalidMove
       }
-    } else {
-      MoveResult.invalidMove
     }
   }
 
@@ -83,59 +87,65 @@ case class playerOneRound(controller: Controller) extends RoundState {
     }
   }
 
+  //      for (row <- 0 until controller.board.size) {
+  //        controller.board.cell(column, row) match {
+  //          case Some(pieceInCell) => if (PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, pieceInCell)) {
+  //            possibleMoves = possibleMoves :+ (column, row)
+  //          } else if (PieceFactory.isInstanceOfPiece(PiecesEnum.King, pieceInCell) && !pieceInCell.isFirstOwner) {
+  //            possibleMoves = possibleMoves.filter(_ != (column, row - 1))
+  //          }
+  //          case None =>
+  //        }
+  //      }
   override def getPossibleMovesConqueredPiece(piece: String): List[(Int, Int)] = {
-    var possibleMoves = List[(Int, Int)]()
-
-    //noinspection ScalaStyle
-    if (!piece.endsWith("°")) return possibleMoves
-
-    def calculatePossibleMovesIfPawn(column: Int) = {
-      if (!controller.board.getPiecesInColumn(column, stateTurn = true).exists((x: PieceInterface) => x.typeEquals("P°"))) {
-        if (!controller.board.getPiecesInColumn(column, stateTurn = true).exists((x: PieceInterface) => x.typeEquals("K°"))) {
-          possibleMoves = possibleMoves ::: controller.board.getEmptyCellsInColumn(column, (0, 7))
-        } else {
-          for (row <- 0 to 8) {
-            controller.board.cell(column, row) match {
-              case Some(pieceInCell) => if (PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, pieceInCell)) {
-                possibleMoves = possibleMoves :+ (column, row)
-              } else if (PieceFactory.isInstanceOfPiece(PiecesEnum.King, pieceInCell) && !pieceInCell.isFirstOwner) {
-                possibleMoves = possibleMoves.filter(_ != (column, row - 1))
-              }
-              case None =>
-            }
-          }
-        }
-      }
+    def colContainsOwnPawns(column: Int) = {
+      controller.board.getPiecesInColumn(column, stateTurn = true).exists((x: PieceInterface) => x.typeEquals("P°"))
     }
+
+    def colContainsEnemyKing(column: Int) = {
+      controller.board.getPiecesInColumn(column, stateTurn = true).exists((x: PieceInterface) => x.typeEquals("K°"))
+    }
+
+    def getCellsInColumnWithKing(column: Int): List[(Int, Int)] = {
+      val indexEnemyKing = controller.board.getAllPiecesInColumnOrdered(column).indexWhere(_.typeEquals("K"))
+      controller.board.getEmptyCellsInColumn(column, (0, indexEnemyKing - 2)) ::: controller.board.getEmptyCellsInColumn(column, (indexEnemyKing + 1, 7))
+    }
+
+    var possibleMoves = List[(Int, Int)]()
 
     if (piece == "P°") {
       for (column: Int <- 0 until controller.board.size) {
-        calculatePossibleMovesIfPawn(column)
+        if (!colContainsOwnPawns(column)) {
+          if (!colContainsEnemyKing(column)) {
+            possibleMoves = possibleMoves ::: controller.board.getEmptyCellsInColumn(column, (0, 7))
+          } else {
+            possibleMoves = possibleMoves ::: getCellsInColumnWithKing(column)
+          }
+        }
       }
     } else if (piece == "KN°" || piece == "L°") {
       for (x <- 0 until controller.board.size) {
         possibleMoves = possibleMoves ::: controller.board.getEmptyCellsInColumn(x, (0, 7))
       }
-    } else {
+    } else if (piece.endsWith("°")) {
       for (x <- 0 until controller.board.size) {
         possibleMoves = possibleMoves ::: controller.board.getEmptyCellsInColumn(x, (0, 8))
       }
     }
     possibleMoves
   }
+
 }
 
-case class playerTwoRound(controller: Controller) extends RoundState {
+case class PlayerTwoRound(controller: Controller) extends RoundState {
 
   override def changeState(): Unit = controller.currentState = controller.playerOnesTurn
 
   override def movePiece(currentPos: (Int, Int), destination: (Int, Int)): MoveResult.Value = {
-    if (getPossibleMoves(currentPos).contains(destination) && controller.currentState.isInstanceOf[playerTwoRound]) {
+    if (getPossibleMoves(currentPos).contains(destination) && controller.currentState.isInstanceOf[PlayerTwoRound]) {
       controller.saveState()
 
-      //noinspection ScalaStyle
       val tempPieceDestination = controller.board.cell(destination._1, destination._2).getOrElse(return MoveResult.invalidMove)
-      //noinspection ScalaStyle
       val tempPieceCurrent = controller.board.cell(currentPos._1, currentPos._2).getOrElse(return MoveResult.invalidMove)
 
       controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
@@ -188,7 +198,7 @@ case class playerTwoRound(controller: Controller) extends RoundState {
     var possibleMoves = List[(Int, Int)]()
     var count = 0
 
-    def calculatePossibleMovesIfPawn(column: Int) = {
+    def calculatePossibleMovesIfPawn(column: Int): Unit = {
       if (!controller.board.getPiecesInColumn(column, stateTurn = false).exists((x: PieceInterface) => x.typeEquals("P"))) {
         if (!controller.board.getPiecesInColumn(column, stateTurn = false).exists((x: PieceInterface) => x.typeEquals("K"))) {
           possibleMoves = possibleMoves ::: controller.board.getEmptyCellsInColumn(column, (1, 8))
