@@ -4,9 +4,10 @@ class UndoManager {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
 
-  def clear(): Unit = {
+  def clear(): Boolean = {
     undoStack = Nil
     redoStack = Nil
+    redoStack == Nil && undoStack == Nil
   }
 
   def saveStep(command: Command): Unit = {

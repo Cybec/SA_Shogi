@@ -52,7 +52,10 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
   class Quit(val successor: Option[Handler]) extends Handler {
     override def handleEvent(event: Event): Unit = {
       event match {
-        case e if e.command == "q" => printString("Quit")
+        case e if e.command == "q" => {
+          printString("Quit")
+//          System.exit(0)
+        }
         case e =>
           successor match {
             case Some(h: Handler) => h.handleEvent(e)
