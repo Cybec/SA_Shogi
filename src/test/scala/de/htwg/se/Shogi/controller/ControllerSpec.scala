@@ -429,7 +429,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.movePiece((4, 3), (4, 2)) should be(MoveResult.validMove) // player_2
         controller.movePiece((5, 1), (4, 2)) should be(MoveResult.validMove) // player_1
 
-        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 7), (4, 6), (4, 5), (4, 4), (4, 3))) // player_2
+        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 3), (4, 4), (4, 5), (4, 6), (4, 7))) // player_2
         controller.movePiece((8, 6), (8, 5)) should be(MoveResult.validMove) // player_2
 
         controller.getPossibleMovesConqueredPiece("P°") should be(List[(Int, Int)]((4, 1), (4, 3), (4, 4), (4, 5), (4, 6))) // player_1
