@@ -150,14 +150,12 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
     controller.board.cell(pos._1, pos._2) match {
       case Some(piece: Piece) =>
         if (!piece.isFirstOwner) piece.getMoveSet((pos._1, pos._2), controller.board) else List()
-      case None => List()
-      case Some(_) => List()
+      case None | Some(_) => List()
     }
   }
 
   override def moveConqueredPiece(pieceAbbreviation: String, destination: (Int, Int)): Boolean = {
     if (getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) {
-
       val getFromPlayerContainer = controller.board.getFromPlayerContainer(controller.player_2) {
         _.typeEquals(pieceAbbreviation)
       }

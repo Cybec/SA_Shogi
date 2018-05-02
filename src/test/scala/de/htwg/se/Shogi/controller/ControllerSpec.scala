@@ -671,8 +671,10 @@ class ControllerSpec extends WordSpec with Matchers {
 
         controller.moveConqueredPiece("P", (0, 2)) should be(false) // player_2
         controller.moveConqueredPiece("P", (4, 1)) should be(false) // player_2
+        controller.moveConqueredPiece("Something that doesn't exist", (4, 1)) should be(false) // player_2
         controller.moveConqueredPiece("P", (4, 3)) should be(true) // player_2
         controller.moveConqueredPiece("P°", (4, 7)) should be(false) // player_1
+        controller.moveConqueredPiece("Something that doesn't exist", (4, 7)) should be(false) // player_1
         controller.moveConqueredPiece("P°", (4, 4)) should be(true) // player_1
 
         controller.boardToString() should be(
