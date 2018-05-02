@@ -73,8 +73,7 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
           controller.board = newBoard
           controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
           true
-        case None => false
-        case Some(_) => false
+        case None | Some(_) => false
       }
     } else {
       false
@@ -168,7 +167,7 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
           controller.board = newBoard
           controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
           true
-        case None => false
+        case None | Some(_) => false
       }
     } else {
       false
