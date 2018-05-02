@@ -92,6 +92,14 @@ trait BoardInterface {
   def getPiecesInColumn(column: Int, stateTurn: Boolean): List[PieceInterface]
 
   /**
+   * Get all Pieces in Column
+   *
+   * @param column    column of Board
+   * @return List of Pieces in specified column ordered from above
+   */
+  def getAllPiecesInColumnOrdered(column: Int): List[PieceInterface]
+
+  /**
    * Get all EmptyPiece in wanted Column
    *
    * @param column column of Board
@@ -107,4 +115,9 @@ trait BoardInterface {
    */
   def toArray: Array[Array[PieceInterface]]
 
+  /**
+   *
+   * @return representation of Board in Html
+   */
+  def toHtml: String
 }

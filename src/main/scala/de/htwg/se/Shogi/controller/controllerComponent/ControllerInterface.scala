@@ -206,4 +206,9 @@ trait ControllerInterface extends scala.swing.Publisher {
    * @param newState is the state the controller should be
    */
   def setCurrentStat(newState: RoundState): Unit
+
+  /**
+   * @return board as Html
+   */
+  def boardToHtml: String
 }

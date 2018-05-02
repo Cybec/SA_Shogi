@@ -1,5 +1,6 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
+import akka.actor.{ ActorSystem, Props }
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Inject, Injector }
 import de.htwg.se.Shogi.ShogiModule
@@ -16,8 +17,8 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
-  val playerOnesTurn: RoundState = playerOneRound(this)
-  val playerTwosTurn: RoundState = playerTwoRound(this)
+  val playerOnesTurn: RoundState = PlayerOneRound(this)
+  val playerTwosTurn: RoundState = PlayerTwoRound(this)
   var player_1: Player = Player("Player1", first = true)
   var player_2: Player = Player("Player2", first = false)
 
@@ -52,7 +53,7 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   }
 
   override def save(): Unit = {
-    val state = if (currentState.isInstanceOf[playerOneRound]) true else false
+    val state = if (currentState.isInstanceOf[PlayerOneRound]) true else false
     fileIo.save(board, state, player_1, player_2)
   }
 
@@ -191,5 +192,9 @@ class Controller @Inject() extends RoundState with ControllerInterface {
 
   override def setCurrentStat(newState: RoundState): Unit = currentState = newState
 
-  override def startSimulation: Unit = Simulator.start(this)
+  override def startSimulation: Unit = {
+    //actor ! Simulator.Simulate(this)
+  }
+
+  override def boardToHtml: String = board.toHtml
 }

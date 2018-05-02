@@ -24,9 +24,11 @@ class FileIO extends FileIOInterface {
 
     boardOption = getBoardBySize(size, injector) match {
       case Some(board) =>
+        val firstPlayer = true
+        val secondPlayer = false
         val newBoard = board.setContainer(
-          getConqueredPieces(file \\ "board" \ "playerFirstConquered", true),
-          getConqueredPieces(file \\ "board" \ "playerSecondConquered", false)
+          getConqueredPieces(file \\ "board" \ "playerFirstConquered", firstPlayer),
+          getConqueredPieces(file \\ "board" \ "playerSecondConquered", secondPlayer)
         )
         Some((newBoard, state, player1, player2))
       case _ => None

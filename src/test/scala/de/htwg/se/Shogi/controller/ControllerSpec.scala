@@ -3,7 +3,7 @@ package de.htwg.se.Shogi.controller
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
-import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, playerOneRound, playerTwoRound }
+import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, PlayerOneRound, PlayerTwoRound }
 import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult, Simulator }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
@@ -23,8 +23,8 @@ class ControllerSpec extends WordSpec with Matchers {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val newController = new Controller()
-  val playerOnesTurn: RoundState = new playerOneRound(newController)
-  val playerTwosTurn: RoundState = new playerTwoRound(newController)
+  val playerOnesTurn: RoundState = PlayerOneRound(newController)
+  val playerTwosTurn: RoundState = PlayerTwoRound(newController)
 
   controller.createNewBoard()
   controller.changeNamePlayer1("Nick")
@@ -429,7 +429,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.movePiece((4, 3), (4, 2)) should be(MoveResult.validMove) // player_2
         controller.movePiece((5, 1), (4, 2)) should be(MoveResult.validMove) // player_1
 
-        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 7), (4, 6), (4, 5), (4, 4), (4, 3))) // player_2
+        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 3), (4, 4), (4, 5), (4, 6), (4, 7))) // player_2
         controller.movePiece((8, 6), (8, 5)) should be(MoveResult.validMove) // player_2
 
         controller.getPossibleMovesConqueredPiece("P°") should be(List[(Int, Int)]((4, 1), (4, 3), (4, 4), (4, 5), (4, 6))) // player_1
@@ -930,7 +930,8 @@ class ControllerSpec extends WordSpec with Matchers {
       }
 
       "loading with unrealistic boardsize" in {
-        val board: BoardInterface = new Board(60, PieceFactory.apply(PiecesEnum.EmptyPiece, false))
+        val isFirstOwner = false
+        val board: BoardInterface = new Board(60, PieceFactory.apply(PiecesEnum.EmptyPiece, isFirstOwner))
         val controller2: Controller = new Controller()
         controller2.replaceBoard(board)
         controller2.save

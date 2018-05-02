@@ -85,6 +85,21 @@ case class Board(
     pieces
   }
 
+  override def getAllPiecesInColumnOrdered(column: Int): List[PieceInterface] = {
+    var pieces = List[PieceInterface]()
+
+    if (column <= this.size && column >= 0) {
+      for (i <- 0 until this.size) {
+        this.cell(column, i) match {
+          case Some(piece) => pieces = pieces :+ piece
+          case None =>
+        }
+      }
+    }
+
+    pieces
+  }
+
   override def getEmptyCellsInColumn(column: Int, range: (Int, Int)): List[(Int, Int)] = {
     var emptyCells = List[(Int, Int)]()
 
@@ -157,4 +172,6 @@ case class Board(
       Some(board(col)(row))
     }
   }
+
+  override def toHtml: String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n", "<br>").replace("  ", " _") + "</p>"
 }
