@@ -30,23 +30,18 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
 
       controller.saveState()
 
-      //Sind die beiden Boardzellen gueltig
-      controller.board.cell(destination._1, destination._2) match {
-        case Some(tempPieceDestination) =>
-          controller.board.cell(currentPos._1, currentPos._2) match {
-            case Some(tempPieceCurrent) =>
-              val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
+      val result: Option[MoveResult.Value] = for (tempPieceDestination <- controller.board.cell(destination._1, destination._2);
+                                                  tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)) yield {
+        val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
 
-              controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
-              controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, emptyPiece)
-              controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
+        controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
+        controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, emptyPiece)
+        controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
 
-              val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
-              if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
-            case None => MoveResult.invalidMove
-          }
-        case None => MoveResult.invalidMove
+        val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
+        if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
       }
+      if (result == None) MoveResult.invalidMove else result.get
     }
   }
 
@@ -110,7 +105,7 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
         getCellsInColumnWithKing(column)).toList.flatten
     }
 
-    val columns = (0 until controller.board.size)
+    val columns = 0 until controller.board.size
     val colWithoutOwnPawns = columns.filter(!isColContainingOwnPawns(_))
     piece match {
       case "P°" =>
@@ -136,23 +131,18 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
 
       controller.saveState()
 
-      //Sind die beiden Boardzellen gueltig
-      controller.board.cell(destination._1, destination._2) match {
-        case Some(tempPieceDestination) =>
-          controller.board.cell(currentPos._1, currentPos._2) match {
-            case Some(tempPieceCurrent) =>
-              val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_2.first)
+      val result: Option[MoveResult.Value] = for (tempPieceDestination <- controller.board.cell(destination._1, destination._2);
+                                                  tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)) yield {
+        val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
 
-              controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
-              controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, emptyPiece)
-              controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
+        controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
+        controller.board = controller.board.replaceCell(currentPos._1, currentPos._2, emptyPiece)
+        controller.board = controller.board.addToPlayerContainer(tempPieceCurrent.isFirstOwner, tempPieceDestination)
 
-              val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
-              if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
-            case None => MoveResult.invalidMove
-          }
-        case None => MoveResult.invalidMove
+        val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
+        if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
       }
+      if (result == None) MoveResult.invalidMove else result.get
     }
   }
 
@@ -188,7 +178,7 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
   }
 
   override def getPossibleMovesConqueredPiece(piece: String): List[(Int, Int)] = {
-
+    //TODO: test intern Methods
     def isColContainingOwnPawns(column: Int) = {
       controller.board.getPiecesInColumn(column, stateTurn = false).exists((x: PieceInterface) => x.typeEquals("P"))
     }
@@ -212,7 +202,7 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
         getCellsInColumnWithKing(column)).toList.flatten
     }
 
-    val columns = (0 until controller.board.size)
+    val columns = 0 until controller.board.size
     val colWithoutOwnPawns = columns.filter(!isColContainingOwnPawns(_))
     piece match {
       case "P" =>
