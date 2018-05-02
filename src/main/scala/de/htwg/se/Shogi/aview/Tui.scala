@@ -265,6 +265,17 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     printString(moveListString.toString())
   }
 
+  def possibleMovesString(moveList: List[(Int, Int)]): String = {
+    val moveListString = new StringBuilder
+    moveListString.append("Possible moves: ")
+    for ((k, v) <- moveList) moveListString.append("(").append(k).append(", ")
+      .append(yAxis.find(_._2 == v).getOrElse((' ', -1))._1).append(")").append("   ")
+    moveListString.append("\n")
+    moveListString.toString()
+  }
+  def possibleMovesAsHtml(moveList: List[(Int, Int)]): String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + possibleMovesString(moveList).replace("\n", "<br>").replace(" ", "&nbsp") + "</p>"
+
+
   def printInputMenu(): Unit = {
     val menuString = new StringBuilder
     for ((k, v) <- getMenu) menuString.append(k).append(": ").append(v).append("\n").append("------\n")
