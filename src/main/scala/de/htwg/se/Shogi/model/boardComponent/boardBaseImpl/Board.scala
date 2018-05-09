@@ -158,5 +158,5 @@ case class Board(
     }
   }
 
-  override def toHtml: String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n", "<br>").replace("  ", " _") + "</p>"
+  override def toHtml: String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n", "<br>").replace(" ", "&nbsp") + "</p>"
 }
