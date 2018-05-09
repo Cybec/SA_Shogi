@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{ExceptionHandler, Route, StandardRoute}
+import akka.http.scaladsl.server.{Route, StandardRoute}
 import akka.stream.ActorMaterializer
 import de.htwg.se.Shogi.controller.controllerComponent._
 
@@ -54,15 +54,26 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
                 controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case MoveResult.invalidMove => invalidMove
                   case MoveResult.validMove => {
-                    tui.promoteQueryForHtml((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
-                    boardToHtml
+                    if(controller.promotable((dest.charAt(0).asDigit, dest.charAt(1).asDigit))) {
+                      complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "Do you want to promote your piece at destination " + dest + "? /y for yes!<br>" + controller.boardToHtml))
+                    } else {
+                      boardToHtml
+                    }
                   }
                   case MoveResult.kingSlain => redirect("winner", StatusCodes.PermanentRedirect)
                 }
               }
             }
           } ~
-          path("mv" / Segment / "shogi" / "winner") { thing => {
+          path("mv" / Segment / Segment / "y") {
+            (_, dest) => {
+              get {
+                controller.promotePiece((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
+                boardToHtml
+              }
+            }
+          } ~
+          path("mv" / Segment / "shogi" / "winner") { _ => {
             get {
               complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>" + controller.boardToHtml))
             }
@@ -116,10 +127,6 @@ path("divide" / IntNumber / IntNumber) { (a, b) =>
     bindingFuture
       .flatMap(_.unbind())
       .onComplete(_ => system.terminate())
-  }
-
-  def processInputLine(input: String): Unit = {
-    tui.processInputLine(input)
   }
 
   /* Exception handler in Akka Http
