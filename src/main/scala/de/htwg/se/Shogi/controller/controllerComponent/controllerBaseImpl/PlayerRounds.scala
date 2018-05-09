@@ -1,7 +1,6 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.Shogi.controller.controllerComponent.MoveResult
-import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl._
 
@@ -41,43 +40,29 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
         val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
         if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
       }
-      if (result == None) MoveResult.invalidMove else result.get
+      if (result.isEmpty) MoveResult.invalidMove else result.get
     }
   }
 
   override def getPossibleMoves(pos: (Int, Int)): List[(Int, Int)] = {
-    controller.board.cell(pos._1, pos._2) match {
-      case Some(piece) =>
-        if (piece.isFirstOwner) {
-          piece.getMoveSet((pos._1, pos._2), controller.board)
-        } else {
-          List()
-        }
-      case None => List()
-    }
+    (for (piece <- controller.board.cell(pos._1, pos._2)
+          if piece.isFirstOwner) yield {
+      piece.getMoveSet((pos._1, pos._2), controller.board)
+    }).getOrElse(List[(Int, Int)]())
   }
 
   override def moveConqueredPiece(pieceAbbreviation: String, destination: (Int, Int)): Boolean = {
-    if (getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) {
-
-      val getFromPlayerContainer = controller.board.getFromPlayerContainer(controller.player_1) {
-        _.typeEquals(pieceAbbreviation)
-      }
-
-      getFromPlayerContainer match {
-        case Some(value: (BoardInterface, PieceInterface)) =>
-          val newBoard: BoardInterface = value._1
-          val piece: PieceInterface = value._2
-          controller.saveState()
-
-          controller.board = newBoard
-          controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
-          true
-        case None | Some(_) => false
-      }
-    } else {
-      false
+    def getFromPlayerContainer = controller.board.getFromPlayerContainer(controller.player_1) {
+      _.typeEquals(pieceAbbreviation)
     }
+
+    (for ((newBoard, piece) <- getFromPlayerContainer
+          if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) yield {
+      controller.saveState()
+      controller.board = newBoard
+      controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
+      true
+    }).getOrElse(false)
   }
 
   override def getPossibleMovesConqueredPiece(piece: String): List[(Int, Int)] = {
@@ -100,7 +85,7 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
     }
 
     def getCellsWithKingInColumn(colWithoutOwnPawns: IndexedSeq[Int]): List[(Int, Int)] = {
-      colWithoutOwnPawns.filter(isColContainingEnemyKing(_)).map(column =>
+      colWithoutOwnPawns.filter(isColContainingEnemyKing).map(column =>
         getCellsInColumnWithKing(column)).toList.flatten
     }
 
@@ -141,37 +126,29 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
         val isDestKing = PieceFactory.isInstanceOfPiece(PiecesEnum.King, tempPieceDestination)
         if (isDestKing) MoveResult.kingSlain else MoveResult.validMove
       }
-      if (result == None) MoveResult.invalidMove else result.get
+      if (result.isEmpty) MoveResult.invalidMove else result.get
     }
   }
 
   override def getPossibleMoves(pos: (Int, Int)): List[(Int, Int)] = {
-    controller.board.cell(pos._1, pos._2) match {
-      case Some(piece: Piece) =>
-        if (!piece.isFirstOwner) piece.getMoveSet((pos._1, pos._2), controller.board) else List()
-      case None | Some(_) => List()
-    }
+    (for (piece <- controller.board.cell(pos._1, pos._2)
+          if !piece.isFirstOwner) yield {
+      piece.getMoveSet((pos._1, pos._2), controller.board)
+    }).getOrElse(List())
   }
 
   override def moveConqueredPiece(pieceAbbreviation: String, destination: (Int, Int)): Boolean = {
-    if (getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) {
-      val getFromPlayerContainer = controller.board.getFromPlayerContainer(controller.player_2) {
-        _.typeEquals(pieceAbbreviation)
-      }
-
-      getFromPlayerContainer match {
-        case Some(value: (BoardInterface, PieceInterface)) =>
-          val newBoard: BoardInterface = value._1
-          val piece: PieceInterface = value._2
-
-          controller.board = newBoard
-          controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
-          true
-        case None | Some(_) => false
-      }
-    } else {
-      false
+    def getFromPlayerContainer = controller.board.getFromPlayerContainer(controller.player_2) {
+      _.typeEquals(pieceAbbreviation)
     }
+
+    (for ((newBoard, piece) <- getFromPlayerContainer
+          if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) yield {
+      controller.saveState()
+      controller.board = newBoard
+      controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
+      true
+    }).getOrElse(false)
   }
 
   override def getPossibleMovesConqueredPiece(piece: String): List[(Int, Int)] = {
@@ -195,7 +172,7 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
     }
 
     def getCellsWithKingInColumn(colWithoutOwnPawns: IndexedSeq[Int]): List[(Int, Int)] = {
-      colWithoutOwnPawns.filter(isColContainingEnemyKing(_)).map(column =>
+      colWithoutOwnPawns.filter(isColContainingEnemyKing).map(column =>
         getCellsInColumnWithKing(column)).toList.flatten
     }
 
