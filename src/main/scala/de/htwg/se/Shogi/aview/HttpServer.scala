@@ -6,7 +6,8 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{ExceptionHandler, Route, StandardRoute}
 import akka.stream.ActorMaterializer
-import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
+import de.htwg.se.Shogi.controller.controllerComponent._
+
 
 class HttpServer(controller: ControllerInterface, tui: Tui) {
   implicit val system = ActorSystem("my-system")
@@ -14,82 +15,85 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
   implicit val executionContext = system.dispatcher
   val port = 8080
   val route: Route =
-      path("shogi") {
-        get {
-          boardToHtml
-        }
-      } ~
-        path("shogi" / "empty") {
+      pathPrefix("shogi") {
+        path("empty") {
           get {
             controller.createEmptyBoard()
             boardToHtml
           }
         } ~
-        path("shogi" / "new") {
-          get {
-            controller.createNewBoard()
-            boardToHtml
-          }
-        } ~
-        path("shogi" / "undo") {
-          get {
-            controller.undoCommand
-            boardToHtml
-          }
-        } ~
-        path("shogi" / "redo") {
-          get {
-            controller.redoCommand
-            boardToHtml
-          }
-        } ~
-    path("shogi" / "pmv" / Segment) {
-      command => {
-        get {
-          val list = controller.getPossibleMoves(command.charAt(0).asDigit, command.charAt(1).asDigit)
-          movesToHtml(list)
+          path("new") {
+            get {
+              controller.createNewBoard()
+              boardToHtml
             }
-        }
-    } ~
-    path("shogi" / "mv" / Segment / Segment ) {
-      (current, dest) => {
-        get {
-          controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
-          case MoveResult.invalidMove => invalidMove
-          case MoveResult.validMove => {
-            tui.promoteQueryForHtml((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
-            boardToHtml
-          }
-          case MoveResult.kingSlain => redirect("/winner", StatusCodes.PermanentRedirect)
-          }
-        }
-      }
-    } ~
-    path("shogi" / "pmvcp" / Segment) {
-      conqueredPiece => {
-        get {
-          val list = controller.getPossibleMovesConqueredPiece(conqueredPiece)
-          movesToHtml(list)
-        }
-      }
-    } ~
-    path("shogi" / "mvcp" / Segment / Segment) {
-      (conqueredPiece, dest) => {
-        get {
-          controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
-            case true => boardToHtml
-            case false => {
-              invalidMove
+          } ~
+          path("undo") {
+            get {
+              controller.undoCommand
+              boardToHtml
+            }
+          } ~
+          path("redo") {
+            get {
+              controller.redoCommand
+              boardToHtml
+            }
+          } ~
+          path("pmv" / Segment) {
+            command => {
+              get {
+                val list = controller.getPossibleMoves(command.charAt(0).asDigit, command.charAt(1).asDigit)
+                movesToHtml(list)
+              }
+            }
+          } ~
+          path("mv" / Segment / Segment) {
+            (current, dest) => {
+              get {
+                controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
+                  case MoveResult.invalidMove => invalidMove
+                  case MoveResult.validMove => {
+                    tui.promoteQueryForHtml((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
+                    boardToHtml
+                  }
+                  case MoveResult.kingSlain => redirect("winner", StatusCodes.PermanentRedirect)
+                }
+              }
+            }
+          } ~
+          path("mv" / Segment / "shogi" / "winner") { thing => {
+            get {
+              complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>" + controller.boardToHtml))
             }
           }
-        }
+          } ~
+          path("pmvcp" / Segment) {
+            conqueredPiece => {
+              get {
+                val list = controller.getPossibleMovesConqueredPiece(conqueredPiece)
+                movesToHtml(list)
+              }
+            }
+          } ~
+          path("mvcp" / Segment / Segment) {
+            (conqueredPiece, dest) => {
+              get {
+                controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
+                  case true => boardToHtml
+                  case false => {
+                    invalidMove
+                  }
+                }
+              }
+            }
+          } ~
+          pathEndOrSingleSlash {
+            get {
+              boardToHtml
+            }
+          }
       }
-    } ~
-    pathPrefix("winner") {
-      get {
-      complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>"))
-    }
-  }
   /* For testing Exception handling in Akka Http
 path("divide" / IntNumber / IntNumber) { (a, b) =>
   handleExceptions(myExceptionHandler) {
