@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Route, StandardRoute}
+import akka.http.scaladsl.server.{ExceptionHandler, Route, StandardRoute}
 import akka.stream.ActorMaterializer
 import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
 
@@ -14,11 +14,6 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
   implicit val executionContext = system.dispatcher
   val port = 8080
   val route: Route =
-      path("hello") {
-        get {
-          complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, "<h1>HTWG Shoshogi</h1>"))
-        }
-      } ~
       path("shogi") {
         get {
           boardToHtml
@@ -48,42 +43,68 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
             boardToHtml
           }
         } ~
-    path("shogi" / "pmv" / Segment) { command => {
-      get {
-        val list = controller.getPossibleMoves(command.charAt(0).asDigit, command.charAt(1).asDigit)
-        pvmToHtml(list)
-      }
-    }
-    } ~
-      path("shogi" / "mv" / Segment / Segment ) { (current, dest) => {
+    path("shogi" / "pmv" / Segment) {
+      command => {
         get {
-        controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
-          //case MoveResult.invalidMove => Exception einbauen
-          case MoveResult.validMove => boardToHtml
-          case MoveResult.kingSlain => redirect("/winner/", StatusCodes.PermanentRedirect)
+          val list = controller.getPossibleMoves(command.charAt(0).asDigit, command.charAt(1).asDigit)
+          movesToHtml(list)
+            }
         }
-        }
-      }
-      }
-
-        /* For testing Exception handling in Akka Http
-        path("divide" / IntNumber / IntNumber) { (a, b) =>
-          handleExceptions(myExceptionHandler) {
-            complete(s"The result is ${a / b}")
+    } ~
+    path("shogi" / "mv" / Segment / Segment ) {
+      (current, dest) => {
+        get {
+          controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
+          case MoveResult.invalidMove => invalidMove
+          case MoveResult.validMove => {
+            tui.promoteQueryForHtml((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
+            boardToHtml
           }
-        }*/
-
-    path("winner") {
+          case MoveResult.kingSlain => redirect("/winner", StatusCodes.PermanentRedirect)
+          }
+        }
+      }
+    } ~
+    path("shogi" / "pmvcp" / Segment) {
+      conqueredPiece => {
+        get {
+          val list = controller.getPossibleMovesConqueredPiece(conqueredPiece)
+          movesToHtml(list)
+        }
+      }
+    } ~
+    path("shogi" / "mvcp" / Segment / Segment) {
+      (conqueredPiece, dest) => {
+        get {
+          controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
+            case true => boardToHtml
+            case false => {
+              invalidMove
+            }
+          }
+        }
+      }
+    } ~
+    pathPrefix("winner") {
       get {
       complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>"))
     }
   }
+  /* For testing Exception handling in Akka Http
+path("divide" / IntNumber / IntNumber) { (a, b) =>
+  handleExceptions(myExceptionHandler) {
+    complete(s"The result is ${a / b}")
+  }
+}*/
 
-  def pvmToHtml(moveList: List[(Int, Int)]): StandardRoute = {
-    complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + tui.possibleMovesAsHtml(moveList)))
+  def movesToHtml(moveList: List[(Int, Int)]): StandardRoute = {
+    complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + tui.possibleMovesAsHtml(moveList) + controller.boardToHtml))
   }
   def boardToHtml: StandardRoute = {
     complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + controller.boardToHtml))
+  }
+  def invalidMove: StandardRoute = {
+    complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>This Move is not valid</h1>" + controller.boardToHtml))
   }
   val bindingFuture = Http().bindAndHandle(route, "localhost", port)
 
@@ -99,7 +120,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
 
   /* Exception handler in Akka Http
   val myExceptionHandler = ExceptionHandler {
-    case _: ArithmeticException =>
-        complete((StatusCodes.BadRequest, "NOPNOPNOPNOP"))
+    case _: Exception =>
+        redirect("/shogi", StatusCodes.PermanentRedirect)
       }*/
 }

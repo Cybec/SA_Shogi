@@ -256,6 +256,12 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     }
   }
 
+  def promoteQueryForHtml(dest: (Int, Int)): Unit = {
+    if(controller.promotable(dest)) {
+      controller.promotePiece(dest._1, dest._2)
+    }
+  }
+
   def printPossibleMoves(moveList: List[(Int, Int)]): Unit = {
     val moveListString = new StringBuilder
     moveListString.append("Possible moves: ")
