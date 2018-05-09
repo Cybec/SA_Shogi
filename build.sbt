@@ -35,6 +35,8 @@ libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.11"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % "10.1.1"
 
+libraryDependencies += "org.seleniumhq.selenium" % "selenium-java" % "2.35.0" % "test"
+
 parallelExecution in Test := false
 
 //Excluded packages and files in coveralls (in REGEX)

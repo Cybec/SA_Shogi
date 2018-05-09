@@ -1,51 +1,25 @@
 package de.htwg.se.Shogi.aview
 
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import akka.http.scaladsl.server._
-import Directives._
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.Shogi.ShogiModule
+import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
+import org.scalatest.selenium.HtmlUnit
 
-class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
+class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest with HtmlUnit {
+  val injector: Injector = Guice.createInjector(new ShogiModule)
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+  val tui = new Tui(controller)
+  val webServer = new HttpServer(controller, tui)
 
-  val smallRoute =
-    get {
-      pathSingleSlash {
-        complete {
-          "Captain on the bridge!"
-        }
-      } ~
-        path("ping") {
-          complete("PONG!")
-        }
+
+  val host = "http://localhost:8080/"
+
+  "The Shogi home page" should {
+    "have the correct Header" in {
+      go to (host + "shogi")
+      //      print(pageSource)
     }
-
-  "Ther service" should {
-    "return a greeting for GET requests to the root path" in {
-      // tests:
-      Get() ~> smallRoute ~> check {
-        responseAs[String] shouldEqual ("Captain on the bridge!")
-      }
-    }
-
-    "return a 'PONG! response for GET requests to /ping" in {
-      // tests:
-      Get("/ping") ~> smallRoute ~> check {
-        responseAs[String] shouldEqual ("PONG!")
-      }
-    }
-
-    /*"leave GET requests to other paths unhandled" in {
-      // tests:
-      GET("/kermit") ~> smallRoute ~> check{
-        handled shouldBe false
-      }
-    }
-
-    "return a MethodNotAllowed error for PUT requests to the root path" in {
-      PUT() ~> Route.seal(smallRoute) ~> check {
-        status shouldEqual(StatusCodes.MethodNotAllowed)
-        responseAs[String] shouldEqual("HTTP method not allowd, supported methods: GET")
-      }
-    }*/
   }
 }
