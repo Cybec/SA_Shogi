@@ -28,7 +28,7 @@ class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
       val p = doc.select("p")
       p.attr("style") should be("font-family:'Lucida Console', monospace")
     }
-    "have new Playground" in {
+    "have empty Playground" in {
       val p = doc.select("p")
       p.text() should be("Captured:    " +
         " &nbsp0    &nbsp1    &nbsp2    &nbsp3    &nbsp4    &nbsp5    &nbsp6    &nbsp7    &nbsp8    " +
