@@ -29,13 +29,16 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-http"   % "10.1.1"
+libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.1.1"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.11"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % "10.1.1"
 
-libraryDependencies += "org.seleniumhq.selenium" % "selenium-java" % "2.35.0" % "test"
+libraryDependencies += "org.jsoup" % "jsoup" % "1.9.1"
+
+
+
 
 parallelExecution in Test := false
 
