@@ -50,7 +50,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           } ~
           path("mv" / Segment / Segment) {
             (current, dest) => {
-              get {
+              put {
                 controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case MoveResult.invalidMove => invalidMove
                   case MoveResult.validMove => {
@@ -67,7 +67,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           } ~
           path("mv" / Segment / Segment / "y") {
             (_, dest) => {
-              get {
+              put {
                 controller.promotePiece((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
                 boardToHtml
               }
@@ -89,7 +89,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           } ~
           path("mvcp" / Segment / Segment) {
             (conqueredPiece, dest) => {
-              get {
+              put {
                 controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case true => boardToHtml
                   case false => {
