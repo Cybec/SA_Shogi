@@ -16,10 +16,10 @@ class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
 
 
   val host = "http://localhost:8080/"
-  val doc = Jsoup.connect(host + "shogi").get()
 
 
-  "The Shogi home page" should {
+  "The service" should {
+    var doc = Jsoup.connect(host + "shogi").get()
     "have the correct Header" in {
       val header = doc.select("h1")
       header.text() should be("HTWG Shogi")
@@ -28,7 +28,7 @@ class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
       val p = doc.select("p")
       p.attr("style") should be("font-family:'Lucida Console', monospace")
     }
-    "have empty Playground" in {
+    "have empty Playground at the start of server" in {
       val p = doc.select("p")
       p.text() should be("Captured:    " +
         " &nbsp0    &nbsp1    &nbsp2    &nbsp3    &nbsp4    &nbsp5    &nbsp6    &nbsp7    &nbsp8    " +
@@ -50,6 +50,58 @@ class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
         "|     |     |     |     |     |     |     |     |     |  h " +
         "---------------------------------------------------------  " +
         "|     |     |     |     |     |     |     |     |     |  i " +
+        "--------------------------------------------------------- " +
+        "Captured: ")
+    }
+    "have empty Playground after shogi/empty was called" in {
+      doc = Jsoup.connect(host + "shogi/empty").get()
+      val p = doc.select("p")
+      p.text() should be("Captured:    " +
+        " &nbsp0    &nbsp1    &nbsp2    &nbsp3    &nbsp4    &nbsp5    &nbsp6    &nbsp7    &nbsp8    " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  a " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  b " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  c " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  d " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  e " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  f " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  g " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  h " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  i " +
+        "--------------------------------------------------------- " +
+        "Captured: ")
+    }
+    "have new Playground after shogi/new was called" in {
+      doc = Jsoup.connect(host + "shogi/new").get()
+      val p = doc.select("p")
+      p.text() should be("Captured:     " +
+        "&nbsp0    &nbsp1    &nbsp2    &nbsp3    &nbsp4    &nbsp5    &nbsp6    &nbsp7    &nbsp8    " +
+        "---------------------------------------------------------  " +
+        "|&nbspL°  |&nbspKN° |&nbspSG° |&nbspGG° |&nbspK°  |&nbspGG° |&nbspSG° |&nbspKN° |&nbspL°  |  a " +
+        "---------------------------------------------------------  " +
+        "|     |&nbspR°  |     |     |     |     |     |&nbspB°  |     |  b " +
+        "---------------------------------------------------------  " +
+        "|&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |&nbspP°  |  c " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  d " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  e " +
+        "---------------------------------------------------------  " +
+        "|     |     |     |     |     |     |     |     |     |  f " +
+        "---------------------------------------------------------  " +
+        "|&nbspP   |&nbspP   |&nbspP   |&nbspP   |&nbspP   |&nbspP   |&nbspP   |&nbspP   |&nbspP   |  g " +
+        "---------------------------------------------------------  " +
+        "|     |&nbspB   |     |     |     |     |     |&nbspR   |     |  h " +
+        "---------------------------------------------------------  " +
+        "|&nbspL   |&nbspKN  |&nbspSG  |&nbspGG  |&nbspK   |&nbspGG  |&nbspSG  |&nbspKN  |&nbspL   |  i " +
         "--------------------------------------------------------- " +
         "Captured: ")
     }
