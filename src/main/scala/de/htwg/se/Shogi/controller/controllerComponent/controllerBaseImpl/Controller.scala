@@ -6,7 +6,7 @@ import com.google.inject.{ Guice, Inject, Injector }
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -15,7 +15,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 
 class Controller @Inject() extends RoundState with ControllerInterface {
   val injector: Injector = Guice.createInjector(new ShogiModule)
-  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+  val fileIo: DAOInterface = injector.instance[DAOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
   val playerOnesTurn: RoundState = PlayerOneRound(this)
   val playerTwosTurn: RoundState = PlayerTwoRound(this)

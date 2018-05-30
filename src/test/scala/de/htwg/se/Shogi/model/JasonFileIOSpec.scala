@@ -7,7 +7,7 @@ import de.htwg.se.Shogi.controller.controllerComponent.MoveResult
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
 import net.codingwell.scalaguice.InjectorExtensions._
@@ -25,7 +25,7 @@ class JasonFileIOSpec extends WordSpec with Matchers {
     val smallBoard: BoardInterface = injector.instance[BoardInterface](Names.named("small")).createNewBoard()
     val tinyBoard: BoardInterface = injector.instance[BoardInterface](Names.named("tiny")).createNewBoard()
 
-    val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+    val fileIo: DAOInterface = injector.instance[DAOInterface]
     "called save and load" should {
       "reload an board(normal) with in the state it was saved" in {
         controller.createNewBoard()

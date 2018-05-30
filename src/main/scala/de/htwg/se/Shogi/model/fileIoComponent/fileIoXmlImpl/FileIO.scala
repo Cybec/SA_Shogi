@@ -3,7 +3,7 @@ package de.htwg.se.Shogi.model.fileIoComponent.fileIoXmlImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -11,7 +11,7 @@ import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
 import net.codingwell.scalaguice.InjectorExtensions._
 import scala.xml.{Node, NodeSeq, PrettyPrinter}
 
-class FileIO extends FileIOInterface {
+class FileIO extends DAOInterface {
 
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     var boardOption: Option[(BoardInterface, Boolean, Player, Player)] = None
