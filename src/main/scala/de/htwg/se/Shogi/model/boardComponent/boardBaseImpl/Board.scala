@@ -4,16 +4,16 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 
-class BoardInj @Inject() (@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
+class BoardInj @Inject()(@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
 
 case class Board(
-    board: Vector[Vector[PieceInterface]],
-    containerPlayer_0: List[PieceInterface],
-    containerPlayer_1: List[PieceInterface]
-) extends BoardInterface {
+                  board: Vector[Vector[PieceInterface]],
+                  containerPlayer_0: List[PieceInterface],
+                  containerPlayer_1: List[PieceInterface]
+                ) extends BoardInterface {
   override def createNewBoard(): BoardInterface = new Board(size, PieceFactory.getEmptyPiece)
 
   def this(size: Int, filling: PieceInterface) =
@@ -42,7 +42,8 @@ case class Board(
   }
 
   override def getFromPlayerContainer(player: Player)(pred: (PieceInterface) => Boolean): Option[(Board, PieceInterface)] = {
-    if (player.first) {
+
+    def getFromPlayerOne(): Option[(Board, PieceInterface)] = {
       val (before, atAndAfter) = containerPlayer_0 span (x => !pred(x))
       if (atAndAfter.nonEmpty) {
         val getPiece: PieceInterface = atAndAfter.head
@@ -51,7 +52,9 @@ case class Board(
       } else {
         None
       }
-    } else {
+    }
+
+    def getFromPlayerTwo(): Option[(Board, PieceInterface)] = {
       val (before, atAndAfter) = containerPlayer_1 span (x => !pred(x))
       if (atAndAfter.nonEmpty) {
         val getPiece: PieceInterface = atAndAfter.head
@@ -60,6 +63,12 @@ case class Board(
       } else {
         None
       }
+    }
+
+    if (player.first) {
+      getFromPlayerOne()
+    } else {
+      getFromPlayerTwo()
     }
   }
 
@@ -72,14 +81,23 @@ case class Board(
     var pieces = List[PieceInterface]()
 
     if (column <= this.size && column >= 0) {
-      for (i <- 0 until this.size) {
-        this.cell(column, i) match {
-          case Some(piece) if PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, piece) =>
-          case Some(piece) => if (stateTurn == piece.isFirstOwner) {
-            pieces = pieces :+ piece
-          }
-          case None =>
-        }
+      for (i <- 0 until this.size;
+           piece <- this.cell(column, i)
+           if !PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, piece)
+           if stateTurn == piece.isFirstOwner) yield {
+        pieces = pieces :+ piece
+      }
+    }
+    pieces
+  }
+
+  override def getAllPiecesInColumnOrdered(column: Int): List[PieceInterface] = {
+    var pieces = List[PieceInterface]()
+
+    if (column <= this.size && column >= 0) {
+      for (i <- 0 until this.size;
+           piece <- this.cell(column, i)) yield {
+        pieces = pieces :+ piece
       }
     }
     pieces
@@ -89,13 +107,10 @@ case class Board(
     var emptyCells = List[(Int, Int)]()
 
     if (column <= this.size && column >= 0) {
-      for (i <- range._1 to range._2) {
-        this.cell(column, i) match {
-          case Some(piece) if PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, piece) =>
-            emptyCells = emptyCells :+ (column, i)
-          case Some(_) =>
-          case None =>
-        }
+      for (i <- range._1 to range._2;
+           piece <- this.cell(column, i)
+           if PieceFactory.isInstanceOfPiece(PiecesEnum.EmptyPiece, piece)) yield {
+        emptyCells = emptyCells :+ (column, i)
       }
     }
     emptyCells
@@ -107,11 +122,9 @@ case class Board(
     for {
       col <- 0 until size
       row <- 0 until size
-    } {
-      cell(col, row) match {
-        case Some(piece) => returnList(col)(row) = piece
-        case None => returnList(col)(row) = PieceFactory.getEmptyPiece
-      }
+      piece <- cell(col, row)
+    } yield {
+      returnList(col)(row) = piece
     }
     returnList
   }

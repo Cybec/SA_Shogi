@@ -42,5 +42,5 @@ libraryDependencies += "org.jsoup" % "jsoup" % "1.9.1"
 
 parallelExecution in Test := false
 
-//Excluded packages and files in coveralls (in REGEX)
+//Excluded packages and files in coveralls (in REGEX) (hier nur die aview)
 coverageExcludedPackages := "<empty>;.*aview.*"

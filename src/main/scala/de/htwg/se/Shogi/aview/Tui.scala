@@ -289,7 +289,6 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
   }
 
   def printString(stringToPrint: String): Boolean = {
-    //    println(stringToPrint)
     logger.info(stringToPrint)
     true
   }
