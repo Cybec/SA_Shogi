@@ -52,7 +52,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
             (current, dest) => {
               put {
                 controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
-                  case MoveResult.invalidMove => invalidMove
+                  case MoveResult.invalidMove => invalidMoveToHtml
                   case MoveResult.validMove => {
                     if(controller.promotable((dest.charAt(0).asDigit, dest.charAt(1).asDigit))) {
                       complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "Do you want to promote your piece at destination " + dest + "? /y for yes!<br>" + controller.boardToHtml))
@@ -68,6 +68,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           path("mv" / Segment / Segment / "y") {
             (_, dest) => {
               put {
+                //TODO: Check if promotable only after move
                 controller.promotePiece((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
                 boardToHtml
               }
@@ -75,6 +76,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           } ~
           path("mv" / Segment / "shogi" / "winner") { _ => {
             get {
+              //TODO: Check if King is actually slain
               complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>" + controller.boardToHtml))
             }
           }
@@ -93,7 +95,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
                 controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case true => boardToHtml
                   case false => {
-                    invalidMove
+                    invalidMoveToHtml
                   }
                 }
               }
@@ -118,7 +120,7 @@ path("divide" / IntNumber / IntNumber) { (a, b) =>
   def boardToHtml: StandardRoute = {
     complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + controller.boardToHtml))
   }
-  def invalidMove: StandardRoute = {
+  def invalidMoveToHtml: StandardRoute = {
     complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>This Move is not valid</h1>" + controller.boardToHtml))
   }
   val bindingFuture = Http().bindAndHandle(route, "localhost", port)
