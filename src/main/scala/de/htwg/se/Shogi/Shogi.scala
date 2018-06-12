@@ -13,7 +13,7 @@ object Shogi extends Publisher {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val webserver = new HttpServer(controller)
+  val webServer = new HttpServer(controller, tui)
   //val gui = new SwingGui(controller)
   //listenTo(gui)
   controller.publish(new UpdateAll)
@@ -26,7 +26,7 @@ object Shogi extends Publisher {
       input = scala.io.StdIn.readLine()
       tui.processInputLine(input)
     } while (input != "q")
-    webserver.unbind
+    webServer.unbind
   }
 
   //reactions += { case _ => if (gui == null) System.exit(0) }
