@@ -1,20 +1,20 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
-import akka.actor.{ ActorSystem, Props }
+import akka.actor.{Actor, ActorSystem, Props}
 import com.google.inject.name.Names
-import com.google.inject.{ Guice, Inject, Injector }
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
 import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
 
-class Controller @Inject() extends RoundState with ControllerInterface {
+class Controller @Inject() extends RoundState with ControllerInterface with Actor{
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
@@ -198,5 +198,10 @@ class Controller @Inject() extends RoundState with ControllerInterface {
 
   override def startSimulation: Unit = {
     actor ! Simulator.Simulate(this)
+  }
+
+  override def receive: Receive = {
+    case Simulator.Done => //TODO: ASK MARKO HOW TO IMPLEMENT THIS
+    case Simulator.Failed =>
   }
 }
