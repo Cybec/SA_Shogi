@@ -973,31 +973,31 @@ class ControllerSpec extends WordSpec with Matchers {
     "called boardToHTML" should {
       "return a String with the Board" in {
         controller.createNewBoard()
-        controller.boardToHtml should be("<p  style=\"font-family:'Lucida Console', monospace\">" +
-          " Captured: " +
-          "<br> _ _0 _ _ 1 _ _ 2 _ _ 3 _ _ 4 _ _ 5 _ _ 6 _ _ 7 _ _ 8 <br> " +
-          "<br>---------------------------------------------------------<br> " +
-          "| L° _| KN° | SG° | GG° | K° _| GG° | SG° | KN° | L° _| 	a" +
-          "<br>---------------------------------------------------------<br>" +
-          " | _ _ | R° _| _ _ | _ _ | _ _ | _ _ | _ _ | B° _| _ _ | 	b" +
-          "<br>---------------------------------------------------------<br>" +
-          " | P° _| P° _| P° _| P° _| P° _| P° _| P° _| P° _| P° _| 	c" +
-          "<br>---------------------------------------------------------<br>" +
-          " | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | 	d" +
-          "<br>---------------------------------------------------------<br>" +
-          " | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | 	e" +
-          "<br>---------------------------------------------------------<br>" +
-          " | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | _ _ | 	f" +
-          "<br>---------------------------------------------------------<br>" +
-          " | P _ | P _ | P _ | P _ | P _ | P _ | P _ | P _ | P _ | 	g" +
-          "<br>---------------------------------------------------------<br>" +
-          " | _ _ | B _ | _ _ | _ _ | _ _ | _ _ | _ _ | R _ | _ _ | 	h" +
-          "<br>---------------------------------------------------------<br>" +
-          " | L _ | KN _| SG _| GG _| K _ | GG _| SG _| KN _| L _ | 	i" +
-          "<br>---------------------------------------------------------<br>" +
-          "Captured: " +
-          "<br>" +
-          "</p>")
+        controller.boardToHtml should be(
+          "<p  style=\"font-family:\'Lucida Console\', monospace\"> " +
+            "Captured:&nbsp<br>&nbsp&nbsp&nbsp&nbsp0&nbsp&nbsp&nbsp&nbsp&nbsp1&nbsp&nbsp&nbsp&nbsp&nbsp2&nbsp&nbsp&nbsp&nbsp&nbsp3&nbsp&nbsp&nbsp&nbsp&nbsp4&nbsp&nbsp&nbsp&nbsp&nbsp5&nbsp&nbsp&nbsp&nbsp&nbsp6&nbsp&nbsp&nbsp&nbsp&nbsp7&nbsp&nbsp&nbsp&nbsp&nbsp8&nbsp" +
+            "<br>&nbsp" +
+            "<br>---------------------------------------------------------<br>" +
+            "&nbsp|&nbspL°&nbsp&nbsp|&nbspKN°&nbsp|&nbspSG°&nbsp|&nbspGG°&nbsp|&nbspK°&nbsp&nbsp|&nbspGG°&nbsp|&nbspSG°&nbsp|&nbspKN°&nbsp|&nbspL°&nbsp&nbsp|&nbsp	a" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspR°&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspB°&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	b" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbsp	c" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	d" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	e" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	f" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbsp	g" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspB&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspR&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	h" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspK&nbsp&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbsp	i" +
+            "<br>---------------------------------------------------------" +
+            "<br>Captured:&nbsp" +
+            "<br></p>")
       }
     }
   }
