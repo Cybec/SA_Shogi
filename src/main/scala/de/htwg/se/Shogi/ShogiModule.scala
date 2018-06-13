@@ -5,7 +5,7 @@ import com.google.inject.name.Names
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 import de.htwg.se.Shogi.model.boardComponent.{ BoardInterface, boardBaseImpl }
-import de.htwg.se.Shogi.model.fileIoComponent.{ DAOInterface, fileIoJsonImpl }
+import de.htwg.se.Shogi.model.fileIoComponent.{ DAOInterface, fileIoJsonImpl, slickDBImpl }
 import net.codingwell.scalaguice.ScalaModule
 
 object ShogiModuleConf {
@@ -25,7 +25,8 @@ class ShogiModule extends AbstractModule with ScalaModule {
 
     bind[BoardInterface].to[boardBaseImpl.BoardInj]
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
-    bind[DAOInterface].to[fileIoJsonImpl.FileIO]
+    bind[DAOInterface].to[slickDBImpl.SlickDB]
+    //    bind[DAOInterface].to[fileIoJsonImpl.FileIO]
     //    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
 
     bind[BoardInterface].annotatedWithName(ShogiModuleConf.defaultBoard).toInstance(
