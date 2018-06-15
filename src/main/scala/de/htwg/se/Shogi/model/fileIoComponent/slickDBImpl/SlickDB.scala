@@ -18,7 +18,7 @@ class SlickDB extends DAOInterface {
 
     val dbQuery = new DBQuery
 
-    println("Inserting new user: Test Example")
+    println("Inserting new user: TestPiece")
     val eventualInsertResult = dbQuery.insert(PieceProfile(1, "TestPiece", true, true))
     val insertResult = Await.result(eventualInsertResult, Duration.Inf)
     println(s"Insert result: $insertResult\n")
@@ -28,10 +28,10 @@ class SlickDB extends DAOInterface {
     val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
     println(s"User profile by ID 1: $maybeUserProfile\n")
 
-    println("Deleting user by ID: 1")
-    val eventualDeleteResult = dbQuery.deletePiece(1)
-    val deleteResult = Await.result(eventualDeleteResult, Duration.Inf)
-    println(s"Delete result: $deleteResult")
+    //    println("Deleting user by ID: 1")
+    //    val eventualDeleteResult = dbQuery.deletePiece(1)
+    //    val deleteResult = Await.result(eventualDeleteResult, Duration.Inf)
+    //    println(s"Delete result: $deleteResult")
 
     None
   }

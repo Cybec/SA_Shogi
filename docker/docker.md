@@ -8,7 +8,7 @@ docker-compose -f ShogiDB.yml down
 docker-compose -f ShogiDB.yml start
 
 # Stop
-docker-compose -f ShogiDB.c stop
+docker-compose -f ShogiDB.yml stop
 
 
 # Docker Console
@@ -22,3 +22,6 @@ docker images
 
 # remove image force
 docker rmi "IMAGE ID" -f
+
+# RIP all none images
+docker image prune -f

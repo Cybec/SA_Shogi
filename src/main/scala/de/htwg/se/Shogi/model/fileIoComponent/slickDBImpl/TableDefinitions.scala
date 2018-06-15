@@ -1,7 +1,7 @@
 package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 
 import slick.lifted.{ ForeignKeyQuery, ProvenShape, Rep, Tag }
-import slick.jdbc.SQLServerProfile.api._
+import slick.jdbc.MySQLProfile.api._
 
 case class GameSessionProfile(id: Int, firstPlayerID: Int, secondPlayerID: Int, state: Boolean, boardID: Int)
 
@@ -15,7 +15,7 @@ case class PlayerSecondContainerProfile(id: Int, pieceID: Int)
 
 case class PieceProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean)
 
-protected class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PlayerFirstContainerProfile_SESSION") {
+protected class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def name: Rep[String] = column[String]("name")
@@ -27,7 +27,7 @@ protected class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PlayerF
   def * : ProvenShape[PieceProfile] = (id, name, hasPromotion, isFirstOwner) <> (PieceProfile.tupled, PieceProfile.unapply) // scalastyle:ignore
 }
 
-protected class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstContainerProfile](tag, "PlayerFirstContainerProfile_SESSION") {
+protected class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstContainerProfile](tag, "PLAYERFIRSTCONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def pieceID: Rep[Int] = column[Int]("pieceID")
@@ -38,7 +38,7 @@ protected class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstC
 
 }
 
-protected class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecondContainerProfile](tag, "PlayerSecondContainerProfile_SESSION") {
+protected class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecondContainerProfile](tag, "PLAYERSECOONDCONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def pieceID: Rep[Int] = column[Int]("pieceID")

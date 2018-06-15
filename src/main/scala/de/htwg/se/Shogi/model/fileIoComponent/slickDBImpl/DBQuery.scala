@@ -3,11 +3,11 @@ package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 import slick.lifted.TableQuery
 
 import scala.concurrent.Future
-import slick.jdbc.SQLServerProfile.api._
+import slick.jdbc.MySQLProfile.api._
 
 class DBQuery {
-  val db = Database.forConfig("mysql")
-
+  //  val db = Database.forConfig("mysql")
+  val db = Database.forURL("jdbc:mysql://192.168.99.100:3306/shogi-db?user=root&password=1234hot5")
   val gameSessionQuery: TableQuery[GameSession] = TableQuery[GameSession]
   val playerSessionQuery: TableQuery[PlayerSession] = TableQuery[PlayerSession]
   val boardSessionQuery: TableQuery[BoardSession] = TableQuery[BoardSession]
@@ -15,7 +15,11 @@ class DBQuery {
   val playerSecondContainerQuery: TableQuery[PlayerSecondContainerSession] = TableQuery[PlayerSecondContainerSession]
   val pieceSessionQuery: TableQuery[PieceSession] = TableQuery[PieceSession]
 
-  def insert(piece: PieceProfile): Future[Int] = db.run(pieceSessionQuery += piece)
+  def insert(piece: PieceProfile): Future[Int] = {
+    val test = pieceSessionQuery += piece
+    print(test)
+    db.run(test)
+  }
 
   def insert(containerFirst: PlayerFirstContainerProfile): Future[Int] = db.run(playerFirstContainerQuery += containerFirst)
 
