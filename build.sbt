@@ -42,7 +42,8 @@ libraryDependencies += "com.typesafe.slick" %% "slick" % "3.2.0"
 libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.2.0"
 libraryDependencies += "com.microsoft.sqlserver" % "mssql-jdbc" % "6.2.1.jre8"
 
-
+libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "3.2.1"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.34"
 
 //Excluded packages and files in coveralls (in REGEX) (hier nur die aview)
 coverageExcludedPackages := "<empty>;.*aview.*"

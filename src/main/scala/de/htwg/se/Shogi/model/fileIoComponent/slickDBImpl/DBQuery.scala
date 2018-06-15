@@ -1,15 +1,12 @@
 package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 
-import slick.basic.DatabaseConfig
-import slick.jdbc.JdbcProfile
 import slick.lifted.TableQuery
 
 import scala.concurrent.Future
 import slick.jdbc.SQLServerProfile.api._
 
 class DBQuery {
-  val dbConfig: DatabaseConfig[JdbcProfile] = DatabaseConfig.forConfig("sqlserver")
-  val db: JdbcProfile#Backend#Database = dbConfig.db
+  val db = Database.forConfig("mysql")
 
   val gameSessionQuery: TableQuery[GameSession] = TableQuery[GameSession]
   val playerSessionQuery: TableQuery[PlayerSession] = TableQuery[PlayerSession]

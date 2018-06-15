@@ -14,8 +14,8 @@ object Shogi extends Publisher {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   val webserver = new HttpServer(controller)
-  //val gui = new SwingGui(controller)
-  //listenTo(gui)
+  val gui = new SwingGui(controller)
+  listenTo(gui)
   controller.publish(new UpdateAll)
 
   def main(args: Array[String]): Unit = {
@@ -29,5 +29,5 @@ object Shogi extends Publisher {
     webserver.unbind
   }
 
-  //reactions += { case _ => if (gui == null) System.exit(0) }
+  reactions += { case _ => if (gui == null) System.exit(0) }
 }

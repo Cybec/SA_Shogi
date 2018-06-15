@@ -1,4 +1,4 @@
-11:18:05.553 [main] INFO  de.htwg.se.Shogi.aview.Tui - Captured: 
+11:31:31.498 [main] INFO  de.htwg.se.Shogi.aview.Tui - Captured: 
     0     1     2     3     4     5     6     7     8 
  
 ---------------------------------------------------------
@@ -22,8 +22,242 @@
 ---------------------------------------------------------
 Captured: 
 
-11:18:05.557 [main] INFO  de.htwg.se.Shogi.aview.Tui - q: quit
+11:31:31.519 [main] INFO  de.htwg.se.Shogi.aview.Tui - q: quit
 ------
 n: new
 ------
 
+11:31:34.551 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - mysql - configuration:
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - allowPoolSuspension.............false
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - autoCommit......................true
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - catalog.........................null
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - connectionInitSql...............null
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - connectionTestQuery.............null
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - connectionTimeout...............1000
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - dataSource......................null
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - dataSourceClassName............."slick.jdbc.DatabaseUrlDataSource"
+11:31:34.555 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - dataSourceJNDI..................null
+11:31:34.556 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - dataSourceProperties............{password=<masked>}
+11:31:34.556 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - driverClassName.................null
+11:31:34.556 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - healthCheckProperties...........{}
+11:31:34.556 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - healthCheckRegistry.............null
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - idleTimeout.....................600000
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - initializationFailFast..........false
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - isolateInternalQueries..........false
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - jdbc4ConnectionTest.............false
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - jdbcUrl.........................null
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - leakDetectionThreshold..........0
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - maxLifetime.....................1800000
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - maximumPoolSize.................100
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - metricRegistry..................null
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - metricsTrackerFactory...........null
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - minimumIdle.....................20
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - password........................<masked>
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - poolName........................"mysql"
+11:31:34.557 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - readOnly........................false
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - registerMbeans..................false
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - scheduledExecutorService........null
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - threadFactory...................null
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - transactionIsolation............null
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - username........................null
+11:31:34.558 [AWT-EventQueue-0] DEBUG com.zaxxer.hikari.HikariConfig - validationTimeout...............1000
+11:31:34.558 [AWT-EventQueue-0] INFO  com.zaxxer.hikari.HikariDataSource - mysql - Started.
+11:31:34.688 [AWT-EventQueue-0] DEBUG slick.compiler.QueryCompiler - Source:
+| TableExpansion
+|   table s2: Table PlayerFirstContainerProfile_SESSION
+|   columns: TypeMapping
+|     0: ProductNode
+|       1: Path s2.id : Int'
+|       2: Path s2.name : String'
+|       3: Path s2.hasPromotion : Boolean'
+|       4: Path s2.isFirstOwner : Boolean'
+
+11:31:34.699 [AWT-EventQueue-0] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
+11:31:34.702 [AWT-EventQueue-0] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
+| TableExpansion
+|   table s3: Table PlayerFirstContainerProfile_SESSION
+|   columns: TypeMapping
+|     0: ProductNode
+|       1: Path s3.id : Int'
+|       2: Path s3.name : String'
+|       3: Path s3.hasPromotion : Boolean'
+|       4: Path s3.isFirstOwner : Boolean'
+
+11:31:34.706 [mysql housekeeper] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Pool stats (total=0, active=0, idle=0, waiting=0)
+11:31:34.708 [AWT-EventQueue-0] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
+11:31:34.711 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.sql.SQLException: Required parameter "url" missing in DriverDataSource
+	at slick.jdbc.DriverDataSource.liftedTree1$1(DriverDataSource.scala:56)
+	at slick.jdbc.DriverDataSource.init(DriverDataSource.scala:55)
+	at slick.jdbc.DatabaseUrlDataSource.init(DatabaseUrlDataSource.scala:21)
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:100)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:34.717 [AWT-EventQueue-0] DEBUG slick.compiler.QueryCompiler - After phase insertCompiler:
+| ResultSetMapping : Vector[(String', Boolean', Boolean')]
+|   from s5: Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
+|     table s6: Table PlayerFirstContainerProfile_SESSION : Vector[@t4<UnassignedType>]
+|     linear: ProductNode : (String', Boolean', Boolean')
+|       1: Path s6.name : String'
+|       2: Path s6.hasPromotion : Boolean'
+|       3: Path s6.isFirstOwner : Boolean'
+|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
+|     0: ProductNode : (Int', String', Boolean', Boolean')
+|       1: InsertColumn id : Int'
+|       2: InsertColumn name : String'
+|         0: Path s5._1 : String'
+|       3: InsertColumn hasPromotion : Boolean'
+|         0: Path s5._2 : Boolean'
+|       4: InsertColumn isFirstOwner : Boolean'
+|         0: Path s5._3 : Boolean'
+
+11:31:34.719 [AWT-EventQueue-0] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
+| Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
+|   table s6: Table PlayerFirstContainerProfile_SESSION : Vector[@t4<UnassignedType>]
+|   linear: ProductNode : (String', Boolean', Boolean')
+|     1: Path s6.name : String'
+|     2: Path s6.hasPromotion : Boolean'
+|     3: Path s6.isFirstOwner : Boolean'
+
+11:31:34.737 [AWT-EventQueue-0] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
+| TypeMappingResultConverter
+|   child: ProductResultConverter
+|     1: CompoundResultConverter
+|     2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
+|     3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
+|     4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
+
+11:31:34.739 [AWT-EventQueue-0] DEBUG slick.compiler.CodeGen - Compiled server-side to:
+| CompiledStatement "insert into "PlayerFirstContainerProfile_SESSION" ("name","hasPromotion","isFirstOwner")  values (?,?,?)" : (String', Boolean', Boolean')
+
+11:31:34.740 [AWT-EventQueue-0] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
+| ResultSetMapping : Vector[(String', Boolean', Boolean')]
+|   from s5: CompiledStatement "insert into "PlayerFirstContainerProfile_SESSION" ("name","hasPromotion","isFirstOwner")  values (?,?,?)" : (String', Boolean', Boolean')
+|   map: CompiledMapping : Mapped[(Int', String', Boolean', Boolean')]
+|     converter: TypeMappingResultConverter
+|       child: ProductResultConverter
+|         1: CompoundResultConverter
+|         2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
+|         3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
+|         4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
+
+11:31:34.741 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
+11:31:34.743 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:   14,119752 ms
+11:31:34.743 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    5,737392 ms
+11:31:34.744 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark -            insertCompiler:    8,903477 ms
+11:31:34.744 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   22,976916 ms
+11:31:34.744 [AWT-EventQueue-0] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:   51,737537 ms
+11:31:34.748 [AWT-EventQueue-0] DEBUG slick.basic.BasicBackend.action - #1: SingleInsertAction [insert into "PlayerFirstContainerProfile_SESSION" ("name","hasPromotion","isFirstOwner")  values (?,?,?)]
+11:31:34.962 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:35.337 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:35.761 [mysql-1] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Timeout failure stats (total=0, active=0, idle=0, waiting=0)
+11:31:35.900 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:36.743 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:37.744 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:38.745 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:39.745 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+11:31:40.746 [mysql connection adder] DEBUG com.zaxxer.hikari.pool.HikariPool - mysql - Cannot acquire connection from data source
+java.lang.NullPointerException: null
+	at slick.jdbc.DriverDataSource.getConnection(DriverDataSource.scala:101)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:430)
+	at com.zaxxer.hikari.pool.HikariPool.access$500(HikariPool.java:64)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:570)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:563)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
