@@ -1,4 +1,4 @@
-15:39:02.732 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - Source:
+12:02:10.037 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - Source:
 | TableExpansion
 |   table s2: Table PIECE_SESSION
 |   columns: TypeMapping
@@ -8,8 +8,8 @@
 |       3: Path s2.hasPromotion : Boolean'
 |       4: Path s2.isFirstOwner : Boolean'
 
-15:39:02.743 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
-15:39:02.745 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
+12:02:10.053 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
+12:02:10.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
 | TableExpansion
 |   table s3: Table PIECE_SESSION
 |   columns: TypeMapping
@@ -19,8 +19,8 @@
 |       3: Path s3.hasPromotion : Boolean'
 |       4: Path s3.isFirstOwner : Boolean'
 
-15:39:02.749 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
-15:39:02.762 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase insertCompiler:
+12:02:10.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
+12:02:10.115 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase insertCompiler:
 | ResultSetMapping : Vector[(String', Boolean', Boolean')]
 |   from s5: Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
 |     table s6: Table PIECE_SESSION : Vector[@t4<UnassignedType>]
@@ -38,7 +38,7 @@
 |       4: InsertColumn isFirstOwner : Boolean'
 |         0: Path s5._3 : Boolean'
 
-15:39:02.765 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
+12:02:10.115 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
 | Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
 |   table s6: Table PIECE_SESSION : Vector[@t4<UnassignedType>]
 |   linear: ProductNode : (String', Boolean', Boolean')
@@ -46,7 +46,7 @@
 |     2: Path s6.hasPromotion : Boolean'
 |     3: Path s6.isFirstOwner : Boolean'
 
-15:39:02.786 [main-ScalaTest-running-SlickDBSpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
+12:02:10.162 [main-ScalaTest-running-DBQuerySpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
 | TypeMappingResultConverter
 |   child: ProductResultConverter
 |     1: CompoundResultConverter
@@ -54,10 +54,10 @@
 |     3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
 |     4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
 
-15:39:02.788 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
+12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
 | CompiledStatement "insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)" : (String', Boolean', Boolean')
 
-15:39:02.790 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
+12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
 | ResultSetMapping : Vector[(String', Boolean', Boolean')]
 |   from s5: CompiledStatement "insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)" : (String', Boolean', Boolean')
 |   map: CompiledMapping : Mapped[(Int', String', Boolean', Boolean')]
@@ -68,22 +68,14 @@
 |         3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
 |         4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
 
-15:39:02.790 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
-15:39:02.795 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:   11,151318 ms
-15:39:02.795 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    3,796605 ms
-15:39:02.795 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -            insertCompiler:   12,176048 ms
-15:39:02.795 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   28,363857 ms
-15:39:02.795 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:   55,487828 ms
-15:39:02.799 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.basic.BasicBackend.action - #1: SingleInsertAction [insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)]
-15:39:03.045 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.statement - Preparing statement: insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - /-----------+---------+---------\
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | 1         | 2       | 3       |
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | String    | Boolean | Boolean |
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - |-----------+---------+---------|
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | TestPiece | true    | true    |
-15:39:03.097 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - \-----------+---------+---------/
-15:39:03.174 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.benchmark - Execution of prepared update took 77ms
-15:39:03.193 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - Source:
+12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
+12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:   29,340578 ms
+12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:   12,523614 ms
+12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            insertCompiler:   31,386792 ms
+12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   66,145062 ms
+12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:  139,396046 ms
+12:02:10.224 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.basic.BasicBackend.action - #1: SingleInsertAction [insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)]
+12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - Source:
 | Take
 |   from: Filter s2
 |     from s2: TableExpansion
@@ -95,12 +87,12 @@
 |           3: Path s3.hasPromotion : Boolean'
 |           4: Path s3.isFirstOwner : Boolean'
 |     where: Apply Function =
-|       0: Path s2.id : Int'
-|       1: LiteralNode 1 (volatileHint=false)
+|       0: Path s2.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false)
 |   count: LiteralNode 1 (volatileHint=false)
 
-15:39:03.193 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
-15:39:03.197 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
+12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
+12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
 | Take
 |   from: Filter s4
 |     from s4: TableExpansion
@@ -112,32 +104,32 @@
 |           3: Path s5.hasPromotion : Boolean'
 |           4: Path s5.isFirstOwner : Boolean'
 |     where: Apply Function =
-|       0: Path s4.id : Int'
-|       1: LiteralNode 1 (volatileHint=false)
+|       0: Path s4.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false)
 |   count: LiteralNode 1 (volatileHint=false)
 
-15:39:03.199 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase unrollTailBinds: (no change)
-15:39:03.200 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
-15:39:03.210 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.ExpandTables - Found Selects for NominalTypes: @(slick.jdbc.MySQLProfile$._.PIECE_SESSION)
-15:39:03.213 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.ExpandTables - With correct table types:
+12:02:31.756 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase unrollTailBinds: (no change)
+12:02:31.756 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
+12:02:31.771 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Found Selects for NominalTypes: @(slick.jdbc.MySQLProfile$._.PIECE_SESSION)
+12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - With correct table types:
 | Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |   from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     where: Apply Function = : Boolean
-|       0: Path s4.id : Int'
-|       1: LiteralNode 1 (volatileHint=false) : Int'
+|       0: Path s4.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |   count: LiteralNode 1 (volatileHint=false) : Long
 
-15:39:03.216 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.ExpandTables - Table expansions: @t6 -> (s5,TypeMapping)
-15:39:03.219 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.ExpandTables - Expanding tables in result type
-15:39:03.224 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase expandTables:
+12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Table expansions: @t6 -> (s5,TypeMapping)
+12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Expanding tables in result type
+12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandTables:
 | Bind : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
 |   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       where: Apply Function = : Boolean
-|         0: Path s4.id : Int'
-|         1: LiteralNode 1 (volatileHint=false) : Int'
+|         0: Path s4.name : String'
+|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     count: LiteralNode 1 (volatileHint=false) : Long
 |   select: Pure t8 : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
 |     value: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
@@ -147,14 +139,14 @@
 |         3: Path s7.hasPromotion : Boolean'
 |         4: Path s7.isFirstOwner : Boolean'
 
-15:39:03.229 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase forceOuterBinds:
+12:02:31.834 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase forceOuterBinds:
 | Bind : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
 |   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       where: Apply Function = : Boolean
-|         0: Path s4.id : Int'
-|         1: LiteralNode 1 (volatileHint=false) : Int'
+|         0: Path s4.name : String'
+|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     count: LiteralNode 1 (volatileHint=false) : Long
 |   select: Pure t8 : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
 |     value: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
@@ -164,14 +156,14 @@
 |         3: Path s7.hasPromotion : Boolean'
 |         4: Path s7.isFirstOwner : Boolean'
 
-15:39:03.235 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase removeMappedTypes:
+12:02:31.849 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase removeMappedTypes:
 | Bind : Vector[t8<(Int', String', Boolean', Boolean')>]
 |   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       where: Apply Function = : Boolean
-|         0: Path s4.id : Int'
-|         1: LiteralNode 1 (volatileHint=false) : Int'
+|         0: Path s4.name : String'
+|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     count: LiteralNode 1 (volatileHint=false) : Long
 |   select: Pure t8 : Vector[t8<(Int', String', Boolean', Boolean')>]
 |     value: ProductNode : (Int', String', Boolean', Boolean')
@@ -180,16 +172,16 @@
 |       3: Path s7.hasPromotion : Boolean'
 |       4: Path s7.isFirstOwner : Boolean'
 
-15:39:03.236 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase expandSums: (no change)
-15:39:03.238 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase emulateOuterJoins: (no change)
-15:39:03.241 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase expandRecords:
+12:02:31.849 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandSums: (no change)
+12:02:31.865 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase emulateOuterJoins: (no change)
+12:02:31.865 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandRecords:
 | Bind : Vector[t8<(Int', String', Boolean', Boolean')>]
 |   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       where: Apply Function = : Boolean
-|         0: Path s4.id : Int'
-|         1: LiteralNode 1 (volatileHint=false) : Int'
+|         0: Path s4.name : String'
+|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     count: LiteralNode 1 (volatileHint=false) : Long
 |   select: Pure t8 : Vector[t8<(Int', String', Boolean', Boolean')>]
 |     value: ProductNode : (Int', String', Boolean', Boolean')
@@ -198,62 +190,62 @@
 |       3: Path s7.hasPromotion : Boolean'
 |       4: Path s7.isFirstOwner : Boolean'
 
-15:39:03.244 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Analyzing s4.id with symbols 
-| Path s4.id : Int'
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s4.name with symbols 
+| Path s4.name : String'
 
-15:39:03.245 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Translated s4.id to:
-| Path s4.id
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s4.name to:
+| Path s4.name
 
-15:39:03.245 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening projection t8
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.id with symbols 
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening projection t8
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.id with symbols 
 | Path s7.id : Int'
 
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Translated s7.id to:
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.id to:
 | Path s7.id
 
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.name with symbols 
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.name with symbols 
 | Path s7.name : String'
 
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Translated s7.name to:
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.name to:
 | Path s7.name
 
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.hasPromotion with symbols 
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.hasPromotion with symbols 
 | Path s7.hasPromotion : Boolean'
 
-15:39:03.246 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Translated s7.hasPromotion to:
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.hasPromotion to:
 | Path s7.hasPromotion
 
-15:39:03.247 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.isFirstOwner with symbols 
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.isFirstOwner with symbols 
 | Path s7.isFirstOwner : Boolean'
 
-15:39:03.247 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Translated s7.isFirstOwner to:
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.isFirstOwner to:
 | Path s7.isFirstOwner
 
-15:39:03.248 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path 
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path 
 | ProductNode
 |   1: Path s7.id
 |   2: Path s7.name
 |   3: Path s7.hasPromotion
 |   4: Path s7.isFirstOwner
 
-15:39:03.251 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _1
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _1
 | Path s7.id
 
-15:39:03.252 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s9 -> Path s7.id
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _2
+12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s9 -> Path s7.id
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _2
 | Path s7.name
 
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s10 -> Path s7.name
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _3
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s10 -> Path s7.name
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _3
 | Path s7.hasPromotion
 
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s11 -> Path s7.hasPromotion
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _4
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s11 -> Path s7.hasPromotion
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _4
 | Path s7.isFirstOwner
 
-15:39:03.253 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s12 -> Path s7.isFirstOwner
-15:39:03.255 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Adding translation for t8: (Map(List(_2) -> s10, List(_1) -> s9, List(_3) -> s11, List(_4) -> s12), UnassignedType)
-15:39:03.257 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.FlattenProjections - Flattened projection to
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s12 -> Path s7.isFirstOwner
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding translation for t8: (Map(List(_2) -> s10, List(_1) -> s9, List(_3) -> s11, List(_4) -> s12), UnassignedType)
+12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattened projection to
 | Pure t8
 |   value: StructNode
 |     s9: Path s7.id
@@ -261,14 +253,14 @@
 |     s11: Path s7.hasPromotion
 |     s12: Path s7.isFirstOwner
 
-15:39:03.261 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase flattenProjections:
+12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase flattenProjections:
 | Bind : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
 |   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       where: Apply Function = : Boolean
-|         0: Path s4.id : Int'
-|         1: LiteralNode 1 (volatileHint=false) : Int'
+|         0: Path s4.name : String'
+|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     count: LiteralNode 1 (volatileHint=false) : Long
 |   select: Pure t8 : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
 |     value: StructNode : {s9: Int', s10: String', s11: Boolean', s12: Boolean'}
@@ -277,30 +269,30 @@
 |       s11: Path s7.hasPromotion : Boolean'
 |       s12: Path s7.isFirstOwner : Boolean'
 
-15:39:03.265 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteJoins: (no change)
-15:39:03.269 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase verifySymbols: (no change)
-15:39:03.270 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase relabelUnions: (no change)
-15:39:03.273 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase createAggregates: (no change)
-15:39:03.274 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase resolveZipJoins: (no change)
-15:39:03.279 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.PruneProjections - Unreferenced: t8; Field refs: (@t6,hasPromotion), (@t6,name), (@t6,id), (@t6,isFirstOwner)
-15:39:03.287 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase pruneProjections: (no change)
-15:39:03.289 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.RewriteDistinct - No DISTINCT used as determined by assignUniqueSymbols - skipping phase
-15:39:03.289 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteDistinct: (no change)
-15:39:03.292 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from t8<Mapped[(Int', String', Boolean', Boolean')]>
-15:39:03.293 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from (Int', String', Boolean', Boolean')
-15:39:03.293 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Int'
-15:39:03.294 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from String'
-15:39:03.294 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
-15:39:03.294 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
-15:39:03.298 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase createResultSetMapping:
+12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteJoins: (no change)
+12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase verifySymbols: (no change)
+12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase relabelUnions: (no change)
+12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase createAggregates: (no change)
+12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase resolveZipJoins: (no change)
+12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.PruneProjections - Unreferenced: t8; Field refs: (@t6,hasPromotion), (@t6,id), (@t6,name), (@t6,isFirstOwner)
+12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase pruneProjections: (no change)
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RewriteDistinct - No DISTINCT used as determined by assignUniqueSymbols - skipping phase
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteDistinct: (no change)
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from t8<Mapped[(Int', String', Boolean', Boolean')]>
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from (Int', String', Boolean', Boolean')
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Int'
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from String'
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
+12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase createResultSetMapping:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
 |   from s13: Bind : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
 |     from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |         from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |         where: Apply Function = : Boolean
-|           0: Path s4.id : Int'
-|           1: LiteralNode 1 (volatileHint=false) : Int'
+|           0: Path s4.name : String'
+|           1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |       count: LiteralNode 1 (volatileHint=false) : Long
 |     select: Pure t8 : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
 |       value: StructNode : {s9: Int', s10: String', s11: Boolean', s12: Boolean'}
@@ -315,9 +307,9 @@
 |       3: Path s13.s11 : Boolean'
 |       4: Path s13.s12 : Boolean'
 
-15:39:03.304 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.HoistClientOps - Hoisting operations from defs: 
-15:39:03.306 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.HoistClientOps - New defs: Map(0 -> (Path s7.id,s14), 1 -> (Path s7.name,s15), 2 -> (Path s7.hasPromotion,s16), 3 -> (Path s7.isFirstOwner,s17))
-15:39:03.316 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.HoistClientOps - New ResultSetMapping:
+12:02:31.959 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - Hoisting operations from defs: 
+12:02:31.959 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - New defs: Map(0 -> (Path s7.id,s14), 1 -> (Path s7.name,s15), 2 -> (Path s7.hasPromotion,s16), 3 -> (Path s7.isFirstOwner,s17))
+12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - New ResultSetMapping:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
 |   from s13: Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |     from s7: ...
@@ -334,15 +326,15 @@
 |       3: Path s13.s16 : Boolean'
 |       4: Path s13.s17 : Boolean'
 
-15:39:03.320 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase hoistClientOps:
+12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase hoistClientOps:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
 |   from s13: Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |     from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |       from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |         from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |         where: Apply Function = : Boolean
-|           0: Path s4.id : Int'
-|           1: LiteralNode 1 (volatileHint=false) : Int'
+|           0: Path s4.name : String'
+|           1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |       count: LiteralNode 1 (volatileHint=false) : Long
 |     select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |       value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
@@ -357,66 +349,66 @@
 |       3: Path s13.s16 : Boolean'
 |       4: Path s13.s17 : Boolean'
 
-15:39:03.324 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase reorderOperations: (no change)
-15:39:03.328 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Table fields: Map(@t6 -> Vector(id, name, hasPromotion, isFirstOwner))
-15:39:03.332 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Creating source from TableNode:
+12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase reorderOperations: (no change)
+12:02:31.990 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Table fields: Map(@t6 -> Vector(name, id, hasPromotion, isFirstOwner))
+12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Creating source from TableNode:
 | Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 
-15:39:03.336 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((@t6,id),List(id)), ((@t6,name),List(name)), ((@t6,hasPromotion),List(hasPromotion)), ((@t6,isFirstOwner),List(isFirstOwner)))
-15:39:03.338 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Building new Comprehension from:
+12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((@t6,name),List(name)), ((@t6,id),List(id)), ((@t6,hasPromotion),List(hasPromotion)), ((@t6,isFirstOwner),List(isFirstOwner)))
+12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Building new Comprehension from:
 | Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 
-15:39:03.348 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Built new Comprehension:
-| Comprehension s19, None, None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
+12:02:32.037 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Built new Comprehension:
+| Comprehension s19, None, None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
 |   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: Int', s22: String', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.id : Int'
-|       s22: Path s19.name : String'
+|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
+|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
+|       s21: Path s19.name : String'
+|       s22: Path s19.id : Int'
 |       s23: Path s19.hasPromotion : Boolean'
 |       s24: Path s19.isFirstOwner : Boolean'
 
-15:39:03.349 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((@t6,id) -> s21, (@t6,name) -> s22, (@t6,hasPromotion) -> s23, (@t6,isFirstOwner) -> s24)
-15:39:03.352 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merging Filter into Comprehension:
+12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((@t6,name) -> s21, (@t6,id) -> s22, (@t6,hasPromotion) -> s23, (@t6,isFirstOwner) -> s24)
+12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Filter into Comprehension:
 | Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |   from s4: ...
 |   where: Apply Function = : Boolean
-|     0: Path s4.id : Int'
-|     1: LiteralNode 1 (volatileHint=false) : Int'
+|     0: Path s4.name : String'
+|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 
-15:39:03.356 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merged Filter into Comprehension:
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
+12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Filter into Comprehension:
+| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
 |   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: Int', s22: String', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.id : Int'
-|       s22: Path s19.name : String'
+|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
+|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
+|       s21: Path s19.name : String'
+|       s22: Path s19.id : Int'
 |       s23: Path s19.hasPromotion : Boolean'
 |       s24: Path s19.isFirstOwner : Boolean'
 |   where: Apply Function = : Boolean
-|     0: Path s19.id : Int'
-|     1: LiteralNode 1 (volatileHint=false) : Int'
+|     0: Path s19.name : String'
+|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 
-15:39:03.357 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merging Take into Comprehension:
+12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Take into Comprehension:
 | Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |   from: ...
 |   count: LiteralNode 1 (volatileHint=false) : Long
 
-15:39:03.360 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merged Take into Comprehension:
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
+12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Take into Comprehension:
+| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
 |   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: Int', s22: String', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: Int', s22: String', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.id : Int'
-|       s22: Path s19.name : String'
+|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
+|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
+|       s21: Path s19.name : String'
+|       s22: Path s19.id : Int'
 |       s23: Path s19.hasPromotion : Boolean'
 |       s24: Path s19.isFirstOwner : Boolean'
 |   where: Apply Function = : Boolean
-|     0: Path s19.id : Int'
-|     1: LiteralNode 1 (volatileHint=false) : Int'
+|     0: Path s19.name : String'
+|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |   fetch: LiteralNode 1 (volatileHint=false) : Long
 
-15:39:03.362 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merging Bind into Comprehension as 'select':
+12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Bind into Comprehension as 'select':
 | Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |   from s7: ...
 |   select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
@@ -426,7 +418,7 @@
 |       s16: Path s7.hasPromotion : Boolean'
 |       s17: Path s7.isFirstOwner : Boolean'
 
-15:39:03.366 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Merged Bind into Comprehension as 'select':
+12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Bind into Comprehension as 'select':
 | Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |   select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
@@ -436,13 +428,13 @@
 |       s16: Path s19.hasPromotion : Boolean'
 |       s17: Path s19.isFirstOwner : Boolean'
 |   where: Apply Function = : Boolean
-|     0: Path s19.id : Int'
-|     1: LiteralNode 1 (volatileHint=false) : Int'
+|     0: Path s19.name : String'
+|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |   fetch: LiteralNode 1 (volatileHint=false) : Long
 
-15:39:03.369 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((t18,s14) -> s14, (t18,s15) -> s15, (t18,s16) -> s16, (t18,s17) -> s17)
-15:39:03.371 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((t18,s14),List(s14)), ((t18,s15),List(s15)), ((t18,s16),List(s16)), ((t18,s17),List(s17)))
-15:39:03.375 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase mergeToComprehensions:
+12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((t18,s14) -> s14, (t18,s15) -> s15, (t18,s16) -> s16, (t18,s17) -> s17)
+12:02:32.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((t18,s14),List(s14)), ((t18,s15),List(s15)), ((t18,s16),List(s16)), ((t18,s17),List(s17)))
+12:02:32.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase mergeToComprehensions:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
 |   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
 |     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
@@ -453,8 +445,8 @@
 |         s16: Path s19.hasPromotion : Boolean'
 |         s17: Path s19.isFirstOwner : Boolean'
 |     where: Apply Function = : Boolean
-|       0: Path s19.id : Int'
-|       1: LiteralNode 1 (volatileHint=false) : Int'
+|       0: Path s19.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     fetch: LiteralNode 1 (volatileHint=false) : Long
 |   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
 |     0: ProductNode : (Int', String', Boolean', Boolean')
@@ -463,9 +455,9 @@
 |       3: Path s13.s16 : Boolean'
 |       4: Path s13.s17 : Boolean'
 
-15:39:03.377 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase optimizeScalar: (no change)
-15:39:03.378 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.RemoveFieldNames - Required symbols: s14 -> 0, s15 -> 1, s16 -> 2, s17 -> 3
-15:39:03.388 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.RemoveFieldNames - Transformed RSM: 
+12:02:32.099 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase optimizeScalar: (no change)
+12:02:32.099 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RemoveFieldNames - Required symbols: s14 -> 0, s15 -> 1, s16 -> 2, s17 -> 3
+12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RemoveFieldNames - Transformed RSM: 
 | ResultSetMapping
 |   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
 |     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
@@ -476,8 +468,8 @@
 |         3: Path s19.hasPromotion : Boolean'
 |         4: Path s19.isFirstOwner : Boolean'
 |     where: Apply Function = : Boolean
-|       0: Path s19.id : Int'
-|       1: LiteralNode 1 (volatileHint=false) : Int'
+|       0: Path s19.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     fetch: LiteralNode 1 (volatileHint=false) : Long
 |   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
 |     0: ProductNode : (Int', String', Boolean', Boolean')
@@ -486,7 +478,7 @@
 |       3: Path s13.s16 : Boolean'
 |       4: Path s13.s17 : Boolean'
 
-15:39:03.391 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase removeFieldNames:
+12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase removeFieldNames:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
 |   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
 |     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
@@ -497,8 +489,8 @@
 |         3: Path s19.hasPromotion : Boolean'
 |         4: Path s19.isFirstOwner : Boolean'
 |     where: Apply Function = : Boolean
-|       0: Path s19.id : Int'
-|       1: LiteralNode 1 (volatileHint=false) : Int'
+|       0: Path s19.name : String'
+|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |     fetch: LiteralNode 1 (volatileHint=false) : Long
 |   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
 |     0: ProductNode : (Int', String', Boolean', Boolean')
@@ -507,7 +499,7 @@
 |       3: Path s13._3 : Boolean'
 |       4: Path s13._4 : Boolean'
 
-15:39:03.391 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
+12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
 | Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
 |   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
 |   select: Pure t18 : Vector[t18<(Int', String', Boolean', Boolean')>]
@@ -517,11 +509,11 @@
 |       3: Path s19.hasPromotion : Boolean'
 |       4: Path s19.isFirstOwner : Boolean'
 |   where: Apply Function = : Boolean
-|     0: Path s19.id : Int'
-|     1: LiteralNode 1 (volatileHint=false) : Int'
+|     0: Path s19.name : String'
+|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
 |   fetch: LiteralNode 1 (volatileHint=false) : Long
 
-15:39:03.414 [main-ScalaTest-running-SlickDBSpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
 | TypeMappingResultConverter
 |   child: ProductResultConverter
 |     1: BaseResultConverter$mcI$sp idx=1, name=<computed> : Int'
@@ -529,12 +521,12 @@
 |     3: BaseResultConverter$mcZ$sp idx=3, name=<computed> : Boolean'
 |     4: BaseResultConverter$mcZ$sp idx=4, name=<computed> : Boolean'
 
-15:39:03.414 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
-| CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `id` = 1 limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
+| CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
 
-15:39:03.415 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
 | ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `id` = 1 limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
+|   from s13: CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
 |   map: CompiledMapping : Mapped[(Int', String', Boolean', Boolean')]
 |     converter: TypeMappingResultConverter
 |       child: ProductResultConverter
@@ -543,38 +535,30 @@
 |         3: BaseResultConverter$mcZ$sp idx=3, name=<computed> : Boolean'
 |         4: BaseResultConverter$mcZ$sp idx=4, name=<computed> : Boolean'
 
-15:39:03.415 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:    3,990246 ms
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -           unrollTailBinds:    1,708491 ms
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    1,140695 ms
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -              expandTables:   23,190978 ms
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -           forceOuterBinds:    6,111910 ms
-15:39:03.416 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -         removeMappedTypes:    5,910611 ms
-15:39:03.417 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                expandSums:    1,359499 ms
-15:39:03.417 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -         emulateOuterJoins:    1,382473 ms
-15:39:03.417 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -             expandRecords:    3,466941 ms
-15:39:03.417 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -        flattenProjections:   19,823229 ms
-15:39:03.417 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -              rewriteJoins:    3,147123 ms
-15:39:03.418 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -             verifySymbols:    5,926657 ms
-15:39:03.418 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -             relabelUnions:    1,551682 ms
-15:39:03.418 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -          createAggregates:    1,064114 ms
-15:39:03.418 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -           resolveZipJoins:    1,049892 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -          pruneProjections:   13,198589 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -           rewriteDistinct:    1,379191 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -    createResultSetMapping:    8,605905 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -            hoistClientOps:   23,231821 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -         reorderOperations:    3,143112 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -     mergeToComprehensions:   50,620909 ms
-15:39:03.419 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -            optimizeScalar:    1,996217 ms
-15:39:03.420 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -          removeFieldNames:   14,006339 ms
-15:39:03.420 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   24,555583 ms
-15:39:03.420 [main-ScalaTest-running-SlickDBSpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:  221,562207 ms
-15:39:03.423 [main-ScalaTest-running-SlickDBSpec] DEBUG slick.basic.BasicBackend.action - #1: StreamingInvokerAction$HeadOptionAction [select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `id` = 1 limit 1]
-15:39:03.433 [AsyncExecutor.default-2] DEBUG slick.jdbc.JdbcBackend.statement - Preparing statement: select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `id` = 1 limit 1
-15:39:03.436 [AsyncExecutor.default-2] DEBUG slick.jdbc.JdbcBackend.benchmark - Execution of prepared statement took 897µs
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - /----+-----------+--------------+--------------\
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - | 1  | 2         | 3            | 4            |
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - | id | name      | hasPromotion | isFirstOwner |
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - |----+-----------+--------------+--------------|
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - | 1  | TestPiece | 1            | 1            |
-15:39:03.463 [AsyncExecutor.default-2] DEBUG slick.jdbc.StatementInvoker.result - \----+-----------+--------------+--------------/
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:    2,432504 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           unrollTailBinds:    3,625273 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    1,375339 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -              expandTables:   74,518709 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           forceOuterBinds:   15,246923 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         removeMappedTypes:   11,185286 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                expandSums:    2,441834 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         emulateOuterJoins:    3,238361 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             expandRecords:    4,296459 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -        flattenProjections:   45,605787 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -              rewriteJoins:    2,392381 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             verifySymbols:    5,433555 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             relabelUnions:    3,705206 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          createAggregates:    2,072651 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           resolveZipJoins:    1,378138 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          pruneProjections:   10,317845 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           rewriteDistinct:    3,149409 ms
+12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -    createResultSetMapping:   10,599632 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            hoistClientOps:   28,933139 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         reorderOperations:    4,645115 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -     mergeToComprehensions:  113,243133 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            optimizeScalar:    3,104311 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          removeFieldNames:   39,344913 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   52,955238 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:  445,241141 ms
+12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.basic.BasicBackend.action - #1: StreamingInvokerAction$HeadOptionAction [select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1]
