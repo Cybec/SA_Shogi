@@ -15,11 +15,7 @@ class DBQuery {
   val playerSecondContainerQuery: TableQuery[PlayerSecondContainerSession] = TableQuery[PlayerSecondContainerSession]
   val pieceSessionQuery: TableQuery[PieceSession] = TableQuery[PieceSession]
 
-  def insert(piece: PieceProfile): Future[Int] = {
-    val test = pieceSessionQuery += piece
-    print(test)
-    db.run(test)
-  }
+  def insert(piece: PieceProfile): Future[Int] = db.run(pieceSessionQuery += piece)
 
   def insert(containerFirst: PlayerFirstContainerProfile): Future[Int] = db.run(playerFirstContainerQuery += containerFirst)
 
@@ -31,8 +27,8 @@ class DBQuery {
 
   def insert(game: GameSessionProfile): Future[Int] = db.run(gameSessionQuery += game)
 
-  def getPiece(id: Int): Future[Option[PieceProfile]] =
-    db.run(pieceSessionQuery.filter(_.id === id).take(1).result.headOption)
+  def getPiece(pp:PieceProfile,f: (PieceSession,PieceProfile)=> Boolean): Future[Option[PieceProfile]] =
+    db.run(pieceSessionQuery.filter(f(_,pp)).take(1).result.headOption)
 
   def getPlayerFirstContainer(id: Int): Future[Option[PlayerFirstContainerProfile]] =
     db.run(playerFirstContainerQuery.filter(_.id === id).take(1).result.headOption)
@@ -49,16 +45,21 @@ class DBQuery {
   def getGame(id: Int): Future[Option[GameSessionProfile]] =
     db.run(gameSessionQuery.filter(_.id === id).take(1).result.headOption)
 
-  //Delete wird evtl. noch nciht benutzt
-  def deletePiece(id: Int): Future[Int] = db.run(pieceSessionQuery.filter(_.id === id).delete)
+  def deletePiece(pp:PieceProfile,f: (PieceSession,PieceProfile)=> Boolean): Future[Int] =
+    db.run(pieceSessionQuery.filter(f(_,pp)).delete)
 
-  def deletePlayerFirstContainer(id: Int): Future[Int] = db.run(playerFirstContainerQuery.filter(_.id === id).delete)
+  def deletePlayerFirstContainer(id: Int): Future[Int] =
+    db.run(playerFirstContainerQuery.filter(_.id === id).delete)
 
-  def deletePlayerSecondContainer(id: Int): Future[Int] = db.run(playerSecondContainerQuery.filter(_.id === id).delete)
+  def deletePlayerSecondContainer(id: Int): Future[Int] =
+    db.run(playerSecondContainerQuery.filter(_.id === id).delete)
 
-  def deleteBoard(id: Int): Future[Int] = db.run(boardSessionQuery.filter(_.id === id).delete)
+  def deleteBoard(id: Int): Future[Int] =
+    db.run(boardSessionQuery.filter(_.id === id).delete)
 
-  def deletePlayer(id: Int): Future[Int] = db.run(playerSessionQuery.filter(_.id === id).delete)
+  def deletePlayer(id: Int): Future[Int] =
+    db.run(playerSessionQuery.filter(_.id === id).delete)
 
-  def deleteGame(id: Int): Future[Int] = db.run(gameSessionQuery.filter(_.id === id).delete)
+  def deleteGame(id: Int): Future[Int] =
+    db.run(gameSessionQuery.filter(_.id === id).delete)
 }

@@ -1,7 +1,7 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.pieceComponentSpecs
 
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 import org.junit.runner.RunWith
 import org.scalatest._

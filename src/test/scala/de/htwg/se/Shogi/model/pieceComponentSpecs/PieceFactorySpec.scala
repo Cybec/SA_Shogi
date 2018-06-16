@@ -1,12 +1,12 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.pieceComponentSpecs
 
-import com.google.inject.{ Guice, Injector }
+import com.google.inject.{Guice, Injector}
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 
 //noinspection ScalaStyle
 @RunWith(classOf[JUnitRunner])

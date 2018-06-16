@@ -15,7 +15,7 @@ case class PlayerSecondContainerProfile(id: Int, pieceID: Int)
 
 case class PieceProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean)
 
-protected class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_SESSION") {
+class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def name: Rep[String] = column[String]("name")
@@ -27,7 +27,7 @@ protected class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_S
   def * : ProvenShape[PieceProfile] = (id, name, hasPromotion, isFirstOwner) <> (PieceProfile.tupled, PieceProfile.unapply) // scalastyle:ignore
 }
 
-protected class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstContainerProfile](tag, "PLAYERFIRSTCONTAINER_SESSION") {
+ class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstContainerProfile](tag, "PLAYERFIRSTCONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def pieceID: Rep[Int] = column[Int]("pieceID")
@@ -38,7 +38,7 @@ protected class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstC
 
 }
 
-protected class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecondContainerProfile](tag, "PLAYERSECOONDCONTAINER_SESSION") {
+ class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecondContainerProfile](tag, "PLAYERSECOONDCONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def pieceID: Rep[Int] = column[Int]("pieceID")
@@ -49,7 +49,7 @@ protected class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecon
 
 }
 
-protected class BoardSession(tag: Tag) extends Table[BoardProfile](tag, "BOARD_SESSION") {
+ class BoardSession(tag: Tag) extends Table[BoardProfile](tag, "BOARD_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def firstPlayerContainerID: Rep[Int] = column[Int]("firstPlayerContainerID")
@@ -68,7 +68,7 @@ protected class BoardSession(tag: Tag) extends Table[BoardProfile](tag, "BOARD_S
   }
 }
 
-protected class PlayerSession(tag: Tag) extends Table[PlayerProfile](tag, "PLAYER_SESSION") {
+ class PlayerSession(tag: Tag) extends Table[PlayerProfile](tag, "PLAYER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def name: Rep[String] = column[String]("name")
@@ -78,7 +78,7 @@ protected class PlayerSession(tag: Tag) extends Table[PlayerProfile](tag, "PLAYE
   def * : ProvenShape[PlayerProfile] = (id, name, first) <> (PlayerProfile.tupled, PlayerProfile.unapply) // scalastyle:ignore
 }
 
-protected class GameSession(tag: Tag) extends Table[GameSessionProfile](tag, "GAME_SESSION") {
+ class GameSession(tag: Tag) extends Table[GameSessionProfile](tag, "GAME_SESSION") {
 
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 

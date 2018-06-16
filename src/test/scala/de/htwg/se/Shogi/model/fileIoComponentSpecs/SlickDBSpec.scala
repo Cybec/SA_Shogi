@@ -1,10 +1,10 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.fileIoComponentSpecs
 
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.SlickDB
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 
 @RunWith(classOf[JUnitRunner])
 class SlickDBSpec extends WordSpec with Matchers {

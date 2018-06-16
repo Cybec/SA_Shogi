@@ -13,7 +13,6 @@ docker-compose -f ShogiDB.yml stop
 
 # Docker Console
 docker exec -it “container-id” bash
-
 # Docker-Image mit Dockerfile bauen
 docker build -t shogi:latest .
 
