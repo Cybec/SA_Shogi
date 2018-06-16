@@ -33,6 +33,10 @@ class DBQuerySpec extends WordSpec with Matchers {
         val eventualDeleteResult = dbQuery.deletePiece(pieceProfile.name)
         val deleteResult = Await.result(eventualDeleteResult, Duration.Inf)
         deleteResult should be(1)
+
+        val eventualMaybeUserProfile = dbQuery.getPiece(pieceProfile.name)
+        val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
+        maybeUserProfile should be(None)
       }
     }
   }
