@@ -1,4 +1,5 @@
-import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{DBQuery, PieceProfile}
+import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
+import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{DBQuery, PieceProfile, PlayerProfile}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
@@ -62,6 +63,59 @@ class DBQuerySpec extends WordSpec with Matchers {
           deleteResult_2 should be(1)
 
           val eventualMaybeUserProfile_2 = dbQuery.getPiece(piece_2.name)
+          val maybeUserProfile_2 = Await.result(eventualMaybeUserProfile_2, Duration.Inf)
+          maybeUserProfile_2 should be(None)
+        }
+      }
+    }
+
+    "called insert, get and delete Player" should {
+      val playerProfile = PlayerProfile(1, "TestPlayer_" + ranControlNumber, true)
+
+      "save" in {
+        val eventualInsertResult = dbQuery.insert(playerProfile)
+        val insertResult = Await.result(eventualInsertResult, Duration.Inf)
+        insertResult should be(1)
+      }
+      "load" in {
+        val eventualMaybeUserProfile = dbQuery.getPlayer(playerProfile.name)
+        val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
+        for (player <- maybeUserProfile) yield {
+          player.name should be(playerProfile.name)
+          player.first should be(playerProfile.first)
+
+          val eventualMaybeUserProfile_2 = dbQuery.getPlayer(player.id)
+          val maybeUserProfile_2 = Await.result(eventualMaybeUserProfile_2, Duration.Inf)
+          for (player_2 <- maybeUserProfile_2) yield {
+            player_2.name should be(playerProfile.name)
+            player_2.first should be(playerProfile.first)
+          }
+        }
+      }
+      "delete" in {
+        val eventualDeleteResult = dbQuery.deletePlayer(playerProfile.name)
+        val deleteResult = Await.result(eventualDeleteResult, Duration.Inf)
+        deleteResult should be(1)
+
+        val eventualMaybeUserProfile = dbQuery.getPlayer(playerProfile.name)
+        val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
+        maybeUserProfile should be(None)
+
+
+        val eventualInsertResult = dbQuery.insert(playerProfile)
+        val insertResult = Await.result(eventualInsertResult, Duration.Inf)
+        insertResult should be(1)
+
+        val eventualMaybeUserProfile_2 = dbQuery.getPlayer(playerProfile.name)
+        val maybeUserProfile_2 = Await.result(eventualMaybeUserProfile_2, Duration.Inf)
+        for (player_2 <- maybeUserProfile_2) yield {
+          player_2.name should be(playerProfile.name)
+          player_2.first should be(playerProfile.first)
+          val eventualDeleteResult_2 = dbQuery.deletePlayer(player_2.id)
+          val deleteResult_2 = Await.result(eventualDeleteResult_2, Duration.Inf)
+          deleteResult_2 should be(1)
+
+          val eventualMaybeUserProfile_2 = dbQuery.getPlayer(player_2.name)
           val maybeUserProfile_2 = Await.result(eventualMaybeUserProfile_2, Duration.Inf)
           maybeUserProfile_2 should be(None)
         }
