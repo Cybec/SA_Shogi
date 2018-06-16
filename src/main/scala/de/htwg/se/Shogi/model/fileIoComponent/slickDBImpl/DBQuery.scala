@@ -42,6 +42,8 @@ class DBQuery {
 
   def getPlayer(id: Int): Future[Option[PlayerProfile]] = db.run(playerSessionQuery.filter(_.id === id).take(1).result.headOption)
 
+  def getPlayer(name: String): Future[Option[PlayerProfile]] = db.run(playerSessionQuery.filter(_.name === name).take(1).result.headOption)
+
   def getGame(id: Int): Future[Option[GameSessionProfile]] = db.run(gameSessionQuery.filter(_.id === id).take(1).result.headOption)
 
 
@@ -57,6 +59,8 @@ class DBQuery {
   def deleteBoard(id: Int): Future[Int] = db.run(boardSessionQuery.filter(_.id === id).delete)
 
   def deletePlayer(id: Int): Future[Int] = db.run(playerSessionQuery.filter(_.id === id).delete)
+
+  def deletePlayer(name: String): Future[Int] = db.run(playerSessionQuery.filter(_.name === name).delete)
 
   def deleteGame(id: Int): Future[Int] = db.run(gameSessionQuery.filter(_.id === id).delete)
 }
