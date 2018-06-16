@@ -1,4 +1,4 @@
-import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{DBQuery, PieceProfile, PieceSession, SlickDB}
+import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{DBQuery, PieceProfile}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
@@ -15,15 +15,13 @@ class DBQuerySpec extends WordSpec with Matchers {
     "called insert, get and delete Piece" should {
       val pieceProfile = PieceProfile(1, "TestPiece_" + ranControlNumber, true, true)
 
-      def f(ps: PieceSession, pp: PieceProfile): Boolean = ps.name == pp.name
-
       "save" in {
         val eventualInsertResult = dbQuery.insert(pieceProfile)
         val insertResult = Await.result(eventualInsertResult, Duration.Inf)
         insertResult should be(1)
       }
       "load" in {
-        val eventualMaybeUserProfile = dbQuery.getPiece(pieceProfile, f)
+        val eventualMaybeUserProfile = dbQuery.getPiece(pieceProfile.name)
         val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
         for (piece <- maybeUserProfile) yield {
           piece.name should be(pieceProfile.name)
@@ -32,7 +30,7 @@ class DBQuerySpec extends WordSpec with Matchers {
         }
       }
       "delete" in {
-        val eventualDeleteResult = dbQuery.deletePiece(pieceProfile, f)
+        val eventualDeleteResult = dbQuery.deletePiece(pieceProfile.name)
         val deleteResult = Await.result(eventualDeleteResult, Duration.Inf)
         deleteResult should be(1)
       }
