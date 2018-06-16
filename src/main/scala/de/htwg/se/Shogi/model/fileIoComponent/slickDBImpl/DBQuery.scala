@@ -28,7 +28,6 @@ class DBQuery {
 
   def insert(game: GameSessionProfile): Future[Int] = db.run(gameSessionQuery += game)
 
-
   //GET
   def getPiece(id: Int): Future[Option[PieceProfile]] = db.run(pieceSessionQuery.filter(_.id === id).take(1).result.headOption)
 
@@ -45,7 +44,6 @@ class DBQuery {
   def getPlayer(name: String): Future[Option[PlayerProfile]] = db.run(playerSessionQuery.filter(_.name === name).take(1).result.headOption)
 
   def getGame(id: Int): Future[Option[GameSessionProfile]] = db.run(gameSessionQuery.filter(_.id === id).take(1).result.headOption)
-
 
   //DELET
   def deletePiece(id: Int): Future[Int] = db.run(pieceSessionQuery.filter(_.id === id).delete)

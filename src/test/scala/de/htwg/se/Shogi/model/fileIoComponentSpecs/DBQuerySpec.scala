@@ -1,8 +1,8 @@
 import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
-import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{DBQuery, PieceProfile, PlayerProfile}
+import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.{ DBQuery, PieceProfile, PlayerProfile }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -46,7 +46,6 @@ class DBQuerySpec extends WordSpec with Matchers {
         val eventualMaybeUserProfile = dbQuery.getPiece(pieceProfile.name)
         val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
         maybeUserProfile should be(None)
-
 
         val eventualInsertResult = dbQuery.insert(pieceProfile)
         val insertResult = Await.result(eventualInsertResult, Duration.Inf)
@@ -100,7 +99,6 @@ class DBQuerySpec extends WordSpec with Matchers {
         val eventualMaybeUserProfile = dbQuery.getPlayer(playerProfile.name)
         val maybeUserProfile = Await.result(eventualMaybeUserProfile, Duration.Inf)
         maybeUserProfile should be(None)
-
 
         val eventualInsertResult = dbQuery.insert(playerProfile)
         val insertResult = Await.result(eventualInsertResult, Duration.Inf)

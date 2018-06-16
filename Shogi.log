@@ -1,564 +1,147 @@
-12:02:10.037 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - Source:
-| TableExpansion
-|   table s2: Table PIECE_SESSION
-|   columns: TypeMapping
-|     0: ProductNode
-|       1: Path s2.id : Int'
-|       2: Path s2.name : String'
-|       3: Path s2.hasPromotion : Boolean'
-|       4: Path s2.isFirstOwner : Boolean'
-
-12:02:10.053 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
-12:02:10.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
-| TableExpansion
-|   table s3: Table PIECE_SESSION
-|   columns: TypeMapping
-|     0: ProductNode
-|       1: Path s3.id : Int'
-|       2: Path s3.name : String'
-|       3: Path s3.hasPromotion : Boolean'
-|       4: Path s3.isFirstOwner : Boolean'
-
-12:02:10.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
-12:02:10.115 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase insertCompiler:
-| ResultSetMapping : Vector[(String', Boolean', Boolean')]
-|   from s5: Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
-|     table s6: Table PIECE_SESSION : Vector[@t4<UnassignedType>]
-|     linear: ProductNode : (String', Boolean', Boolean')
-|       1: Path s6.name : String'
-|       2: Path s6.hasPromotion : Boolean'
-|       3: Path s6.isFirstOwner : Boolean'
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: InsertColumn id : Int'
-|       2: InsertColumn name : String'
-|         0: Path s5._1 : String'
-|       3: InsertColumn hasPromotion : Boolean'
-|         0: Path s5._2 : Boolean'
-|       4: InsertColumn isFirstOwner : Boolean'
-|         0: Path s5._3 : Boolean'
-
-12:02:10.115 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
-| Insert allFields=[id, name, hasPromotion, isFirstOwner] : (String', Boolean', Boolean')
-|   table s6: Table PIECE_SESSION : Vector[@t4<UnassignedType>]
-|   linear: ProductNode : (String', Boolean', Boolean')
-|     1: Path s6.name : String'
-|     2: Path s6.hasPromotion : Boolean'
-|     3: Path s6.isFirstOwner : Boolean'
-
-12:02:10.162 [main-ScalaTest-running-DBQuerySpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
-| TypeMappingResultConverter
-|   child: ProductResultConverter
-|     1: CompoundResultConverter
-|     2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
-|     3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
-|     4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
-
-12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
-| CompiledStatement "insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)" : (String', Boolean', Boolean')
-
-12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
-| ResultSetMapping : Vector[(String', Boolean', Boolean')]
-|   from s5: CompiledStatement "insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)" : (String', Boolean', Boolean')
-|   map: CompiledMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     converter: TypeMappingResultConverter
-|       child: ProductResultConverter
-|         1: CompoundResultConverter
-|         2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
-|         3: BaseResultConverter$mcZ$sp idx=2, name=hasPromotion : Boolean'
-|         4: BaseResultConverter$mcZ$sp idx=3, name=isFirstOwner : Boolean'
-
-12:02:10.178 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
-12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:   29,340578 ms
-12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:   12,523614 ms
-12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            insertCompiler:   31,386792 ms
-12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   66,145062 ms
-12:02:10.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:  139,396046 ms
-12:02:10.224 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.basic.BasicBackend.action - #1: SingleInsertAction [insert into `PIECE_SESSION` (`name`,`hasPromotion`,`isFirstOwner`)  values (?,?,?)]
-12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - Source:
-| Take
-|   from: Filter s2
-|     from s2: TableExpansion
-|       table s3: Table PIECE_SESSION
-|       columns: TypeMapping
-|         0: ProductNode
-|           1: Path s3.id : Int'
-|           2: Path s3.name : String'
-|           3: Path s3.hasPromotion : Boolean'
-|           4: Path s3.isFirstOwner : Boolean'
-|     where: Apply Function =
-|       0: Path s2.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false)
-|   count: LiteralNode 1 (volatileHint=false)
-
-12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
-12:02:31.740 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
-| Take
-|   from: Filter s4
-|     from s4: TableExpansion
-|       table s5: Table PIECE_SESSION
-|       columns: TypeMapping
-|         0: ProductNode
-|           1: Path s5.id : Int'
-|           2: Path s5.name : String'
-|           3: Path s5.hasPromotion : Boolean'
-|           4: Path s5.isFirstOwner : Boolean'
-|     where: Apply Function =
-|       0: Path s4.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false)
-|   count: LiteralNode 1 (volatileHint=false)
-
-12:02:31.756 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase unrollTailBinds: (no change)
-12:02:31.756 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
-12:02:31.771 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Found Selects for NominalTypes: @(slick.jdbc.MySQLProfile$._.PIECE_SESSION)
-12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - With correct table types:
-| Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     where: Apply Function = : Boolean
-|       0: Path s4.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|   count: LiteralNode 1 (volatileHint=false) : Long
-
-12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Table expansions: @t6 -> (s5,TypeMapping)
-12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.ExpandTables - Expanding tables in result type
-12:02:31.818 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandTables:
-| Bind : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
-|   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       where: Apply Function = : Boolean
-|         0: Path s4.name : String'
-|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     count: LiteralNode 1 (volatileHint=false) : Long
-|   select: Pure t8 : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
-|     value: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|       0: ProductNode : (Int', String', Boolean', Boolean')
-|         1: Path s7.id : Int'
-|         2: Path s7.name : String'
-|         3: Path s7.hasPromotion : Boolean'
-|         4: Path s7.isFirstOwner : Boolean'
-
-12:02:31.834 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase forceOuterBinds:
-| Bind : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
-|   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       where: Apply Function = : Boolean
-|         0: Path s4.name : String'
-|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     count: LiteralNode 1 (volatileHint=false) : Long
-|   select: Pure t8 : Vector[t8<Mapped[(Int', String', Boolean', Boolean')]>]
-|     value: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|       0: ProductNode : (Int', String', Boolean', Boolean')
-|         1: Path s7.id : Int'
-|         2: Path s7.name : String'
-|         3: Path s7.hasPromotion : Boolean'
-|         4: Path s7.isFirstOwner : Boolean'
-
-12:02:31.849 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase removeMappedTypes:
-| Bind : Vector[t8<(Int', String', Boolean', Boolean')>]
-|   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       where: Apply Function = : Boolean
-|         0: Path s4.name : String'
-|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     count: LiteralNode 1 (volatileHint=false) : Long
-|   select: Pure t8 : Vector[t8<(Int', String', Boolean', Boolean')>]
-|     value: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s7.id : Int'
-|       2: Path s7.name : String'
-|       3: Path s7.hasPromotion : Boolean'
-|       4: Path s7.isFirstOwner : Boolean'
-
-12:02:31.849 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandSums: (no change)
-12:02:31.865 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase emulateOuterJoins: (no change)
-12:02:31.865 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase expandRecords:
-| Bind : Vector[t8<(Int', String', Boolean', Boolean')>]
-|   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       where: Apply Function = : Boolean
-|         0: Path s4.name : String'
-|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     count: LiteralNode 1 (volatileHint=false) : Long
-|   select: Pure t8 : Vector[t8<(Int', String', Boolean', Boolean')>]
-|     value: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s7.id : Int'
-|       2: Path s7.name : String'
-|       3: Path s7.hasPromotion : Boolean'
-|       4: Path s7.isFirstOwner : Boolean'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s4.name with symbols 
-| Path s4.name : String'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s4.name to:
-| Path s4.name
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening projection t8
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.id with symbols 
-| Path s7.id : Int'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.id to:
-| Path s7.id
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.name with symbols 
-| Path s7.name : String'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.name to:
-| Path s7.name
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.hasPromotion with symbols 
-| Path s7.hasPromotion : Boolean'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.hasPromotion to:
-| Path s7.hasPromotion
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Analyzing s7.isFirstOwner with symbols 
-| Path s7.isFirstOwner : Boolean'
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Translated s7.isFirstOwner to:
-| Path s7.isFirstOwner
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path 
-| ProductNode
-|   1: Path s7.id
-|   2: Path s7.name
-|   3: Path s7.hasPromotion
-|   4: Path s7.isFirstOwner
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _1
-| Path s7.id
-
-12:02:31.881 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s9 -> Path s7.id
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _2
-| Path s7.name
-
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s10 -> Path s7.name
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _3
-| Path s7.hasPromotion
-
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s11 -> Path s7.hasPromotion
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattening node at Path _4
-| Path s7.isFirstOwner
-
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding definition: s12 -> Path s7.isFirstOwner
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Adding translation for t8: (Map(List(_2) -> s10, List(_1) -> s9, List(_3) -> s11, List(_4) -> s12), UnassignedType)
-12:02:31.896 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.FlattenProjections - Flattened projection to
-| Pure t8
-|   value: StructNode
-|     s9: Path s7.id
-|     s10: Path s7.name
-|     s11: Path s7.hasPromotion
-|     s12: Path s7.isFirstOwner
-
-12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase flattenProjections:
-| Bind : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
-|   from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       where: Apply Function = : Boolean
-|         0: Path s4.name : String'
-|         1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     count: LiteralNode 1 (volatileHint=false) : Long
-|   select: Pure t8 : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
-|     value: StructNode : {s9: Int', s10: String', s11: Boolean', s12: Boolean'}
-|       s9: Path s7.id : Int'
-|       s10: Path s7.name : String'
-|       s11: Path s7.hasPromotion : Boolean'
-|       s12: Path s7.isFirstOwner : Boolean'
-
-12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteJoins: (no change)
-12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase verifySymbols: (no change)
-12:02:31.912 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase relabelUnions: (no change)
-12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase createAggregates: (no change)
-12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase resolveZipJoins: (no change)
-12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.PruneProjections - Unreferenced: t8; Field refs: (@t6,hasPromotion), (@t6,id), (@t6,name), (@t6,isFirstOwner)
-12:02:31.927 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase pruneProjections: (no change)
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RewriteDistinct - No DISTINCT used as determined by assignUniqueSymbols - skipping phase
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase rewriteDistinct: (no change)
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from t8<Mapped[(Int', String', Boolean', Boolean')]>
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from (Int', String', Boolean', Boolean')
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Int'
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from String'
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.CreateResultSetMapping - Creating mapping from Boolean'
-12:02:31.943 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase createResultSetMapping:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: Bind : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
-|     from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|         from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|         where: Apply Function = : Boolean
-|           0: Path s4.name : String'
-|           1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|       count: LiteralNode 1 (volatileHint=false) : Long
-|     select: Pure t8 : Vector[t8<{s9: Int', s10: String', s11: Boolean', s12: Boolean'}>]
-|       value: StructNode : {s9: Int', s10: String', s11: Boolean', s12: Boolean'}
-|         s9: Path s7.id : Int'
-|         s10: Path s7.name : String'
-|         s11: Path s7.hasPromotion : Boolean'
-|         s12: Path s7.isFirstOwner : Boolean'
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13.s9 : Int'
-|       2: Path s13.s10 : String'
-|       3: Path s13.s11 : Boolean'
-|       4: Path s13.s12 : Boolean'
-
-12:02:31.959 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - Hoisting operations from defs: 
-12:02:31.959 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - New defs: Map(0 -> (Path s7.id,s14), 1 -> (Path s7.name,s15), 2 -> (Path s7.hasPromotion,s16), 3 -> (Path s7.isFirstOwner,s17))
-12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.HoistClientOps - New ResultSetMapping:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|     from s7: ...
-|     select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|       value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
-|         s14: Path s7.id : Int'
-|         s15: Path s7.name : String'
-|         s16: Path s7.hasPromotion : Boolean'
-|         s17: Path s7.isFirstOwner : Boolean'
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13.s14 : Int'
-|       2: Path s13.s15 : String'
-|       3: Path s13.s16 : Boolean'
-|       4: Path s13.s17 : Boolean'
-
-12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase hoistClientOps:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|     from s7: Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|       from: Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|         from s4: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|         where: Apply Function = : Boolean
-|           0: Path s4.name : String'
-|           1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|       count: LiteralNode 1 (volatileHint=false) : Long
-|     select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|       value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
-|         s14: Path s7.id : Int'
-|         s15: Path s7.name : String'
-|         s16: Path s7.hasPromotion : Boolean'
-|         s17: Path s7.isFirstOwner : Boolean'
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13.s14 : Int'
-|       2: Path s13.s15 : String'
-|       3: Path s13.s16 : Boolean'
-|       4: Path s13.s17 : Boolean'
-
-12:02:31.974 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase reorderOperations: (no change)
-12:02:31.990 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Table fields: Map(@t6 -> Vector(name, id, hasPromotion, isFirstOwner))
-12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Creating source from TableNode:
-| Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-
-12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((@t6,name),List(name)), ((@t6,id),List(id)), ((@t6,hasPromotion),List(hasPromotion)), ((@t6,isFirstOwner),List(isFirstOwner)))
-12:02:32.006 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Building new Comprehension from:
-| Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-
-12:02:32.037 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Built new Comprehension:
-| Comprehension s19, None, None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.name : String'
-|       s22: Path s19.id : Int'
-|       s23: Path s19.hasPromotion : Boolean'
-|       s24: Path s19.isFirstOwner : Boolean'
-
-12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((@t6,name) -> s21, (@t6,id) -> s22, (@t6,hasPromotion) -> s23, (@t6,isFirstOwner) -> s24)
-12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Filter into Comprehension:
-| Filter s4 : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   from s4: ...
-|   where: Apply Function = : Boolean
-|     0: Path s4.name : String'
-|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-
-12:02:32.052 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Filter into Comprehension:
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, None, None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.name : String'
-|       s22: Path s19.id : Int'
-|       s23: Path s19.hasPromotion : Boolean'
-|       s24: Path s19.isFirstOwner : Boolean'
-|   where: Apply Function = : Boolean
-|     0: Path s19.name : String'
-|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-
-12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Take into Comprehension:
-| Take : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   from: ...
-|   count: LiteralNode 1 (volatileHint=false) : Long
-
-12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Take into Comprehension:
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t20 : Vector[t20<{s21: String', s22: Int', s23: Boolean', s24: Boolean'}>]
-|     value: StructNode : {s21: String', s22: Int', s23: Boolean', s24: Boolean'}
-|       s21: Path s19.name : String'
-|       s22: Path s19.id : Int'
-|       s23: Path s19.hasPromotion : Boolean'
-|       s24: Path s19.isFirstOwner : Boolean'
-|   where: Apply Function = : Boolean
-|     0: Path s19.name : String'
-|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|   fetch: LiteralNode 1 (volatileHint=false) : Long
-
-12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merging Bind into Comprehension as 'select':
-| Bind : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|   from s7: ...
-|   select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|     value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
-|       s14: Path s7.id : Int'
-|       s15: Path s7.name : String'
-|       s16: Path s7.hasPromotion : Boolean'
-|       s17: Path s7.isFirstOwner : Boolean'
-
-12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Merged Bind into Comprehension as 'select':
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|     value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
-|       s14: Path s19.id : Int'
-|       s15: Path s19.name : String'
-|       s16: Path s19.hasPromotion : Boolean'
-|       s17: Path s19.isFirstOwner : Boolean'
-|   where: Apply Function = : Boolean
-|     0: Path s19.name : String'
-|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|   fetch: LiteralNode 1 (volatileHint=false) : Long
-
-12:02:32.068 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Replacements are: Map((t18,s14) -> s14, (t18,s15) -> s15, (t18,s16) -> s16, (t18,s17) -> s17)
-12:02:32.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.MergeToComprehensions - Mappings are: ConstArray(((t18,s14),List(s14)), ((t18,s15),List(s15)), ((t18,s16),List(s16)), ((t18,s17),List(s17)))
-12:02:32.084 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase mergeToComprehensions:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     select: Pure t18 : Vector[t18<{s14: Int', s15: String', s16: Boolean', s17: Boolean'}>]
-|       value: StructNode : {s14: Int', s15: String', s16: Boolean', s17: Boolean'}
-|         s14: Path s19.id : Int'
-|         s15: Path s19.name : String'
-|         s16: Path s19.hasPromotion : Boolean'
-|         s17: Path s19.isFirstOwner : Boolean'
-|     where: Apply Function = : Boolean
-|       0: Path s19.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     fetch: LiteralNode 1 (volatileHint=false) : Long
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13.s14 : Int'
-|       2: Path s13.s15 : String'
-|       3: Path s13.s16 : Boolean'
-|       4: Path s13.s17 : Boolean'
-
-12:02:32.099 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase optimizeScalar: (no change)
-12:02:32.099 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RemoveFieldNames - Required symbols: s14 -> 0, s15 -> 1, s16 -> 2, s17 -> 3
-12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.RemoveFieldNames - Transformed RSM: 
-| ResultSetMapping
-|   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
-|     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     select: Pure t18 : Vector[t18<(Int', String', Boolean', Boolean')>]
-|       value: ProductNode : (Int', String', Boolean', Boolean')
-|         1: Path s19.id : Int'
-|         2: Path s19.name : String'
-|         3: Path s19.hasPromotion : Boolean'
-|         4: Path s19.isFirstOwner : Boolean'
-|     where: Apply Function = : Boolean
-|       0: Path s19.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     fetch: LiteralNode 1 (volatileHint=false) : Long
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13.s14 : Int'
-|       2: Path s13.s15 : String'
-|       3: Path s13.s16 : Boolean'
-|       4: Path s13.s17 : Boolean'
-
-12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase removeFieldNames:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
-|     from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|     select: Pure t18 : Vector[t18<(Int', String', Boolean', Boolean')>]
-|       value: ProductNode : (Int', String', Boolean', Boolean')
-|         1: Path s19.id : Int'
-|         2: Path s19.name : String'
-|         3: Path s19.hasPromotion : Boolean'
-|         4: Path s19.isFirstOwner : Boolean'
-|     where: Apply Function = : Boolean
-|       0: Path s19.name : String'
-|       1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|     fetch: LiteralNode 1 (volatileHint=false) : Long
-|   map: TypeMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     0: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s13._1 : Int'
-|       2: Path s13._2 : String'
-|       3: Path s13._3 : Boolean'
-|       4: Path s13._4 : Boolean'
-
-12:02:32.131 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
-| Comprehension s19, Some(Apply Function =), None, ConstArray(), None, None, Some(LiteralNode 1 (volatileHint=false)), None, false : Vector[t18<(Int', String', Boolean', Boolean')>]
-|   from s19: Table PIECE_SESSION : Vector[@t6<{id: Int', name: String', hasPromotion: Boolean', isFirstOwner: Boolean'}>]
-|   select: Pure t18 : Vector[t18<(Int', String', Boolean', Boolean')>]
-|     value: ProductNode : (Int', String', Boolean', Boolean')
-|       1: Path s19.id : Int'
-|       2: Path s19.name : String'
-|       3: Path s19.hasPromotion : Boolean'
-|       4: Path s19.isFirstOwner : Boolean'
-|   where: Apply Function = : Boolean
-|     0: Path s19.name : String'
-|     1: LiteralNode TestPiece_scala.util.Random@1e66f1f5 (volatileHint=false) : String'
-|   fetch: LiteralNode 1 (volatileHint=false) : Long
-
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
-| TypeMappingResultConverter
-|   child: ProductResultConverter
-|     1: BaseResultConverter$mcI$sp idx=1, name=<computed> : Int'
-|     2: SpecializedJdbcResultConverter$$anon$1 idx=2, name=<computed> : String'
-|     3: BaseResultConverter$mcZ$sp idx=3, name=<computed> : Boolean'
-|     4: BaseResultConverter$mcZ$sp idx=4, name=<computed> : Boolean'
-
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.CodeGen - Compiled server-side to:
-| CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
-
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
-| ResultSetMapping : Vector[Mapped[(Int', String', Boolean', Boolean')]]
-|   from s13: CompiledStatement "select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1" : Vector[t18<(Int', String', Boolean', Boolean')>]
-|   map: CompiledMapping : Mapped[(Int', String', Boolean', Boolean')]
-|     converter: TypeMappingResultConverter
-|       child: ProductResultConverter
-|         1: BaseResultConverter$mcI$sp idx=1, name=<computed> : Int'
-|         2: SpecializedJdbcResultConverter$$anon$1 idx=2, name=<computed> : String'
-|         3: BaseResultConverter$mcZ$sp idx=3, name=<computed> : Boolean'
-|         4: BaseResultConverter$mcZ$sp idx=4, name=<computed> : Boolean'
-
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:    2,432504 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           unrollTailBinds:    3,625273 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    1,375339 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -              expandTables:   74,518709 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           forceOuterBinds:   15,246923 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         removeMappedTypes:   11,185286 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                expandSums:    2,441834 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         emulateOuterJoins:    3,238361 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             expandRecords:    4,296459 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -        flattenProjections:   45,605787 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -              rewriteJoins:    2,392381 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             verifySymbols:    5,433555 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -             relabelUnions:    3,705206 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          createAggregates:    2,072651 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           resolveZipJoins:    1,378138 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          pruneProjections:   10,317845 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -           rewriteDistinct:    3,149409 ms
-12:02:32.193 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -    createResultSetMapping:   10,599632 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            hoistClientOps:   28,933139 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -         reorderOperations:    4,645115 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -     mergeToComprehensions:  113,243133 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -            optimizeScalar:    3,104311 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -          removeFieldNames:   39,344913 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   52,955238 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:  445,241141 ms
-12:02:32.209 [main-ScalaTest-running-DBQuerySpec] DEBUG slick.basic.BasicBackend.action - #1: StreamingInvokerAction$HeadOptionAction [select `id`, `name`, `hasPromotion`, `isFirstOwner` from `PIECE_SESSION` where `name` = 'TestPiece_scala.util.Random@1e66f1f5' limit 1]
+16:18:00.514 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[192.168.99.100:8081], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=50}
+16:18:00.593 [main] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING}]
+16:18:00.606 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:1}
+16:18:00.609 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server 192.168.99.100:8081
+com.mongodb.MongoSocketReadException: Prematurely reached end of stream
+	at com.mongodb.connection.SocketStream.read(SocketStream.java:88)
+	at com.mongodb.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:494)
+	at com.mongodb.connection.InternalStreamConnection.receiveMessage(InternalStreamConnection.java:224)
+	at com.mongodb.connection.CommandHelper.receiveReply(CommandHelper.java:134)
+	at com.mongodb.connection.CommandHelper.receiveCommandResult(CommandHelper.java:121)
+	at com.mongodb.connection.CommandHelper.executeCommand(CommandHelper.java:32)
+	at com.mongodb.connection.InternalStreamConnectionInitializer.initializeConnectionDescription(InternalStreamConnectionInitializer.java:85)
+	at com.mongodb.connection.InternalStreamConnectionInitializer.initialize(InternalStreamConnectionInitializer.java:45)
+	at com.mongodb.connection.InternalStreamConnection.open(InternalStreamConnection.java:116)
+	at com.mongodb.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:113)
+	at java.lang.Thread.run(Thread.java:748)
+16:18:00.609 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:00.632 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Registering Scala Conversions.
+16:18:00.632 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Deserializers for Scala Conversions registering
+16:18:00.632 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Serializers for Scala Conversions registering
+16:18:00.633 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up OptionSerializer
+16:18:00.638 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaProductSerializer
+16:18:00.639 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaCollectionSerializer
+16:18:00.640 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaRegexSerializers
+16:18:00.640 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Hooking up scala.util.matching.Regex serializer
+16:18:00.641 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Reached base registration method on MongoConversionHelper.
+16:18:00.828 [main] INFO  org.mongodb.driver.cluster - No server chosen by WritableServerSelector from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, serverDescriptions=[ServerDescription{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]}. Waiting for 30000 ms before timing out
+16:18:01.112 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:2}
+16:18:01.112 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:01.614 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:3}
+16:18:01.614 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:02.115 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:4}
+16:18:02.115 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:02.617 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:5}
+16:18:02.618 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:03.119 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:6}
+16:18:03.119 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:03.620 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:7}
+16:18:03.620 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:04.122 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:8}
+16:18:04.122 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:04.624 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:9}
+16:18:04.625 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:05.127 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:10}
+16:18:05.127 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:05.628 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:11}
+16:18:05.628 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:06.129 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:12}
+16:18:06.129 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:06.629 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:13}
+16:18:06.630 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:07.131 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:14}
+16:18:07.132 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:07.634 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:15}
+16:18:07.634 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:08.136 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:16}
+16:18:08.136 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:08.636 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:17}
+16:18:08.637 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:09.138 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:18}
+16:18:09.139 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:09.640 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:19}
+16:18:09.640 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:10.141 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:20}
+16:18:10.142 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:10.644 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:21}
+16:18:10.644 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:11.145 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:22}
+16:18:11.146 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:11.647 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:23}
+16:18:11.648 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:12.148 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:24}
+16:18:12.149 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:12.650 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:25}
+16:18:12.651 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:13.151 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:26}
+16:18:13.152 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:13.652 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:27}
+16:18:13.653 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:14.154 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:28}
+16:18:14.155 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:14.656 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:29}
+16:18:14.657 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:15.159 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:30}
+16:18:15.160 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:15.662 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:31}
+16:18:15.662 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:16.163 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:32}
+16:18:16.164 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:16.664 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:33}
+16:18:16.665 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:17.165 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:34}
+16:18:17.166 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:17.667 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:35}
+16:18:17.668 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:18.169 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:36}
+16:18:18.169 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:18.671 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:37}
+16:18:18.672 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:19.173 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:38}
+16:18:19.174 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:19.675 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:39}
+16:18:19.676 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:20.177 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:40}
+16:18:20.178 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:20.679 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:41}
+16:18:20.680 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:21.182 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:42}
+16:18:21.182 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:21.683 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:43}
+16:18:21.683 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:22.184 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:44}
+16:18:22.184 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:22.685 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:45}
+16:18:22.685 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:23.187 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:46}
+16:18:23.187 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:23.689 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:47}
+16:18:23.689 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:24.190 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:48}
+16:18:24.190 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:24.692 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:49}
+16:18:24.692 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:25.193 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:50}
+16:18:25.194 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:25.695 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:51}
+16:18:25.695 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:26.197 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:52}
+16:18:26.197 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:26.699 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:53}
+16:18:26.700 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:27.201 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:54}
+16:18:27.201 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:27.702 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:55}
+16:18:27.703 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:28.204 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:56}
+16:18:28.205 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:28.706 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:57}
+16:18:28.706 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:29.208 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:58}
+16:18:29.208 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:29.716 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:59}
+16:18:29.716 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:30.217 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:60}
+16:18:30.218 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
+16:18:30.719 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:61}
+16:18:30.720 [cluster-ClusterId{value='5b251c18d6ce7c41c09e1d07', description='null'}-192.168.99.100:8081] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=192.168.99.100:8081, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketReadException: Prematurely reached end of stream}}]
