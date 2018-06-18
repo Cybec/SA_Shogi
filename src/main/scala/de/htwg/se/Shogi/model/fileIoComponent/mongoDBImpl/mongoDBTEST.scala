@@ -2,9 +2,9 @@ package de.htwg.se.Shogi.model.fileIoComponent
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.DBObject
-import com.mongodb.casbah.{MongoClient}
+import com.mongodb.casbah.{ MongoClient }
 import com.mongodb.casbah.commons.MongoDBObject
-import org.mongodb.scala.{MongoCredential, ServerAddress}
+import org.mongodb.scala.{ MongoCredential, ServerAddress }
 
 object mongoDBTEST {
 
