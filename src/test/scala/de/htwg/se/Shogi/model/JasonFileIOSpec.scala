@@ -20,18 +20,24 @@ class JasonFileIOSpec extends WordSpec with Matchers {
   "A JasonFileIO" when {
     val injector: Injector = Guice.createInjector(new ShogiModule)
     val controller: Controller = new Controller()
-    var player_1: Player = Player("Player1", first = true)
-    var player_2: Player = Player("Player2", first = false)
-    var smallBoard: BoardInterface = injector.instance[BoardInterface](Names.named("small")).createNewBoard()
-    var tinyBoard: BoardInterface = injector.instance[BoardInterface](Names.named("tiny")).createNewBoard()
+    val player_1: Player = Player("Player1", first = true)
+    val player_2: Player = Player("Player2", first = false)
+    val smallBoard: BoardInterface = injector.instance[BoardInterface](Names.named("small")).createNewBoard()
+    val tinyBoard: BoardInterface = injector.instance[BoardInterface](Names.named("tiny")).createNewBoard()
 
     val fileIo: FileIOInterface = injector.instance[FileIOInterface]
     "called save and load" should {
       "reload an board(normal) with in the state it was saved" in {
         controller.createNewBoard()
-        fileIo.save(controller.board, true, player_1, player_2)
+        val currentPlayerIsFirst = true
+        fileIo.save(controller.board, currentPlayerIsFirst, player_1, player_2)
         controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
-        val (board: BoardInterface, state: Boolean, p1, p2) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        val (board: BoardInterface, state: Boolean, p1: Player, p2: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        p1.name shouldEqual player_1.name
+        p1.first shouldBe player_1.first
+        p2.name shouldEqual player_2.name
+        p2.first shouldBe player_2.first
+
         controller.replaceBoard(board)
         controller.currentState = if (state) {
           controller.playerOnesTurn
@@ -74,7 +80,12 @@ class JasonFileIOSpec extends WordSpec with Matchers {
         }
         fileIo.save(controller.board, currentState, player_1, player_2)
         controller.movePiece((8, 6), (8, 5)) should be(MoveResult.validMove)
-        val (board2: BoardInterface, state2: Boolean, p12, p22) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        val (board2: BoardInterface, state2: Boolean, p12: Player, p22: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        p12.name shouldEqual player_1.name
+        p12.first shouldBe player_1.first
+        p22.name shouldEqual player_2.name
+        p22.first shouldBe player_2.first
+
         controller.replaceBoard(board2)
         controller.currentState = if (state2) {
           controller.playerOnesTurn
@@ -110,7 +121,8 @@ class JasonFileIOSpec extends WordSpec with Matchers {
       }
 
       "reload an board(small) with in the state it was saved" in {
-        fileIo.save(smallBoard, true, player_1, player_2)
+        val currentPlayerIsFirst = true
+        fileIo.save(smallBoard, currentPlayerIsFirst, player_1, player_2)
         smallBoard.replaceCell(0, 2, PieceFactory.apply(PiecesEnum.King, player_1.first))
         controller.load
         controller.boardToString() should be(
@@ -140,7 +152,8 @@ class JasonFileIOSpec extends WordSpec with Matchers {
       }
 
       "reload an board(tiny) with the state it was saved" in {
-        fileIo.save(tinyBoard, true, player_1, player_2)
+        val currentPlayerIsFirst = true
+        fileIo.save(tinyBoard, currentPlayerIsFirst, player_1, player_2)
         smallBoard.replaceCell(0, 0, PieceFactory.apply(PiecesEnum.King, player_1.first))
         controller.load
         controller.boardToString() should be(
@@ -172,7 +185,8 @@ class JasonFileIOSpec extends WordSpec with Matchers {
       "getBoardBySize will return None if no default board size is given" in {
         val unrealisticBoardSize = 60
         val board: BoardInterface = new Board(unrealisticBoardSize, PieceFactory.apply(PiecesEnum.EmptyPiece, player_1.first))
-        fileIo.save(board, true, player_1, player_2)
+        val currentPlayerIsFirst = true
+        fileIo.save(board, currentPlayerIsFirst, player_1, player_2)
         fileIo.load should be(None)
       }
     }

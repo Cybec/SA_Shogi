@@ -17,8 +17,8 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
-  val playerOnesTurn: RoundState = playerOneRound(this)
-  val playerTwosTurn: RoundState = playerTwoRound(this)
+  val playerOnesTurn: RoundState = PlayerOneRound(this)
+  val playerTwosTurn: RoundState = PlayerTwoRound(this)
   var player_1: Player = Player("Player1", first = true)
   var player_2: Player = Player("Player2", first = false)
 
@@ -53,7 +53,7 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   }
 
   override def save(): Unit = {
-    val state = if (currentState.isInstanceOf[playerOneRound]) true else false
+    val state = if (currentState.isInstanceOf[PlayerOneRound]) true else false
     fileIo.save(board, state, player_1, player_2)
   }
 

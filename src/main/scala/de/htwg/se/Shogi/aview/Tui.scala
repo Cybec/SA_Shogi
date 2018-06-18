@@ -52,7 +52,10 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
   class Quit(val successor: Option[Handler]) extends Handler {
     override def handleEvent(event: Event): Unit = {
       event match {
-        case e if e.command == "q" => printString("Quit")
+        case e if e.command == "q" => {
+          printString("Quit")
+//          System.exit(0)
+        }
         case e =>
           successor match {
             case Some(h: Handler) => h.handleEvent(e)
@@ -253,6 +256,12 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     }
   }
 
+  def promoteQueryForHtml(dest: (Int, Int)): Unit = {
+    if(controller.promotable(dest)) {
+      controller.promotePiece(dest._1, dest._2)
+    }
+  }
+
   def printPossibleMoves(moveList: List[(Int, Int)]): Unit = {
     val moveListString = new StringBuilder
     moveListString.append("Possible moves: ")
@@ -262,6 +271,17 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     printString(moveListString.toString())
   }
 
+  def possibleMovesString(moveList: List[(Int, Int)]): String = {
+    val moveListString = new StringBuilder
+    moveListString.append("Possible moves: ")
+    for ((k, v) <- moveList) moveListString.append("(").append(k).append(", ")
+      .append(yAxis.find(_._2 == v).getOrElse((' ', -1))._1).append(")").append("   ")
+    moveListString.append("\n")
+    moveListString.toString()
+  }
+  def possibleMovesAsHtml(moveList: List[(Int, Int)]): String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + possibleMovesString(moveList).replace("\n", "<br>").replace(" ", "&nbsp") + "</p>"
+
+
   def printInputMenu(): Unit = {
     val menuString = new StringBuilder
     for ((k, v) <- getMenu) menuString.append(k).append(": ").append(v).append("\n").append("------\n")
@@ -269,7 +289,6 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
   }
 
   def printString(stringToPrint: String): Boolean = {
-    //    println(stringToPrint)
     logger.info(stringToPrint)
     true
   }

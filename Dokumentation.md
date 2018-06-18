@@ -98,6 +98,8 @@ Dadurch wird das Verständnis unseres Schichten-Modells vereinfacht (MVC).
 
 Jedwede Benennung von Parametern, Variablen und Funktionen sollten in einer  gut verständlichen  und gut lesbaren Art verfasst werden, welche eine zusätzliche Erklärung des Quellcode durch einen Kommentar überflüssig machen.
 
+# Relevante Fakten und Annahmen
+
 # Der Umfang des Werkes
 
 Dieses Projekt wurde im Zeitraum vom 6. Oktober 2017 bis 26. Januar 2018 in einem 2er Team umgesetzt.
@@ -114,7 +116,7 @@ Das Prudukt beinhaltet ein komplettes Spiel bestehend aus einem Spielbrett und J
 
 ## Projektanforderung
 
-Zum ausführen des Projektes empfehlen wir [IDEA](#https://www.jetbrains.com/idea/) von JetBrains.
+Zum ausführen des Projektes empfehlen wir [IDEA](https://www.jetbrains.com/idea/) von JetBrains.
 Zusätzlich werden folgende Dependencys benötigt:
 	- Scala (min. Version 2.11.8)
 	- Junit (min. Version 4.8)
@@ -131,7 +133,7 @@ Für genauers siehe [Build.sbt](./build.sbt)
 
 Um das Endprodukt ausführen zu können wird lediglich eine JRE oder JDK benötigt (min. Version 8). (Bspw.: [JRE-Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html), [JDK-Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))
 
-# "Look and Feel" Anforderungen
+# Look and Feel Anforderungen
 
 Angelehnt wurde das Produkt an das echte Shogispiel und vermittelt die nötigsten Inhalte.
 
