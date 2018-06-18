@@ -46,7 +46,7 @@ libraryDependencies += "com.typesafe" % "config" % "1.3.1"
 
 libraryDependencies += "org.mongodb" %% "casbah" % "3.1.1"
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.2.0"
-libraryDependencies += "org.mongodb" % "mongo-java-driver" % "3.4.2"
+libraryDependencies += "org.mongodb" % "mongo-java-driver" % "3.6.0"
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-bson" % "2.1.0"
 
 
