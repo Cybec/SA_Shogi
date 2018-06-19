@@ -1,18 +1,18 @@
 package de.htwg.se.Shogi.controller
 
 import com.google.inject.name.Names
-import com.google.inject.{Guice, Injector}
+import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
-import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{Controller, RoundState, PlayerOneRound, PlayerTwoRound}
-import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult, Simulator}
+import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, PlayerOneRound, PlayerTwoRound }
+import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult, Simulator }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import net.codingwell.scalaguice.InjectorExtensions._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 import scala.language.reflectiveCalls
 
@@ -967,7 +967,6 @@ class ControllerSpec extends WordSpec with Matchers {
       }
     }
   }
-
 
   "Controller" when {
     "called boardToHTML" should {

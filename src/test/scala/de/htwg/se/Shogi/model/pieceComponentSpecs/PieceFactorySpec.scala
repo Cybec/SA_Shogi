@@ -1,4 +1,4 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.pieceComponentSpecs
 
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule

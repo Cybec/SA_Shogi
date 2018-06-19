@@ -1,19 +1,19 @@
-package de.htwg.se.Shogi.model.fileIoComponent
+package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.playerComponent.Player
 
-/**
- * A Interface to implement the I/O unit for the game Shogi.
- */
-trait FileIOInterface {
+class SlickDB extends DAOInterface {
 
   /**
    * Loads the saved game
    *
    * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
    */
-  def load: Option[(BoardInterface, Boolean, Player, Player)]
+  override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
+    None
+  }
 
   /**
    * Saving the current game
@@ -23,6 +23,5 @@ trait FileIOInterface {
    * @param player_1 Player_1
    * @param player_2 Player_2
    */
-  def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit
-
+  override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {}
 }
