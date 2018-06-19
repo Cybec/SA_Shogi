@@ -11,24 +11,57 @@ import com.mongodb.{DBCursor, DBObject}
 import com.mongodb.casbah.MongoClient
 import com.mongodb.casbah.commons.Imports.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
-import de.htwg.se.Shogi.ShogiModule
+import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.PlayerProfile
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import org.mongodb.scala.{MongoCredential, ServerAddress}
 import org.mongodb.scala.model.Sorts._
+import play.api.libs.json.{JsValue, Json}
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.Shogi.model.boardComponent.BoardInterface
+import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
+import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
+import de.htwg.se.Shogi.model.playerComponent.Player
+import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
+import net.codingwell.scalaguice.InjectorExtensions._
+import play.api.libs.json._
+
+import scala.io.Source
 
 object Test {
   def main(args: Array[String]): Unit = {
-    val controller: Controller = new Controller()
     val player_1: Player = Player("Player1", first = true)
     val player_2: Player = Player("Player2", first = false)
+    val injector: Injector = Guice.createInjector(new ShogiModule)
+    val board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
+    val controller: Controller = new Controller()
+    controller.replaceBoard(board)
     controller.createNewBoard()
+    println(controller.board.toString)
+    controller.movePiece((0, 0), (0, 1))
+    controller.movePiece((0,6), (0,5))
+    controller.movePiece((0,2), (0,3))
+    controller.movePiece((0,5), (0,4))
+    controller.movePiece((0,3), (0,4))
+
+
     val currentPlayerIsFirst = true
     val db = new MongoDB
     (new MongoDB).save(controller.board, currentPlayerIsFirst, player_1, player_2)
-    val result = db.load
+//    val result = db.load
+//    result match {
+//    case None => println("TEST FAILED")
+//    case Some((board, state, _player1, _player2)) =>
+//    println(board.toString)
   }
+
+
+
+//  }
 }
 
 class MongoDB extends DAOInterface {
@@ -48,45 +81,82 @@ class MongoDB extends DAOInterface {
     * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
     */
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
-    //gets first data in DB
-    val controller: Controller = new Controller()
-    val player_1: Player = Player("Player1", first = true)
-    val player_2: Player = Player("Player2", first = false)
-    var document = db.find().sort(new BasicDBObject("_id", -1)).toArray().get(0).toArray
-    val player1 = document(1)._2
+    var loadReturnOption: Option[(BoardInterface, Boolean, Player, Player)] = None
+    val document = db.find().sort(new BasicDBObject("_id", -1)).toArray().get(0)
+    val json: JsValue = Json.parse(document.toString)
+    print(document.toString)
+    val size = (json \ "board" \ "size").get.toString.toInt
+    val state = (json \ "state").get.toString.toBoolean
 
-//https://stackoverflow.com/questions/13925650/how-can-i-deserialize-from-json-with-scala-using-non-case-classes
-    //println(test)
-    val player2 = document(2)._2
-    val state = document(3)._2
-    val board = document(4)._2
+    val player1Data = (json \ "player_1").get.toString.replace("\"", "").replace("[", "").replace("]", "").split(",")
+    val player2Data = (json \ "player_2").get.toString.replace("\"", "").replace("[", "").replace("]", "").split(",")
+    val player1 = Player(player1Data(0), player1Data(1).toBoolean)
+    val player2 = Player(player2Data(0), player2Data(1).toBoolean)
 
-    print(player2.getClass)
+    val injector: Injector = Guice.createInjector(new ShogiModule)
+    loadReturnOption = getBoardBySize(size, injector) match {
+      case Some(board) =>
+        val firstPlayer = true
+        val secondPlayer = false
+        val newBoard = board.setContainer(
+          getConqueredPieces((json \ "board" \ "container_player_1" \ "conquered_pieces").as[Array[JsValue]], firstPlayer),
+          getConqueredPieces((json \ "board" \ "container_player_2" \ "conquered_pieces").as[Array[JsValue]], secondPlayer)
+        )
+        Some((newBoard, state, player1, player2))
+      case _ => None
+    }
 
-    println(player1.toString)
-    println(player2.toString)
-    println(state.toString)
-    println(board.toString)
-
-    None
+    loadReturnOption match {
+      case Some((board, savedState, player_1, player_2)) =>
+        var _board = board
+        for (
+              column <- 0 until board.size;
+              row <- 0 until board.size
+            ){
+          val piece = "piece_" + (column.toString) + "_" + (row.toString)
+          val pieceName = (json \ "board" \ "board_field" \ "field" \ piece \ "name").as[JsString].value
+          val firstPlayer = (json \ "board" \ "board_field" \ "field" \ piece \ "is_first_owner").get.toString.toBoolean
+          //We dont actually need to save the hasPromotion field
+          //val hasPromotion = (json \ "board" \ "board_field" \ "field" \ piece \ "has_promotion").get.toString.toBoolean
+          PiecesEnum.withNameOpt(pieceName) match {
+            case Some(pieceEnum) =>
+              _board = _board.replaceCell(column, row, PieceFactory.apply(pieceEnum, firstPlayer))
+            case None =>
+          }
+        }
+        loadReturnOption = Some(_board, savedState, player_1, player_2)
+      case None => None
+    }
+    loadReturnOption
   }
 
-  def flatProduct(t: Product): Iterator[Any] = t.productIterator.flatMap {
-    case p: Product => flatProduct(p)
-    case x => Iterator(x)
+  def getBoardBySize(size: Int, injector: Injector): Option[BoardInterface] = {
+    size match {
+      case ShogiModuleConf.defaultBoardSize =>
+        Some(injector.instance[BoardInterface](Names.named(ShogiModuleConf.defaultBoard)).createNewBoard())
+      case ShogiModuleConf.smallBoardSize =>
+        Some(injector.instance[BoardInterface](Names.named(ShogiModuleConf.smallBoard)).createNewBoard())
+      case ShogiModuleConf.tinyBoardSize =>
+        Some(injector.instance[BoardInterface](Names.named(ShogiModuleConf.tinyBoard)).createNewBoard())
+      case _ => None
+    }
   }
 
-  //  def loadPieces: Array[Array[PieceInterface]] = {
-  //    var pieces = Array[Array[PieceInterface]]()
-  //    pieces
-  //
-  //    val find = db.getCollection(COLLECTION).find()
-  //    while (find.hasNext) {
-  //
-  //    }
-  //
-  //    None
-  //  }
+
+  def getConqueredPieces(jsArray: Array[JsValue], istFirst: Boolean): List[PieceInterface] = {
+    var stringList: List[String] = List[String]()
+    var pieceList: List[PieceInterface] = List[PieceInterface]()
+
+    for (x <- jsArray) yield (x \\ "name").foreach(i => stringList = stringList :+ i.as[String])
+
+    for (x: String <- stringList) {
+      PiecesEnum.withNameOpt(x) match {
+        case Some(pieceEnum) => pieceList = pieceList :+ PieceFactory.apply(pieceEnum, istFirst)
+        case None =>
+      }
+    }
+    pieceList
+  }
 
   /**
     * Saving the current game
