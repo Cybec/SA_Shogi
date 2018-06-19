@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.22
+    container_name: shogi-db
+    environment:
+      - MYSQL_DATABASE=shogi-db
+      - MYSQL_ROOT_PASSWORD=1234hot5
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234hot5
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  mongo:
+    image: mongo
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234hot5
