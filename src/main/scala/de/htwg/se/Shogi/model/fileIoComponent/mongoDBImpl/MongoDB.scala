@@ -45,17 +45,19 @@ class MongoDB extends DAOInterface {
    * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
    */
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
-    def loadPieces: Array[Array[PieceInterface]]= {
-      var pieces = Array[Array[PieceInterface]]()
-      pieces
-
-      val find = db.getCollection(COLLECTION).find()
-      while (find.hasNext) {
-
-      }
-
     None
   }
+//  def loadPieces: Array[Array[PieceInterface]] = {
+//    var pieces = Array[Array[PieceInterface]]()
+//    pieces
+//
+//    val find = db.getCollection(COLLECTION).find()
+//    while (find.hasNext) {
+//
+//    }
+//
+//    None
+//  }
 
   /**
    * Saving the current game
