@@ -52,16 +52,16 @@ object Test {
     val currentPlayerIsFirst = true
     val db = new MongoDB
     (new MongoDB).save(controller.board, currentPlayerIsFirst, player_1, player_2)
-//    val result = db.load
-//    result match {
-//    case None => println("TEST FAILED")
-//    case Some((board, state, _player1, _player2)) =>
-//    println(board.toString)
+    val result = db.load
+    result match {
+    case None => println("TEST FAILED")
+    case Some((board, state, _player1, _player2)) =>
+    println(board.toString)
   }
 
 
 
-//  }
+  }
 }
 
 class MongoDB extends DAOInterface {
@@ -84,7 +84,7 @@ class MongoDB extends DAOInterface {
     var loadReturnOption: Option[(BoardInterface, Boolean, Player, Player)] = None
     val document = db.find().sort(new BasicDBObject("_id", -1)).toArray().get(0)
     val json: JsValue = Json.parse(document.toString)
-    print(document.toString)
+    println("TEST: " + document.toString)
     val size = (json \ "board" \ "size").get.toString.toInt
     val state = (json \ "state").get.toString.toBoolean
 
@@ -94,13 +94,15 @@ class MongoDB extends DAOInterface {
     val player2 = Player(player2Data(0), player2Data(1).toBoolean)
 
     val injector: Injector = Guice.createInjector(new ShogiModule)
+
     loadReturnOption = getBoardBySize(size, injector) match {
       case Some(board) =>
+        println("BOARD SIZE!!!: " + board.size.toString)
         val firstPlayer = true
         val secondPlayer = false
         val newBoard = board.setContainer(
-          getConqueredPieces((json \ "board" \ "container_player_1" \ "conquered_pieces").as[Array[JsValue]], firstPlayer),
-          getConqueredPieces((json \ "board" \ "container_player_2" \ "conquered_pieces").as[Array[JsValue]], secondPlayer)
+          getConqueredPieces((json \\ "conquered_pieces1").toArray, firstPlayer),
+          getConqueredPieces((json \\"conquered_pieces2").toArray, secondPlayer)
         )
         Some((newBoard, state, player1, player2))
       case _ => None
@@ -186,10 +188,16 @@ class MongoDB extends DAOInterface {
       piece.result()
     }
 
+    def containerBuilderpieces(pieces: Array[PieceInterface]): MongoDBObject = {
+      val containerPieces = MongoDBObject.newBuilder
+      pieces.foreach(x => containerPieces += "piece" -> pieceBuilder((x)))
+      containerPieces.result()
+    }
+
     val container_player_1_Builder = MongoDBObject.newBuilder
-    container_player_1_Builder += "conquered_pieces" -> board.getContainer._1.toArray
+    container_player_1_Builder += "conquered_pieces1" -> containerBuilderpieces(board.getContainer._1.toArray)
     val container_player_2_Builder = MongoDBObject.newBuilder
-    container_player_2_Builder += "conquered_pieces" -> board.getContainer._2.toArray
+    container_player_2_Builder += "conquered_pieces2" -> containerBuilderpieces(board.getContainer._2.toArray)
     val board_field = MongoDBObject.newBuilder
     board_field += "field" -> pieceArrayBuilder(board.toArray)
 

@@ -1,38 +1,28 @@
-16:00:27.188 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[0.0.0.0:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-16:00:27.271 [main] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=0.0.0.0:27017, type=UNKNOWN, state=CONNECTING}]
-16:00:27.387 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Registering Scala Conversions.
-16:00:27.389 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Deserializers for Scala Conversions registering
-16:00:27.390 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Serializers for Scala Conversions registering
-16:00:27.392 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up OptionSerializer
-16:00:27.399 [cluster-ClusterId{value='5b290c7bd02d6823706507bf', description='null'}-0.0.0.0:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:210}] to 0.0.0.0:27017
-16:00:27.399 [cluster-ClusterId{value='5b290c7bd02d6823706507bf', description='null'}-0.0.0.0:27017] DEBUG org.mongodb.driver.cluster - Checking status of 0.0.0.0:27017
-16:00:27.409 [cluster-ClusterId{value='5b290c7bd02d6823706507bf', description='null'}-0.0.0.0:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=0.0.0.0:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 6, 5]}, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=6814489}
-16:00:27.413 [cluster-ClusterId{value='5b290c7bd02d6823706507bf', description='null'}-0.0.0.0:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=0.0.0.0:27017, type=STANDALONE, roundTripTime=6.8 ms, state=CONNECTED}]
-16:00:27.423 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaProductSerializer
-16:00:27.425 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaCollectionSerializer
-16:00:27.426 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaRegexSerializers
-16:00:27.427 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Hooking up scala.util.matching.Regex serializer
-16:00:27.431 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Reached base registration method on MongoConversionHelper.
-16:00:28.137 [main-ScalaTest-running-MongoDBSpec] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:211}] to 0.0.0.0:27017
-16:00:28.162 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:28.171 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:28.287 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:28.441 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:28.450 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {getMore : BsonInt64{value=11170867784}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:28.476 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.288 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.292 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.293 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.430 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.431 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {getMore : BsonInt64{value=9569803350}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.440 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.520 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.528 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.542 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.547 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.568 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.621 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.623 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.717 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
-16:00:29.718 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {getMore : BsonInt64{value=11516698813}} to database GameSession on connection [connectionId{localValue:2, serverValue:211}] to server 0.0.0.0:27017
-16:00:29.773 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:46.548 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[0.0.0.0:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+17:16:46.629 [main] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=UNKNOWN, servers=[{address=0.0.0.0:27017, type=UNKNOWN, state=CONNECTING}]
+17:16:46.744 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Registering Scala Conversions.
+17:16:46.746 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Deserializers for Scala Conversions registering
+17:16:46.748 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Serializers for Scala Conversions registering
+17:16:46.750 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up OptionSerializer
+17:16:46.765 [cluster-ClusterId{value='5b291e5ed02d682380b7205f', description='null'}-0.0.0.0:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:280}] to 0.0.0.0:27017
+17:16:46.766 [cluster-ClusterId{value='5b291e5ed02d682380b7205f', description='null'}-0.0.0.0:27017] DEBUG org.mongodb.driver.cluster - Checking status of 0.0.0.0:27017
+17:16:46.780 [cluster-ClusterId{value='5b291e5ed02d682380b7205f', description='null'}-0.0.0.0:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=0.0.0.0:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 6, 5]}, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=11193366}
+17:16:46.783 [cluster-ClusterId{value='5b291e5ed02d682380b7205f', description='null'}-0.0.0.0:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=0.0.0.0:27017, type=STANDALONE, roundTripTime=11.2 ms, state=CONNECTED}]
+17:16:46.785 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaProductSerializer
+17:16:46.787 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaCollectionSerializer
+17:16:46.789 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Setting up ScalaRegexSerializers
+17:16:46.790 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Hooking up scala.util.matching.Regex serializer
+17:16:46.792 [main] DEBUG c.m.c.c.c.s.RegisterConversionHelpers$ - Reached base registration method on MongoConversionHelper.
+17:16:47.304 [main-ScalaTest-running-MongoDBSpec] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:281}] to 0.0.0.0:27017
+17:16:47.327 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:47.339 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:47.412 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:47.538 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:48.336 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:48.340 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:48.342 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:48.382 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:48.434 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {insert : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:48.472 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed
+17:16:48.474 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Sending command {find : BsonString{value='GameSave'}} to database GameSession on connection [connectionId{localValue:2, serverValue:281}] to server 0.0.0.0:27017
+17:16:48.559 [main-ScalaTest-running-MongoDBSpec] DEBUG org.mongodb.driver.protocol.command - Command execution completed

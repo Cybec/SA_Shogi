@@ -32,7 +32,7 @@ class MongoDBSpec extends WordSpec with Matchers {
         controller.createNewBoard()
         val currentPlayerIsFirst = true
         fileIo.save(controller.board, currentPlayerIsFirst, player_1, player_2)
-        controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
+        controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove) // stimmt
         val (board: BoardInterface, state: Boolean, p1: Player, p2: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
         p1.name shouldEqual player_1.name
         p1.first shouldBe player_1.first
@@ -120,69 +120,6 @@ class MongoDBSpec extends WordSpec with Matchers {
         )
 
       }
-
-      "reload an board(small) with in the state it was saved" in {
-        val currentPlayerIsFirst = true
-        fileIo.save(smallBoard, currentPlayerIsFirst, player_1, player_2)
-        smallBoard.replaceCell(0, 2, PieceFactory.apply(PiecesEnum.King, player_1.first))
-        controller.load
-        controller.boardToString() should be(
-          "Captured: \n" +
-            "    0     1     2     3     4     5     6     7     8 \n \n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \ta\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \tb\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \tc\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \td\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \te\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     | \tf\n" +
-            "---------------------------------------------------------\n " +
-            "| \tg\n" +
-            "---------------------------------------------------------\n " +
-            "| \th\n" +
-            "---------------------------------------------------------\n " +
-            "| \ti\n" +
-            "---------------------------------------------------------\n" +
-            "Captured: \n"
-        )
-      }
-
-      "reload an board(tiny) with the state it was saved" in {
-        val currentPlayerIsFirst = true
-        fileIo.save(tinyBoard, currentPlayerIsFirst, player_1, player_2)
-        smallBoard.replaceCell(0, 0, PieceFactory.apply(PiecesEnum.King, player_1.first))
-        controller.load
-        controller.boardToString() should be(
-          "Captured: \n" +
-            "    0     1     2     3     4     5     6     7     8 \n \n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     | \ta\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     | \tb\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     | \tc\n" +
-            "---------------------------------------------------------\n " +
-            "| \td\n" +
-            "---------------------------------------------------------\n " +
-            "| \te\n" +
-            "---------------------------------------------------------\n " +
-            "| \tf\n" +
-            "---------------------------------------------------------\n " +
-            "| \tg\n" +
-            "---------------------------------------------------------\n " +
-            "| \th\n" +
-            "---------------------------------------------------------\n " +
-            "| \ti\n" +
-            "---------------------------------------------------------\n" +
-            "Captured: \n"
-        )
-      }
-
       "getBoardBySize will return None if no default board size is given" in {
         val unrealisticBoardSize = 60
         val board: BoardInterface = new Board(unrealisticBoardSize, PieceFactory.apply(PiecesEnum.EmptyPiece, player_1.first))
