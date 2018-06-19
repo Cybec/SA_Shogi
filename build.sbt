@@ -35,6 +35,11 @@ libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.11"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % "10.1.1"
 
+libraryDependencies += "org.jsoup" % "jsoup" % "1.9.1"
+
+
+
+
 parallelExecution in Test := false
 
 
