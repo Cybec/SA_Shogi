@@ -54,7 +54,7 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
       event match {
         case e if e.command == "q" => {
           printString("Quit")
-//          System.exit(0)
+          //          System.exit(0)
         }
         case e =>
           successor match {
@@ -257,7 +257,7 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
   }
 
   def promoteQueryForHtml(dest: (Int, Int)): Unit = {
-    if(controller.promotable(dest)) {
+    if (controller.promotable(dest)) {
       controller.promotePiece(dest._1, dest._2)
     }
   }
@@ -280,7 +280,6 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     moveListString.toString()
   }
   def possibleMovesAsHtml(moveList: List[(Int, Int)]): String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + possibleMovesString(moveList).replace("\n", "<br>").replace(" ", "&nbsp") + "</p>"
-
 
   def printInputMenu(): Unit = {
     val menuString = new StringBuilder

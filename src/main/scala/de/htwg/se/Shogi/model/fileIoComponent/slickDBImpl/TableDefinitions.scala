@@ -3,19 +3,23 @@ package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 import slick.lifted.{ ForeignKeyQuery, ProvenShape, Rep, Tag }
 import slick.jdbc.MySQLProfile.api._
 
-case class GameSessionProfile(id: Int, firstPlayerID: Int, secondPlayerID: Int, state: Boolean, boardID: Int)
+/*
+*   Profiles
+* */
+case class GameSessionProfile(id: Int, firstPlayerID: Int, secondPlayerID: Int, state: Boolean, firstPlayerContainerID: Int, secondPlayerContainerID: Int)
 
 case class PlayerProfile(id: Int, name: String, first: Boolean)
 
-case class BoardProfile(id: Int, size: Int, firstPlayerContainerID: Int, secondPlayerContainerID: Int)
+case class PlayerContainerProfile(id: Int)
 
-case class PlayerFirstContainerProfile(id: Int, pieceID: Int)
+case class PieceOnBoardProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean, playerID: Int)
 
-case class PlayerSecondContainerProfile(id: Int, pieceID: Int)
+case class PieceContainerProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean, containerID: Int)
 
-case class PieceProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean)
-
-class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_SESSION") {
+/*
+*   Sessions
+* */
+class PieceOnBoardSession(tag: Tag) extends Table[PieceOnBoardProfile](tag, "PIECE_ON_BOARD_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def name: Rep[String] = column[String]("name")
@@ -24,48 +28,36 @@ class PieceSession(tag: Tag) extends Table[PieceProfile](tag, "PIECE_SESSION") {
 
   def isFirstOwner: Rep[Boolean] = column[Boolean]("isFirstOwner")
 
-  def * : ProvenShape[PieceProfile] = (id, name, hasPromotion, isFirstOwner) <> (PieceProfile.tupled, PieceProfile.unapply) // scalastyle:ignore
-}
+  def playerID: Rep[Int] = column[Int]("playerID")
 
-class PlayerFirstContainerSession(tag: Tag) extends Table[PlayerFirstContainerProfile](tag, "PLAYERFIRSTCONTAINER_SESSION") {
-  def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def * : ProvenShape[PieceOnBoardProfile] = (id, name, hasPromotion, isFirstOwner, playerID) <> (PieceOnBoardProfile.tupled, PieceOnBoardProfile.unapply) // scalastyle:ignore
 
-  def pieceID: Rep[Int] = column[Int]("pieceID")
-
-  def * : ProvenShape[PlayerFirstContainerProfile] = (id, pieceID) <> (PlayerFirstContainerProfile.tupled, PlayerFirstContainerProfile.unapply) // scalastyle:ignore
-
-  def piece: ForeignKeyQuery[PieceSession, PieceProfile] = foreignKey("piece_fk", pieceID, TableQuery[PieceSession])(_.id)
+  def player: ForeignKeyQuery[PlayerSession, PlayerProfile] = foreignKey("player_fk", playerID, TableQuery[PlayerSession])(_.id)
 
 }
 
-class PlayerSecondContainerSession(tag: Tag) extends Table[PlayerSecondContainerProfile](tag, "PLAYERSECOONDCONTAINER_SESSION") {
+class PieceContainerSession(tag: Tag) extends Table[PieceContainerProfile](tag, "PIECE_CONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-  def pieceID: Rep[Int] = column[Int]("pieceID")
+  def name: Rep[String] = column[String]("name")
 
-  def * : ProvenShape[PlayerSecondContainerProfile] = (id, pieceID) <> (PlayerSecondContainerProfile.tupled, PlayerSecondContainerProfile.unapply) // scalastyle:ignore
+  def hasPromotion: Rep[Boolean] = column[Boolean]("hasPromotion")
 
-  def piece: ForeignKeyQuery[PieceSession, PieceProfile] = foreignKey("piece_fk", pieceID, TableQuery[PieceSession])(_.id)
+  def isFirstOwner: Rep[Boolean] = column[Boolean]("isFirstOwner")
+
+  def containerID: Rep[Int] = column[Int]("containerID")
+
+  def * : ProvenShape[PieceContainerProfile] = (id, name, hasPromotion, isFirstOwner, containerID) <> (PieceContainerProfile.tupled, PieceContainerProfile.unapply) // scalastyle:ignore
+
+  def container: ForeignKeyQuery[PlayerContainerSession, PlayerContainerProfile] = foreignKey("player_fk", containerID, TableQuery[PlayerContainerSession])(_.id) // scalastyle:ignore
 
 }
 
-class BoardSession(tag: Tag) extends Table[BoardProfile](tag, "BOARD_SESSION") {
+class PlayerContainerSession(tag: Tag) extends Table[PlayerContainerProfile](tag, "PLAYER_CONTAINER_SESSION") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-  def firstPlayerContainerID: Rep[Int] = column[Int]("firstPlayerContainerID")
+  def * : ProvenShape[PlayerContainerProfile] = (id) <> (PlayerContainerProfile, PlayerContainerProfile.unapply) // scalastyle:ignore
 
-  def secondPlayerContainerID: Rep[Int] = column[Int]("secondPlayerContainerID")
-
-  def size: Rep[Int] = column[Int]("size")
-
-  def * : ProvenShape[BoardProfile] = (id, firstPlayerContainerID, secondPlayerContainerID, size) <> (BoardProfile.tupled, BoardProfile.unapply) // scalastyle:ignore
-  def firstPlayerContainer: ForeignKeyQuery[PlayerFirstContainerSession, PlayerFirstContainerProfile] = {
-    foreignKey("firstPlayerContainer_fk", firstPlayerContainerID, TableQuery[PlayerFirstContainerSession])(_.id)
-  }
-
-  def secondPlayerContainer: ForeignKeyQuery[PlayerSecondContainerSession, PlayerSecondContainerProfile] = {
-    foreignKey("secondPlayerContainer_fk", secondPlayerContainerID, TableQuery[PlayerSecondContainerSession])(_.id)
-  }
 }
 
 class PlayerSession(tag: Tag) extends Table[PlayerProfile](tag, "PLAYER_SESSION") {
@@ -86,16 +78,24 @@ class GameSession(tag: Tag) extends Table[GameSessionProfile](tag, "GAME_SESSION
 
   def secondPlayerID: Rep[Int] = column[Int]("secondPlayerID")
 
-  def boardID: Rep[Int] = column[Int]("boardID")
+  def firstPlayerContainerID: Rep[Int] = column[Int]("firstPlayerContainerID")
+
+  def secondPlayerContainerID: Rep[Int] = column[Int]("secondPlayerContainerID")
 
   def state: Rep[Boolean] = column[Boolean]("state")
 
-  def * : ProvenShape[GameSessionProfile] = (id, firstPlayerID, secondPlayerID, state, boardID) <> (GameSessionProfile.tupled, GameSessionProfile.unapply) // scalastyle:ignore
+  def * : ProvenShape[GameSessionProfile] = (id, firstPlayerID, secondPlayerID, state, firstPlayerContainerID, secondPlayerContainerID) <> (GameSessionProfile.tupled, GameSessionProfile.unapply) // scalastyle:ignore
 
   def firstPlayer: ForeignKeyQuery[PlayerSession, PlayerProfile] = foreignKey("firstPlayer_fk", firstPlayerID, TableQuery[PlayerSession])(_.id)
 
   def secondPlayer: ForeignKeyQuery[PlayerSession, PlayerProfile] = foreignKey("secondPlayer_fk", secondPlayerID, TableQuery[PlayerSession])(_.id)
 
-  def board: ForeignKeyQuery[BoardSession, BoardProfile] = foreignKey("board_fk", boardID, TableQuery[BoardSession])(_.id)
+  def firstPlayerContainer: ForeignKeyQuery[PlayerContainerSession, PlayerContainerProfile] = {
+    foreignKey("firstPlayerContainer_fk", firstPlayerContainerID, TableQuery[PlayerContainerSession])(_.id)
+  }
+
+  def secondPlayerContainer: ForeignKeyQuery[PlayerContainerSession, PlayerContainerProfile] = {
+    foreignKey("secondPlayerContainer_fk", secondPlayerContainerID, TableQuery[PlayerContainerSession])(_.id)
+  }
 }
 

@@ -4,6 +4,19 @@ import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.playerComponent.Player
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+object Test {
+  def main(args: Array[String]): Unit = {
+    val dBQuery = new DBQuery
+    val playerProfile = PlayerProfile(1, "TestPlayer_3248079", true)
+
+    val insertResult = dBQuery.insert(playerProfile)
+    print("Result: " + insertResult)
+  }
+}
+
 class SlickDB extends DAOInterface {
 
   /**
@@ -12,6 +25,7 @@ class SlickDB extends DAOInterface {
    * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
    */
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
+
     None
   }
 
@@ -23,5 +37,7 @@ class SlickDB extends DAOInterface {
    * @param player_1 Player_1
    * @param player_2 Player_2
    */
-  override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {}
+  override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {
+
+  }
 }
