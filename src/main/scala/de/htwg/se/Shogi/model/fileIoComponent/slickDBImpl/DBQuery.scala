@@ -27,11 +27,6 @@ class DBQuery {
   def insert(player: PlayerProfile): Future[Int] = db.run(playerSessionQuery += player)
 
   def insert(game: GameSessionProfile): Future[Int] = {
-    game.
-
-
-
-
     db.run(gameSessionQuery += game)
   }
 
