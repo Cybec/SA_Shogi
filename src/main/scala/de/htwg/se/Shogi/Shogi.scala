@@ -14,7 +14,7 @@ object Shogi extends Publisher {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   val webServer = new HttpServer(controller, tui)
-  //val gui = new SwingGui(controller)
+  val gui = new SwingGui(controller)
   //listenTo(gui)
   controller.publish(new UpdateAll)
 

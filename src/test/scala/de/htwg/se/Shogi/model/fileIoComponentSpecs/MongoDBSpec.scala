@@ -1,8 +1,6 @@
 package de.htwg.se.Shogi.model.fileIoComponentSpecs
 
 import de.htwg.se.Shogi.model.fileIoComponent.mongoDBImpl
-import net.codingwell.scalaguice.InjectorExtensions._
-import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent.MoveResult
@@ -23,8 +21,6 @@ class MongoDBSpec extends WordSpec with Matchers {
     val controller: Controller = new Controller()
     val player_1: Player = Player("Player1", first = true)
     val player_2: Player = Player("Player2", first = false)
-    val smallBoard: BoardInterface = injector.instance[BoardInterface](Names.named("small")).createNewBoard()
-    val tinyBoard: BoardInterface = injector.instance[BoardInterface](Names.named("tiny")).createNewBoard()
 
     val fileIo: DAOInterface = new mongoDBImpl.MongoDB
     "called save and load" should {

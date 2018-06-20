@@ -1,27 +1,14 @@
 package de.htwg.se.Shogi.model.fileIoComponent.mongoDBImpl
 
-import akka.http.scaladsl.server.PathMatcher._stringExtractionPair2PathMatcher
-import com.google.inject.name.Names
-import com.google.inject.{Guice, Injector}
-import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
-import de.htwg.se.Shogi.model.playerComponent.Player
 import com.mongodb.casbah.Imports._
-import com.mongodb.{DBCursor, DBObject}
 import com.mongodb.casbah.MongoClient
-import com.mongodb.casbah.commons.Imports.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
-import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl.PlayerProfile
-import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import org.mongodb.scala.{MongoCredential, ServerAddress}
-import org.mongodb.scala.model.Sorts._
 import play.api.libs.json.{JsValue, Json}
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
@@ -29,8 +16,6 @@ import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
-
-import scala.io.Source
 
 object Test {
   def main(args: Array[String]): Unit = {
