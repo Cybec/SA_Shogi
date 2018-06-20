@@ -26,8 +26,9 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker ps
-  - docker images
+  - netstat -a -f
   - cd docker
   - docker-compose -f ShogiDB.yml up -d
   - cd ..
+  - docker ps
+  - docker images
