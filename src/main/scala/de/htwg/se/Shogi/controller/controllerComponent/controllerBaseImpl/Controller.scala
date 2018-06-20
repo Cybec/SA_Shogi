@@ -1,14 +1,15 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
-import akka.actor.{ ActorSystem, Props }
+import akka.actor.{ActorSystem, Props}
 import com.google.inject.name.Names
-import com.google.inject.{ Guice, Inject, Injector }
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
+import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
@@ -199,8 +200,5 @@ class Controller @Inject() extends RoundState with ControllerInterface {
     actor ! Simulator.Simulate(this)
   }
 
-  override def receive: Receive = {
-    case Simulator.Done => //TODO: ASK MARKO HOW TO IMPLEMENT THIS
-    case Simulator.Failed =>
-  }
+  override def boardToHtml: String = board.toHtml
 }
