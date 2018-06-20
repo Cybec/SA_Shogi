@@ -11,7 +11,7 @@ services:
     volumes:
       - ./data:/docker-entrypoint-initdb.d
     ports:
-      - "3306:3306"
+      - "3333:3333"
 
   mongo:
     image: mongo
