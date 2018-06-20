@@ -17,38 +17,6 @@ import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
 
-object Test {
-  def main(args: Array[String]): Unit = {
-    val player_1: Player = Player("Player1", first = true)
-    val player_2: Player = Player("Player2", first = false)
-    val injector: Injector = Guice.createInjector(new ShogiModule)
-    val board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
-    val controller: Controller = new Controller()
-    controller.replaceBoard(board)
-    controller.createNewBoard()
-    println(controller.board.toString)
-    controller.movePiece((0, 0), (0, 1))
-    controller.movePiece((0,6), (0,5))
-    controller.movePiece((0,2), (0,3))
-    controller.movePiece((0,5), (0,4))
-    controller.movePiece((0,3), (0,4))
-
-
-    val currentPlayerIsFirst = true
-    val db = new MongoDB
-    (new MongoDB).save(controller.board, currentPlayerIsFirst, player_1, player_2)
-    val result = db.load
-    result match {
-    case None => println("TEST FAILED")
-    case Some((board, state, _player1, _player2)) =>
-    println(board.toString)
-  }
-
-
-
-  }
-}
-
 class MongoDB extends DAOInterface {
   val SERVER = "0.0.0.0"
   val PORT = 27017
@@ -87,7 +55,7 @@ class MongoDB extends DAOInterface {
         val secondPlayer = false
         val newBoard = board.setContainer(
           getConqueredPieces((json \\ "conquered_pieces1").toArray, firstPlayer),
-          getConqueredPieces((json \\"conquered_pieces2").toArray, secondPlayer)
+          getConqueredPieces((json \\ "conquered_pieces2").toArray, secondPlayer)
         )
         Some((newBoard, state, player1, player2))
       case _ => None
@@ -97,9 +65,9 @@ class MongoDB extends DAOInterface {
       case Some((board, savedState, player_1, player_2)) =>
         var _board = board
         for (
-              column <- 0 until board.size;
-              row <- 0 until board.size
-            ){
+          column <- 0 until board.size;
+          row <- 0 until board.size
+        ) {
           val piece = "piece_" + (column.toString) + "_" + (row.toString)
           val pieceName = (json \ "board" \ "board_field" \ "field" \ piece \ "name").as[JsString].value
           val firstPlayer = (json \ "board" \ "board_field" \ "field" \ piece \ "is_first_owner").get.toString.toBoolean
