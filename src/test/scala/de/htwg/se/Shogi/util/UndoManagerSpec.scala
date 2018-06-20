@@ -1,12 +1,12 @@
 package de.htwg.se.Shogi.util
 
-import com.google.inject.{Guice, Injector}
+import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.SolveCommand
-import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
+import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 @RunWith(classOf[JUnitRunner])
 class UndoManagerSpec extends WordSpec with Matchers {
@@ -45,7 +45,7 @@ class UndoManagerSpec extends WordSpec with Matchers {
             "---------------------------------------------------------\n" +
             "Captured: \n"
         )
-          controller.undoCommand
+        controller.undoCommand
         controller.boardToString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +

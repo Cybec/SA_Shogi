@@ -25,6 +25,7 @@ class ShogiModule extends AbstractModule with ScalaModule {
 
     bind[BoardInterface].to[boardBaseImpl.BoardInj]
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
+
     bind[DAOInterface].to[slickDBImpl.SlickDB]
     //    bind[DAOInterface].to[fileIoJsonImpl.FileIO]
     //    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
