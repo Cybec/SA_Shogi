@@ -1,16 +1,7 @@
 language: scala
+
 scala:
   - 2.11.8
-
-ignore:
-  - src/test/scala/de/htwg/se/Shogi/aview/HttpServerSepc.scala
-
-script:
-  - sbt clean coverage test coverageReport
-
-after_success:
-  - sbt coverageReport coveralls
-
 
 env:
   - DOCKER_COMPOSE_VERSION=1.20.1
@@ -26,3 +17,12 @@ script:
   - docker-compose -f docker/ShogiDB.yml up -d
   - docker ps
   - docker images
+
+ignore:
+  - src/test/scala/de/htwg/se/Shogi/aview/HttpServerSepc.scala
+
+script:
+  - sbt clean coverage test coverageReport coverageAggregate
+
+after_success:
+  - sbt coverageReport coveralls
