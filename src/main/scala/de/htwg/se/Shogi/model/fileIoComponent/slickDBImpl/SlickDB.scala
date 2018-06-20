@@ -5,7 +5,6 @@ import com.google.inject.Guice
 import com.google.inject.name.Names
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
 import net.codingwell.scalaguice.InjectorExtensions._
