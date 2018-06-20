@@ -29,8 +29,10 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
 
       controller.saveState()
 
-      val result: Option[MoveResult.Value] = for (tempPieceDestination <- controller.board.cell(destination._1, destination._2);
-                                                  tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)) yield {
+      val result: Option[MoveResult.Value] = for (
+        tempPieceDestination <- controller.board.cell(destination._1, destination._2);
+        tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)
+      ) yield {
         val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
 
         controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
@@ -45,8 +47,9 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
   }
 
   override def getPossibleMoves(pos: (Int, Int)): List[(Int, Int)] = {
-    (for (piece <- controller.board.cell(pos._1, pos._2)
-          if piece.isFirstOwner) yield {
+    (for (
+      piece <- controller.board.cell(pos._1, pos._2) if piece.isFirstOwner
+    ) yield {
       piece.getMoveSet((pos._1, pos._2), controller.board)
     }).getOrElse(List[(Int, Int)]())
   }
@@ -56,8 +59,9 @@ case class PlayerOneRound(controller: Controller) extends RoundState {
       _.typeEquals(pieceAbbreviation)
     }
 
-    (for ((newBoard, piece) <- getFromPlayerContainer
-          if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) yield {
+    (for (
+      (newBoard, piece) <- getFromPlayerContainer if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)
+    ) yield {
       controller.saveState()
       controller.board = newBoard
       controller.board = controller.board.replaceCell(destination._1, destination._2, piece)
@@ -115,8 +119,10 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
 
       controller.saveState()
 
-      val result: Option[MoveResult.Value] = for (tempPieceDestination <- controller.board.cell(destination._1, destination._2);
-                                                  tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)) yield {
+      val result: Option[MoveResult.Value] = for (
+        tempPieceDestination <- controller.board.cell(destination._1, destination._2);
+        tempPieceCurrent <- controller.board.cell(currentPos._1, currentPos._2)
+      ) yield {
         val emptyPiece = PieceFactory.apply(PiecesEnum.EmptyPiece, controller.player_1.first)
 
         controller.board = controller.board.replaceCell(destination._1, destination._2, tempPieceCurrent)
@@ -131,8 +137,9 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
   }
 
   override def getPossibleMoves(pos: (Int, Int)): List[(Int, Int)] = {
-    (for (piece <- controller.board.cell(pos._1, pos._2)
-          if !piece.isFirstOwner) yield {
+    (for (
+      piece <- controller.board.cell(pos._1, pos._2) if !piece.isFirstOwner
+    ) yield {
       piece.getMoveSet((pos._1, pos._2), controller.board)
     }).getOrElse(List())
   }
@@ -142,8 +149,9 @@ case class PlayerTwoRound(controller: Controller) extends RoundState {
       _.typeEquals(pieceAbbreviation)
     }
 
-    (for ((newBoard, piece) <- getFromPlayerContainer
-          if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)) yield {
+    (for (
+      (newBoard, piece) <- getFromPlayerContainer if getPossibleMovesConqueredPiece(pieceAbbreviation).contains(destination)
+    ) yield {
       controller.saveState()
       controller.board = newBoard
       controller.board = controller.board.replaceCell(destination._1, destination._2, piece)

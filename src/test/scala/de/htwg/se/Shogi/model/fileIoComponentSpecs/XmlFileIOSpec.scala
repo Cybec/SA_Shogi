@@ -1,4 +1,4 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.fileIoComponentSpecs
 
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
@@ -7,7 +7,8 @@ import de.htwg.se.Shogi.controller.controllerComponent.MoveResult
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.fileIoXmlImpl
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
 import net.codingwell.scalaguice.InjectorExtensions._
@@ -16,8 +17,8 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.{ Matchers, WordSpec }
 
 @RunWith(classOf[JUnitRunner])
-class JasonFileIOSpec extends WordSpec with Matchers {
-  "A JasonFileIO" when {
+class XmlFileIOSpec extends WordSpec with Matchers {
+  "A XmlFileIO" when {
     val injector: Injector = Guice.createInjector(new ShogiModule)
     val controller: Controller = new Controller()
     val player_1: Player = Player("Player1", first = true)
@@ -25,25 +26,16 @@ class JasonFileIOSpec extends WordSpec with Matchers {
     val smallBoard: BoardInterface = injector.instance[BoardInterface](Names.named("small")).createNewBoard()
     val tinyBoard: BoardInterface = injector.instance[BoardInterface](Names.named("tiny")).createNewBoard()
 
-    val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+    val fileIo: DAOInterface = new fileIoXmlImpl.FileIO
+
     "called save and load" should {
       "reload an board(normal) with in the state it was saved" in {
         controller.createNewBoard()
         val currentPlayerIsFirst = true
         fileIo.save(controller.board, currentPlayerIsFirst, player_1, player_2)
         controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
-        val (board: BoardInterface, state: Boolean, p1: Player, p2: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
-        p1.name shouldEqual player_1.name
-        p1.first shouldBe player_1.first
-        p2.name shouldEqual player_2.name
-        p2.first shouldBe player_2.first
-
-        controller.replaceBoard(board)
-        controller.currentState = if (state) {
-          controller.playerOnesTurn
-        } else {
-          controller.playerTwosTurn
-        }
+        val result = fileIo.load.get
+        controller.board = result._1
         controller.boardToString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
@@ -68,64 +60,19 @@ class JasonFileIOSpec extends WordSpec with Matchers {
             "---------------------------------------------------------\n" +
             "Captured: \n"
         )
-        controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
-        controller.movePiece((0, 6), (0, 5)) should be(MoveResult.validMove)
-        controller.movePiece((0, 3), (0, 4)) should be(MoveResult.validMove)
-        controller.movePiece((0, 5), (0, 4)) should be(MoveResult.validMove)
-        controller.movePiece((0, 0), (0, 4)) should be(MoveResult.validMove)
-        val currentState: Boolean = if (controller.currentState == controller.playerOnesTurn) {
-          true
-        } else {
-          false
-        }
-        fileIo.save(controller.board, currentState, player_1, player_2)
-        controller.movePiece((8, 6), (8, 5)) should be(MoveResult.validMove)
-        val (board2: BoardInterface, state2: Boolean, p12: Player, p22: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
-        p12.name shouldEqual player_1.name
-        p12.first shouldBe player_1.first
-        p22.name shouldEqual player_2.name
-        p22.first shouldBe player_2.first
-
-        controller.replaceBoard(board2)
-        controller.currentState = if (state2) {
-          controller.playerOnesTurn
-        } else {
-          controller.playerTwosTurn
-        }
-        println(controller.boardToString())
-        controller.boardToString() should be(
-          "Captured: P°    \n" +
-            "    0     1     2     3     4     5     6     7     8 \n \n" +
-            "---------------------------------------------------------\n " +
-            "|     | KN° | SG° | GG° | K°  | GG° | SG° | KN° | L°  | \ta\n" +
-            "---------------------------------------------------------\n " +
-            "|     | R°  |     |     |     |     |     | B°  |     | \tb\n" +
-            "---------------------------------------------------------\n " +
-            "|     | P°  | P°  | P°  | P°  | P°  | P°  | P°  | P°  | \tc\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \td\n" +
-            "---------------------------------------------------------\n " +
-            "| L°  |     |     |     |     |     |     |     |     | \te\n" +
-            "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tf\n" +
-            "---------------------------------------------------------\n " +
-            "|     | P   | P   | P   | P   | P   | P   | P   | P   | \tg\n" +
-            "---------------------------------------------------------\n " +
-            "|     | B   |     |     |     |     |     | R   |     | \th\n" +
-            "---------------------------------------------------------\n " +
-            "| L   | KN  | SG  | GG  | K   | GG  | SG  | KN  | L   | \ti\n" +
-            "---------------------------------------------------------\n" +
-            "Captured: P     \n"
-        )
-
       }
-
       "reload an board(small) with in the state it was saved" in {
         val currentPlayerIsFirst = true
         fileIo.save(smallBoard, currentPlayerIsFirst, player_1, player_2)
         smallBoard.replaceCell(0, 2, PieceFactory.apply(PiecesEnum.King, player_1.first))
-        controller.load
-        controller.boardToString() should be(
+        val (board, state, player1: Player, player2: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        state shouldBe currentPlayerIsFirst
+        player1.name shouldEqual player_1.name
+        player1.first shouldBe player_1.first
+        player2.name shouldEqual player_2.name
+        player2.first shouldBe player_2.first
+
+        board.toString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
             "---------------------------------------------------------\n " +
@@ -154,9 +101,15 @@ class JasonFileIOSpec extends WordSpec with Matchers {
       "reload an board(tiny) with the state it was saved" in {
         val currentPlayerIsFirst = true
         fileIo.save(tinyBoard, currentPlayerIsFirst, player_1, player_2)
-        smallBoard.replaceCell(0, 0, PieceFactory.apply(PiecesEnum.King, player_1.first))
-        controller.load
-        controller.boardToString() should be(
+        tinyBoard.replaceCell(0, 2, PieceFactory.apply(PiecesEnum.King, player_1.first))
+        val (board, state, player1: Player, player2: Player) = fileIo.load.getOrElse(controller.createEmptyBoard())
+        state shouldBe currentPlayerIsFirst
+        player1.name shouldEqual player_1.name
+        player1.first shouldBe player_1.first
+        player2.name shouldEqual player_2.name
+        player2.first shouldBe player_2.first
+
+        board.toString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
             "---------------------------------------------------------\n " +

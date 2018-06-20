@@ -5,7 +5,7 @@ import java.nio.file.{ Files, Paths }
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -15,7 +15,7 @@ import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO extends FileIOInterface {
+class FileIO extends DAOInterface {
 
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     if (Files.exists(Paths.get("board.json"))) {

@@ -6,7 +6,7 @@ import de.htwg.se.Shogi.model.playerComponent.Player
 /**
  * A Interface to implement the I/O unit for the game Shogi.
  */
-trait FileIOInterface {
+trait DAOInterface {
 
   /**
    * Loads the saved game

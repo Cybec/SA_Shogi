@@ -2,6 +2,9 @@ language: scala
 scala:
 - 2.11.8
 
+ignore:
+  - src/test/scala/de/htwg/se/Shogi/aview/HttpServerSepc.scala
+
 script:
 - sbt clean coverage test coverageReport
 

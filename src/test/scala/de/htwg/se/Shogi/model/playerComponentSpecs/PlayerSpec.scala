@@ -1,4 +1,4 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.playerComponentSpecs
 
 import de.htwg.se.Shogi.model.playerComponent.Player
 import org.junit.runner.RunWith
