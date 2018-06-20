@@ -996,7 +996,8 @@ class ControllerSpec extends WordSpec with Matchers {
             "<br>&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspK&nbsp&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbsp	i" +
             "<br>---------------------------------------------------------" +
             "<br>Captured:&nbsp" +
-            "<br></p>")
+            "<br></p>"
+        )
       }
     }
   }

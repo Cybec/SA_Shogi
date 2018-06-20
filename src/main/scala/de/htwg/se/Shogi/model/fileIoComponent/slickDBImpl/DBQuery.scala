@@ -1,67 +1,109 @@
 package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 
-import slick.lifted.TableQuery
+import slick.ast.TableExpansion
+import slick.dbio.Effect
+import slick.lifted.{ AbstractTable, TableQuery }
 
-import scala.concurrent.Future
+import scala.concurrent.{ Await, Future }
 import slick.jdbc.MySQLProfile.api._
+import slick.sql.FixedSqlAction
+
+import scala.concurrent.duration.Duration
 
 class DBQuery {
-  //  val db = Database.forConfig("mysql")
   val db = Database.forURL("jdbc:mysql://192.168.99.100:3306/shogi-db?user=root&password=1234hot5")
   val gameSessionQuery: TableQuery[GameSession] = TableQuery[GameSession]
   val playerSessionQuery: TableQuery[PlayerSession] = TableQuery[PlayerSession]
-  val boardSessionQuery: TableQuery[BoardSession] = TableQuery[BoardSession]
-  val playerFirstContainerQuery: TableQuery[PlayerFirstContainerSession] = TableQuery[PlayerFirstContainerSession]
-  val playerSecondContainerQuery: TableQuery[PlayerSecondContainerSession] = TableQuery[PlayerSecondContainerSession]
-  val pieceSessionQuery: TableQuery[PieceSession] = TableQuery[PieceSession]
+  val playerContainerQuery: TableQuery[PlayerContainerSession] = TableQuery[PlayerContainerSession]
+  val pieceOnBoardSessionQuery: TableQuery[PieceOnBoardSession] = TableQuery[PieceOnBoardSession]
+  val pieceInContainerSessionQuery: TableQuery[PieceContainerSession] = TableQuery[PieceContainerSession]
 
-  //INSERT
-  def insert(piece: PieceProfile): Future[Int] = db.run(pieceSessionQuery += piece)
+  def run[E <: AbstractTable[_]](query: FixedSqlAction[Int, NoStream, Effect.Write], s: TableQuery[E]): Option[(Int, Int)] = {
+    val eventualInsertResult = db.run(query)
+    val insertResult = Await.result(eventualInsertResult, Duration.Inf)
 
-  def insert(containerFirst: PlayerFirstContainerProfile): Future[Int] = db.run(playerFirstContainerQuery += containerFirst)
+    s match {
+      case item => item.shaped.value.tableName match {
+        case "PIECE_ON_BOARD_SESSION" => {
+          val eventualInsertResult_2 = db.run(pieceOnBoardSessionQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
+        }
+        case "PIECE_ON_BOARD_SESSION" => {
+          val eventualInsertResult_2 = db.run(pieceOnBoardSessionQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
 
-  def insert(containerSecond: PlayerSecondContainerProfile): Future[Int] = db.run(playerSecondContainerQuery += containerSecond)
-
-  def insert(board: BoardProfile): Future[Int] = db.run(boardSessionQuery += board)
-
-  def insert(player: PlayerProfile): Future[Int] = db.run(playerSessionQuery += player)
-
-  def insert(game: GameSessionProfile): Future[Int] = {
-    game.
-
-
-
-
-    db.run(gameSessionQuery += game)
+        }
+        case "PIECE_CONTAINER_SESSION" => {
+          val eventualInsertResult_2 = db.run(pieceInContainerSessionQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
+        }
+        case "PLAYER_CONTAINER_SESSION" => {
+          val eventualInsertResult_2 = db.run(playerContainerQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
+        }
+        case "PLAYER_SESSION" => {
+          val eventualInsertResult_2 = db.run(playerSessionQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
+        }
+        case "GAME_SESSION" => {
+          val eventualInsertResult_2 = db.run(gameSessionQuery.result)
+          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
+        }
+        case _ => None
+      }
+    }
   }
 
+  //INSERT
+  def insert(piece: PieceOnBoardProfile): Option[(Int, Int)] = run(pieceOnBoardSessionQuery += piece, pieceOnBoardSessionQuery)
+
+  def insert(container: PieceContainerProfile): Option[(Int, Int)] = run(pieceInContainerSessionQuery += container, pieceInContainerSessionQuery)
+
+  def insert(container: PlayerContainerProfile): Option[(Int, Int)] = run(playerContainerQuery += container, playerContainerQuery)
+
+  def insert(player: PlayerProfile): Option[(Int, Int)] = run(playerSessionQuery += player, playerSessionQuery)
+
+  def insert(game: GameSessionProfile): Option[(Int, Int)] = run(gameSessionQuery += game, gameSessionQuery)
+
   //GET
-  def getPiece(id: Int): Future[Option[PieceProfile]] = db.run(pieceSessionQuery.filter(_.id === id).take(1).result.headOption)
+  def getPieceOnBoard(playerID: Int): Seq[PieceOnBoardProfile] = {
+    val eventualInsertResult = db.run(pieceOnBoardSessionQuery.filter(_.playerID === playerID).result)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getPiece(name: String): Future[Option[PieceProfile]] = db.run(pieceSessionQuery.filter(_.name === name).take(1).result.headOption)
+  def getPieceInContainer(containerID: Int): Seq[PieceContainerProfile] = {
+    val eventualInsertResult = db.run(pieceInContainerSessionQuery.filter(_.containerID === containerID).result)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getPlayerFirstContainer(id: Int): Future[Option[PlayerFirstContainerProfile]] = db.run(playerFirstContainerQuery.filter(_.id === id).take(1).result.headOption)
+  def getPlayerContainer(id: Int): Option[PlayerContainerProfile] = {
+    val eventualInsertResult = db.run(playerContainerQuery.filter(_.id === id).take(1).result.headOption)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getPlayerSecondContainer(id: Int): Future[Option[PlayerSecondContainerProfile]] = db.run(playerSecondContainerQuery.filter(_.id === id).take(1).result.headOption)
+  def getPlayer(id: Int): Option[PlayerProfile] = {
+    val eventualInsertResult = db.run(playerSessionQuery.filter(_.id === id).take(1).result.headOption)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getBoard(id: Int): Future[Option[BoardProfile]] = db.run(boardSessionQuery.filter(_.id === id).take(1).result.headOption)
+  def getPlayer(name: String): Option[PlayerProfile] = {
+    val eventualInsertResult = db.run(playerSessionQuery.filter(_.name === name).take(1).result.headOption)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getPlayer(id: Int): Future[Option[PlayerProfile]] = db.run(playerSessionQuery.filter(_.id === id).take(1).result.headOption)
+  def getGame(id: Int): Option[GameSessionProfile] = {
+    val eventualInsertResult = db.run(gameSessionQuery.filter(_.id === id).take(1).result.headOption)
+    Await.result(eventualInsertResult, Duration.Inf)
+  }
 
-  def getPlayer(name: String): Future[Option[PlayerProfile]] = db.run(playerSessionQuery.filter(_.name === name).take(1).result.headOption)
-
-  def getGame(id: Int): Future[Option[GameSessionProfile]] = db.run(gameSessionQuery.filter(_.id === id).take(1).result.headOption)
+  def getLastIDGame(): Int = Await.result(db.run(gameSessionQuery.result), Duration.Inf).map(x => x.id).max
 
   //DELET
-  def deletePiece(id: Int): Future[Int] = db.run(pieceSessionQuery.filter(_.id === id).delete)
+  def deletePieceOnBoard(id: Int): Future[Int] = db.run(pieceOnBoardSessionQuery.filter(_.id === id).delete)
 
-  def deletePiece(name: String): Future[Int] = db.run(pieceSessionQuery.filter(_.name === name).delete)
+  def deletePieceInContainer(id: Int): Future[Int] = db.run(pieceInContainerSessionQuery.filter(_.id === id).delete)
 
-  def deletePlayerFirstContainer(id: Int): Future[Int] = db.run(playerFirstContainerQuery.filter(_.id === id).delete)
-
-  def deletePlayerSecondContainer(id: Int): Future[Int] = db.run(playerSecondContainerQuery.filter(_.id === id).delete)
-
-  def deleteBoard(id: Int): Future[Int] = db.run(boardSessionQuery.filter(_.id === id).delete)
+  def deletePlayerContainer(id: Int): Future[Int] = db.run(playerContainerQuery.filter(_.id === id).delete)
 
   def deletePlayer(id: Int): Future[Int] = db.run(playerSessionQuery.filter(_.id === id).delete)
 
