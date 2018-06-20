@@ -4,9 +4,6 @@ import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.playerComponent.Player
 
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-
 object Test {
   def main(args: Array[String]): Unit = {
     val dBQuery = new DBQuery

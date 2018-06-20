@@ -2,7 +2,7 @@ package de.htwg.se.Shogi.model.fileIoComponent.slickDBImpl
 
 import slick.lifted.TableQuery
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{ Await, Future }
 import slick.jdbc.MySQLProfile.api._
 
 import scala.concurrent.duration.Duration

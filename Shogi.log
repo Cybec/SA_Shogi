@@ -1,77 +1,53 @@
-12:55:01.528 [main] DEBUG slick.compiler.QueryCompiler - Source:
-| TableExpansion
-|   table s2: Table PLAYER_SESSION
-|   columns: TypeMapping
-|     0: ProductNode
-|       1: Path s2.id : Int'
-|       2: Path s2.name : String'
-|       3: Path s2.first : Boolean'
+08:54:23.591 [main] INFO  de.htwg.se.Shogi.aview.Tui - Captured: 
+    0     1     2     3     4     5     6     7     8 
+ 
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	a
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	b
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	c
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	d
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	e
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	f
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	g
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	h
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	i
+---------------------------------------------------------
+Captured: 
 
-12:55:01.539 [main] DEBUG slick.compiler.AssignUniqueSymbols - Detected features: UsedFeatures(false,true,false,false)
-12:55:01.541 [main] DEBUG slick.compiler.QueryCompiler - After phase assignUniqueSymbols:
-| TableExpansion
-|   table s3: Table PLAYER_SESSION
-|   columns: TypeMapping
-|     0: ProductNode
-|       1: Path s3.id : Int'
-|       2: Path s3.name : String'
-|       3: Path s3.first : Boolean'
+08:54:23.647 [main] INFO  de.htwg.se.Shogi.aview.Tui - q: quit
+------
+n: new
+------
 
-12:55:01.544 [main] DEBUG slick.compiler.QueryCompiler - After phase inferTypes: (no change)
-12:55:01.556 [main] DEBUG slick.compiler.QueryCompiler - After phase insertCompiler:
-| ResultSetMapping : Vector[(String', Boolean')]
-|   from s5: Insert allFields=[id, name, first] : (String', Boolean')
-|     table s6: Table PLAYER_SESSION : Vector[@t4<UnassignedType>]
-|     linear: ProductNode : (String', Boolean')
-|       1: Path s6.name : String'
-|       2: Path s6.first : Boolean'
-|   map: TypeMapping : Mapped[(Int', String', Boolean')]
-|     0: ProductNode : (Int', String', Boolean')
-|       1: InsertColumn id : Int'
-|       2: InsertColumn name : String'
-|         0: Path s5._1 : String'
-|       3: InsertColumn first : Boolean'
-|         0: Path s5._2 : Boolean'
+08:54:26.976 [AWT-EventQueue-0] INFO  de.htwg.se.Shogi.aview.Tui - Captured: 
+    0     1     2     3     4     5     6     7     8 
+ 
+---------------------------------------------------------
+ | L°  | KN° | SG° | GG° | K°  | GG° | SG° | KN° | L°  | 	a
+---------------------------------------------------------
+ |     | R°  |     |     |     |     |     | B°  |     | 	b
+---------------------------------------------------------
+ | P°  | P°  | P°  | P°  | P°  | P°  | P°  | P°  | P°  | 	c
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	d
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	e
+---------------------------------------------------------
+ |     |     |     |     |     |     |     |     |     | 	f
+---------------------------------------------------------
+ | P   | P   | P   | P   | P   | P   | P   | P   | P   | 	g
+---------------------------------------------------------
+ |     | B   |     |     |     |     |     | R   |     | 	h
+---------------------------------------------------------
+ | L   | KN  | SG  | GG  | K   | GG  | SG  | KN  | L   | 	i
+---------------------------------------------------------
+Captured: 
 
-12:55:01.559 [main] DEBUG slick.compiler.CodeGen - Compiling server-side and mapping with server-side:
-| Insert allFields=[id, name, first] : (String', Boolean')
-|   table s6: Table PLAYER_SESSION : Vector[@t4<UnassignedType>]
-|   linear: ProductNode : (String', Boolean')
-|     1: Path s6.name : String'
-|     2: Path s6.first : Boolean'
-
-12:55:01.573 [main] DEBUG s.relational.ResultConverterCompiler - Compiled ResultConverter
-| TypeMappingResultConverter
-|   child: ProductResultConverter
-|     1: CompoundResultConverter
-|     2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
-|     3: BaseResultConverter$mcZ$sp idx=2, name=first : Boolean'
-
-12:55:01.575 [main] DEBUG slick.compiler.CodeGen - Compiled server-side to:
-| CompiledStatement "insert into `PLAYER_SESSION` (`name`,`first`)  values (?,?)" : (String', Boolean')
-
-12:55:01.577 [main] DEBUG slick.compiler.QueryCompiler - After phase codeGen:
-| ResultSetMapping : Vector[(String', Boolean')]
-|   from s5: CompiledStatement "insert into `PLAYER_SESSION` (`name`,`first`)  values (?,?)" : (String', Boolean')
-|   map: CompiledMapping : Mapped[(Int', String', Boolean')]
-|     converter: TypeMappingResultConverter
-|       child: ProductResultConverter
-|         1: CompoundResultConverter
-|         2: SpecializedJdbcResultConverter$$anon$1 idx=1, name=name : String'
-|         3: BaseResultConverter$mcZ$sp idx=2, name=first : Boolean'
-
-12:55:01.577 [main] DEBUG s.compiler.QueryCompilerBenchmark - ------------------- Phase: Time ---------
-12:55:01.584 [main] DEBUG s.compiler.QueryCompilerBenchmark -       assignUniqueSymbols:   10,740321 ms
-12:55:01.584 [main] DEBUG s.compiler.QueryCompilerBenchmark -                inferTypes:    3,732783 ms
-12:55:01.584 [main] DEBUG s.compiler.QueryCompilerBenchmark -            insertCompiler:   10,780435 ms
-12:55:01.584 [main] DEBUG s.compiler.QueryCompilerBenchmark -                   codeGen:   20,874557 ms
-12:55:01.585 [main] DEBUG s.compiler.QueryCompilerBenchmark -                     TOTAL:   46,128096 ms
-12:55:01.588 [main] DEBUG slick.basic.BasicBackend.action - #1: SingleInsertAction [insert into `PLAYER_SESSION` (`name`,`first`)  values (?,?)]
-12:55:01.801 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.statement - Preparing statement: insert into `PLAYER_SESSION` (`name`,`first`)  values (?,?)
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - /--------------------+---------\
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | 1                  | 2       |
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | String             | Boolean |
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - |--------------------+---------|
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - | TestPlayer_3248079 | true    |
-12:55:01.829 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.parameter - \--------------------+---------/
-12:55:01.836 [AsyncExecutor.default-1] DEBUG slick.jdbc.JdbcBackend.benchmark - Execution of prepared update took 6ms
