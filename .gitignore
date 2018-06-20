@@ -56,4 +56,6 @@ codestyles/
 /keymaps/
 /find.xml
 /.metadata/
+
+# Log
 *.log
