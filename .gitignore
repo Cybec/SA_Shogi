@@ -56,4 +56,6 @@ codestyles/
 /keymaps/
 /find.xml
 /.metadata/
-/Shogi.log/
+
+# Log
+*.log
