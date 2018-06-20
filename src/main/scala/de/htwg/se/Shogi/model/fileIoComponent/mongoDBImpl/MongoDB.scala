@@ -19,6 +19,7 @@ import play.api.libs.json._
 
 class MongoDB extends DAOInterface {
   val SERVER = "192.168.99.100"
+  //  val SERVER = "0.0.0.0"
   val PORT = 27017
   val DATABASE = "GameSession"
   val COLLECTION = "GameSave"
@@ -37,7 +38,6 @@ class MongoDB extends DAOInterface {
     var loadReturnOption: Option[(BoardInterface, Boolean, Player, Player)] = None
     val document = db.find().sort(new BasicDBObject("_id", -1)).toArray().get(0)
     val json: JsValue = Json.parse(document.toString)
-    println("TEST: " + document.toString)
     val size = (json \ "board" \ "size").get.toString.toInt
     val state = (json \ "state").get.toString.toBoolean
 
@@ -50,7 +50,6 @@ class MongoDB extends DAOInterface {
 
     loadReturnOption = getBoardBySize(size, injector) match {
       case Some(board) =>
-        println("BOARD SIZE!!!: " + board.size.toString)
         val firstPlayer = true
         val secondPlayer = false
         val newBoard = board.setContainer(
@@ -71,8 +70,6 @@ class MongoDB extends DAOInterface {
           val piece = "piece_" + (column.toString) + "_" + (row.toString)
           val pieceName = (json \ "board" \ "board_field" \ "field" \ piece \ "name").as[JsString].value
           val firstPlayer = (json \ "board" \ "board_field" \ "field" \ piece \ "is_first_owner").get.toString.toBoolean
-          //We dont actually need to save the hasPromotion field
-          //val hasPromotion = (json \ "board" \ "board_field" \ "field" \ piece \ "has_promotion").get.toString.toBoolean
           PiecesEnum.withNameOpt(pieceName) match {
             case Some(pieceEnum) =>
               _board = _board.replaceCell(column, row, PieceFactory.apply(pieceEnum, firstPlayer))

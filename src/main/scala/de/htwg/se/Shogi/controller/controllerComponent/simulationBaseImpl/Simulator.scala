@@ -1,6 +1,6 @@
 package de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl
 
-import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
+import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult }
 import akka.actor.Actor
 
 class Simulator extends Actor {
