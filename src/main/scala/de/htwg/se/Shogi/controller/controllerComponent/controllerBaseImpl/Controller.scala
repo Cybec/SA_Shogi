@@ -1,19 +1,35 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
-import akka.actor.{ ActorSystem, Props }
+import akka.actor.{ActorSystem, Props}
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model._
+import akka.stream.ActorMaterializer
 import com.google.inject.name.Names
-import com.google.inject.{ Guice, Inject, Injector }
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
 
+import scala.concurrent.Future
+
+object Controller {
+  def main(args: Array[String]): Unit= {
+    new Controller
+  }
+}
+
 class Controller @Inject() extends RoundState with ControllerInterface {
+  private val MODEL_PORT = 8081
+  private val MODEL_IP = "localhost"
+  val server = new ModelHttp(MODEL_IP, MODEL_PORT)
+
+
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
@@ -197,4 +213,24 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   }
 
   override def boardToHtml: String = board.toHtml
+}
+
+private class ModelHttp(ip:String, port:Int){
+  implicit val system = ActorSystem("CONTROLLER")
+  implicit val executionContext = system.dispatcher
+  implicit val materializer = ActorMaterializer()
+
+
+  def call(route: String, method: HttpMethod = HttpMethods.GET, entity: RequestEntity = HttpEntity.Empty): Future[HttpResponse] =
+    Http().singleRequest(HttpRequest(method, Uri("http://%s:%d/%s".format(ip, port, route)), Nil, entity))
+
+
+
+
+
+
+
+
+
+
 }
