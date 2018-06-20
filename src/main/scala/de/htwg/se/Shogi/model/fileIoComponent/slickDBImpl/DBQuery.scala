@@ -10,7 +10,7 @@ import slick.sql.FixedSqlAction
 import scala.concurrent.duration.Duration
 
 class DBQuery {
-  val db = Database.forURL("jdbc:mysql://192.168.99.100:3333/shogi-db?user=root&password=1234hot5")
+  val db = Database.forURL("jdbc:mysql://192.168.99.100:3306/shogi-db?user=root&password=1234hot5")
   val gameSessionQuery: TableQuery[GameSession] = TableQuery[GameSession]
   val playerSessionQuery: TableQuery[PlayerSession] = TableQuery[PlayerSession]
   val playerContainerQuery: TableQuery[PlayerContainerSession] = TableQuery[PlayerContainerSession]
