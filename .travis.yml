@@ -16,10 +16,6 @@ env:
   - DOCKER_COMPOSE_VERSION=1.20.1
 
 before_install:
-  - sudo service postgresql stop
-  # wait for postgresql to shutdown
-  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
-
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
@@ -27,8 +23,6 @@ before_install:
 
 script:
   - netstat -antp
-  - cd docker
-  - docker-compose -f ShogiDB.yml up -d
-  - cd ..
+  - docker-compose -f docker/ShogiDB.yml up -d
   - docker ps
   - docker images
