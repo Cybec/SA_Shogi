@@ -28,11 +28,6 @@ class DBQuery {
           val eventualInsertResult_2 = db.run(pieceOnBoardSessionQuery.result)
           Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
         }
-        case "PIECE_ON_BOARD_SESSION" => {
-          val eventualInsertResult_2 = db.run(pieceOnBoardSessionQuery.result)
-          Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
-
-        }
         case "PIECE_CONTAINER_SESSION" => {
           val eventualInsertResult_2 = db.run(pieceInContainerSessionQuery.result)
           Some((insertResult, Await.result(eventualInsertResult_2, Duration.Inf).map(x => x.id).max))
