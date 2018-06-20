@@ -11,7 +11,7 @@ import de.htwg.se.Shogi.model.playerComponent.Player
 import net.codingwell.scalaguice.InjectorExtensions._
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.{path, _}
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 
@@ -200,78 +200,87 @@ object BoardServer {
   private def server: Unit = {
     val route: Route = {
       get {
-        path("createNewBoard") {
-          board.createNewBoard()
-          complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-        } ~
         path("getContainer") {
           complete(HttpEntity(ContentTypes.`application/json`, getContainer))
+        } ~
+          path("getPiecesInColumn" / Segment / Segment) {
+            (column, state) => {
+              complete(HttpEntity(ContentTypes.`application/json`, getPiecesInColumn(column.toInt, state.toBoolean)))
+            }
+          } ~
+          path("getAllPiecesInColumnOrdered" / Segment) {
+            column => {
+              complete(HttpEntity(ContentTypes.`application/json`, getAllPiecesInColumnOrdered(column.toInt)))
+            }
+          } ~
+          path("getEmptyCellsInColumn" / Segment / Segment / Segment) {
+            (column, rangeA, rangeB) => {
+              val range = (rangeA.toInt, rangeB.toInt)
+              complete(HttpEntity(ContentTypes.`application/json`, getEmptyCellsInColumn(column.toInt, range)))
+            }
+          } ~
+          path("cell" / Segment / Segment) {
+            (column, row) => {
+              complete(HttpEntity(ContentTypes.`application/json`, cell(column.toInt, row.toInt)))
+            }
+          } ~
+          path("size") {
+            complete(HttpEntity(ContentTypes.`application/json`, size))
+          } ~
+          path("copyBoard") {
+            complete(HttpEntity(ContentTypes.`application/json`, copyBoard))
+          }
+      }
+      post {
+        path("createNewBoard") {
+          board.createNewBoard()
+          complete(HttpEntity(ContentTypes.`application/json`, board.toHtml))
         }
       }
-      }
-    }
+      //TODO: PUT
 
+    }
+  }
 
   //GET
-  private def getContainer:String = {
+  private def getContainer: String = {
     board.getContainer._1.mkString(",") + board.getContainer._2.mkString(",")
-      }
-  private def getFromPlayerContainer(player: Player): String = {
-
-      ""
   }
-  private def getPiecesInColumn(column: Int, stateTurn: Boolean): String = {
+
+  private def getFromPlayerContainer(player: Player): String = {
+    //board.getFromPlayerContainer(player)
     ""
   }
-}
 
-//          path("getContainer") {
-//            var container = board.getContainer()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("setContainer") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("addToPlayerContainer") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("getFromPlayerContainer") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("replaceCell") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("getPiecesInColumn") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("getAllPiecesInColumnOrdered") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("getEmptyCellsInColumn") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("toArray") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("size") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("cell") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          } ~
-//          path("toHtml") {
-//            board.createNewBoard()
-//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
-//          }
-//      }
-//    }
+  private def getPiecesInColumn(column: Int, stateTurn: Boolean): String = {
+    board.getPiecesInColumn(column, stateTurn).mkString(",")
+  }
+
+  private def getAllPiecesInColumnOrdered(column: Int): String = {
+    board.getAllPiecesInColumnOrdered(column).mkString(",")
+  }
+
+  private def getEmptyCellsInColumn(column: Int, range: (Int, Int)): String = {
+    val list = board.getEmptyCellsInColumn(column, range)
+    val string = new StringBuilder
+    list.foreach(position => string.append(position.toString))
+    list.toString()
+  }
+
+  private def cell(column: Int, row: Int): String = {
+    board.cell(column, row).toString
+  }
+
+  private def size(): String = {
+    board.size.toString
+  }
+
+  private def copyBoard(): String = {
+    board.copyBoard.toString
+  }
+
+  //POST
+  private def createNewBoard(): String = {
+    board.createNewBoard().toString
+  }
+}
