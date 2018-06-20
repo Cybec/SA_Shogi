@@ -5,7 +5,7 @@ import java.nio.file.{ Files, Paths }
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -15,7 +15,7 @@ import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO extends FileIOInterface {
+class FileIO extends DAOInterface {
 
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     if (Files.exists(Paths.get("board.json"))) {
@@ -24,15 +24,19 @@ class FileIO extends FileIOInterface {
       val json: JsValue = Json.parse(source)
       val size = (json \ "board" \ "size").get.toString.toInt
       val state = (json \ "board" \ "state").get.toString.toBoolean
-      val player1 = Player((json \ "board" \ "playerFirstName").get.toString, first = true)
-      val player2 = Player((json \ "board" \ "playerSecondName").get.toString, first = false)
+      val playerFirstName = (json \ "board" \ "playerFirstName").get.toString.replace("\"", "")
+      val playerSecondName = (json \ "board" \ "playerSecondName").get.toString.replace("\"", "")
+      val player1 = Player(playerFirstName, first = true)
+      val player2 = Player(playerSecondName, first = false)
       val injector: Injector = Guice.createInjector(new ShogiModule)
 
       loadReturnOption = getBoardBySize(size, injector) match {
         case Some(board) =>
+          val firstPlayer = true
+          val secondPlayer = false
           val newBoard = board.setContainer(
-            getConqueredPieces((json \\ "playerFirstConquered").toArray, true),
-            getConqueredPieces((json \\ "playerSecondConquered").toArray, false)
+            getConqueredPieces((json \\ "playerFirstConquered").toArray, firstPlayer),
+            getConqueredPieces((json \\ "playerSecondConquered").toArray, secondPlayer)
           )
           Some((newBoard, state, player1, player2))
         case _ => None

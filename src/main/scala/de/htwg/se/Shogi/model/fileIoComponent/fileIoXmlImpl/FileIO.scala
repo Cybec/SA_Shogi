@@ -3,7 +3,7 @@ package de.htwg.se.Shogi.model.fileIoComponent.fileIoXmlImpl
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -11,7 +11,7 @@ import de.htwg.se.Shogi.{ ShogiModule, ShogiModuleConf }
 import net.codingwell.scalaguice.InjectorExtensions._
 import scala.xml.{ Node, NodeSeq, PrettyPrinter }
 
-class FileIO extends FileIOInterface {
+class FileIO extends DAOInterface {
 
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     var boardOption: Option[(BoardInterface, Boolean, Player, Player)] = None
@@ -24,9 +24,11 @@ class FileIO extends FileIOInterface {
 
     boardOption = getBoardBySize(size, injector) match {
       case Some(board) =>
+        val firstPlayer = true
+        val secondPlayer = false
         val newBoard = board.setContainer(
-          getConqueredPieces(file \\ "board" \ "playerFirstConquered", true),
-          getConqueredPieces(file \\ "board" \ "playerSecondConquered", false)
+          getConqueredPieces(file \\ "board" \ "playerFirstConquered", firstPlayer),
+          getConqueredPieces(file \\ "board" \ "playerSecondConquered", secondPlayer)
         )
         Some((newBoard, state, player1, player2))
       case _ => None
@@ -71,16 +73,16 @@ class FileIO extends FileIOInterface {
 
     for (x <- nodeSeq) yield (x \\ "piece").foreach(i => stringList = stringList :+ (i \\ "@pieceName").text.toString)
 
-    for (x: String <- stringList) {
-      PiecesEnum.withNameOpt(x) match {
-        case Some(pieceEnum) => pieceList = pieceList :+ PieceFactory.apply(pieceEnum, first)
-        case None =>
-      }
+    for (
+      x: String <- stringList;
+      pieceEnum <- PiecesEnum.withNameOpt(x)
+    ) yield {
+      pieceList = pieceList :+ PieceFactory.apply(pieceEnum, first)
     }
     pieceList
   }
 
-  def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = saveString(board, state, player_1, player_2)
+  override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = saveString(board, state, player_1, player_2)
 
   def saveString(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {
     import java.io._

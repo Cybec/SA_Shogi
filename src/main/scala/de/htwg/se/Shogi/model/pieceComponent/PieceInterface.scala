@@ -1,6 +1,7 @@
 package de.htwg.se.Shogi.model.pieceComponent
 
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
+// $COVERAGE-OFF$
 
 /**
  * Interface for Pieces on Board

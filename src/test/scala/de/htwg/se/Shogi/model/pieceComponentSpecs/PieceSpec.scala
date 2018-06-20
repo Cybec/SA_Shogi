@@ -1,4 +1,4 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.pieceComponentSpecs
 
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }

@@ -1,13 +1,10 @@
 package de.htwg.se.Shogi.controller
 
-import java.io.File
-import java.nio.file.{ Files, Paths }
 import com.google.inject.name.Names
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
-import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, playerOneRound, playerTwoRound }
-import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
-import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult }
+import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ Controller, RoundState, PlayerOneRound, PlayerTwoRound }
+import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult, Simulator }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.boardComponent.boardBaseImpl.Board
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
@@ -26,8 +23,8 @@ class ControllerSpec extends WordSpec with Matchers {
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val newController = new Controller()
-  val playerOnesTurn: RoundState = new playerOneRound(newController)
-  val playerTwosTurn: RoundState = new playerTwoRound(newController)
+  val playerOnesTurn: RoundState = PlayerOneRound(newController)
+  val playerTwosTurn: RoundState = PlayerTwoRound(newController)
 
   controller.createNewBoard()
   controller.changeNamePlayer1("Nick")
@@ -65,8 +62,10 @@ class ControllerSpec extends WordSpec with Matchers {
       "be field (0,3) for Pawn at place (0,2)" in {
         controller.createNewBoard()
         controller.getPossibleMoves(0, 2) should be(List[(Int, Int)]((0, 3)))
+        controller.getPossibleMoves(-1, -1) should be(List[(Int, Int)]())
         controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
         controller.getPossibleMoves(0, 6) should be(List[(Int, Int)]((0, 5)))
+        controller.getPossibleMoves(-1, -1) should be(List[(Int, Int)]())
 
       }
     }
@@ -432,7 +431,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.movePiece((4, 3), (4, 2)) should be(MoveResult.validMove) // player_2
         controller.movePiece((5, 1), (4, 2)) should be(MoveResult.validMove) // player_1
 
-        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 7), (4, 6), (4, 5), (4, 4), (4, 3))) // player_2
+        controller.getPossibleMovesConqueredPiece("P") should be(List[(Int, Int)]((4, 3), (4, 4), (4, 5), (4, 6), (4, 7))) // player_2
         controller.movePiece((8, 6), (8, 5)) should be(MoveResult.validMove) // player_2
 
         controller.getPossibleMovesConqueredPiece("P°") should be(List[(Int, Int)]((4, 1), (4, 3), (4, 4), (4, 5), (4, 6))) // player_1
@@ -674,8 +673,10 @@ class ControllerSpec extends WordSpec with Matchers {
 
         controller.moveConqueredPiece("P", (0, 2)) should be(false) // player_2
         controller.moveConqueredPiece("P", (4, 1)) should be(false) // player_2
+        controller.moveConqueredPiece("Something that doesn't exist", (4, 1)) should be(false) // player_2
         controller.moveConqueredPiece("P", (4, 3)) should be(true) // player_2
         controller.moveConqueredPiece("P°", (4, 7)) should be(false) // player_1
+        controller.moveConqueredPiece("Something that doesn't exist", (4, 7)) should be(false) // player_1
         controller.moveConqueredPiece("P°", (4, 4)) should be(true) // player_1
 
         controller.boardToString() should be(
@@ -884,10 +885,10 @@ class ControllerSpec extends WordSpec with Matchers {
       "save the board in first players turn" in {
         newController.createNewBoard()
         val oldState = newController.currentState
-        newController.save
+        newController.save()
         newController.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
         newController.getCurrentStat() should be(playerTwosTurn)
-        newController.load
+        newController.load()
         newController.getCurrentStat() should be(oldState)
       }
 
@@ -895,55 +896,50 @@ class ControllerSpec extends WordSpec with Matchers {
         newController.createNewBoard()
         newController.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
         val oldState = newController.currentState
-        newController.save
+        newController.save()
         newController.movePiece((0, 6), (0, 5)) should be(MoveResult.validMove)
         newController.getCurrentStat() should be(playerOnesTurn)
-        newController.load
+        newController.load()
         newController.getCurrentStat() should be(oldState)
       }
 
-      //TODO: The process cannot access the file because it is being used by another process.
-      "loading an empty/no save file" in {
+      "not saving, loading the board changes nothing" in {
         controller.createNewBoard()
-        if (Files.exists(Paths.get("board.json"))) {
-          Files.delete(Paths.get(("board.json")))
-        }
-        if (Files.exists(Paths.get("board.xml"))) {
-          Files.delete(Paths.get(("board.xml")))
-        }
+        controller.movePiece((0, 2), (0, 3)) should be(MoveResult.validMove)
         controller.load
         controller.boardToString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \ta\n" +
+            "| L°  | KN° | SG° | GG° | K°  | GG° | SG° | KN° | L°  | \ta\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tb\n" +
+            "|     | R°  |     |     |     |     |     | B°  |     | \tb\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tc\n" +
+            "|     | P°  | P°  | P°  | P°  | P°  | P°  | P°  | P°  | \tc\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \td\n" +
+            "| P°  |     |     |     |     |     |     |     |     | \td\n" +
             "---------------------------------------------------------\n " +
             "|     |     |     |     |     |     |     |     |     | \te\n" +
             "---------------------------------------------------------\n " +
             "|     |     |     |     |     |     |     |     |     | \tf\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \tg\n" +
+            "| P   | P   | P   | P   | P   | P   | P   | P   | P   | \tg\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \th\n" +
+            "|     | B   |     |     |     |     |     | R   |     | \th\n" +
             "---------------------------------------------------------\n " +
-            "|     |     |     |     |     |     |     |     |     | \ti\n" +
+            "| L   | KN  | SG  | GG  | K   | GG  | SG  | KN  | L   | \ti\n" +
             "---------------------------------------------------------\n" +
             "Captured: \n"
         )
       }
 
-      /*"loading with unrealistic boardsize" in {
-        val board: BoardInterface = new Board(60, PieceFactory.apply(PiecesEnum.EmptyPiece, false))
+      "loading with unrealistic boardsize" in {
+        val isFirstOwner = false
+        val board: BoardInterface = new Board(60, PieceFactory.apply(PiecesEnum.EmptyPiece, isFirstOwner))
         val controller2: Controller = new Controller()
         controller2.replaceBoard(board)
-        controller2.save
-        controller2.load
+        controller2.save()
+        controller2.load()
         controller2.boardToString() should be(
           "Captured: \n" +
             "    0     1     2     3     4     5     6     7     8 \n \n" +
@@ -968,7 +964,40 @@ class ControllerSpec extends WordSpec with Matchers {
             "---------------------------------------------------------\n" +
             "Captured: \n"
         )
-      }*/
+      }
+    }
+  }
+
+  "Controller" when {
+    "called boardToHTML" should {
+      "return a String with the Board" in {
+        controller.createNewBoard()
+        controller.boardToHtml should be(
+          "<p  style=\"font-family:\'Lucida Console\', monospace\"> " +
+            "Captured:&nbsp<br>&nbsp&nbsp&nbsp&nbsp0&nbsp&nbsp&nbsp&nbsp&nbsp1&nbsp&nbsp&nbsp&nbsp&nbsp2&nbsp&nbsp&nbsp&nbsp&nbsp3&nbsp&nbsp&nbsp&nbsp&nbsp4&nbsp&nbsp&nbsp&nbsp&nbsp5&nbsp&nbsp&nbsp&nbsp&nbsp6&nbsp&nbsp&nbsp&nbsp&nbsp7&nbsp&nbsp&nbsp&nbsp&nbsp8&nbsp" +
+            "<br>&nbsp" +
+            "<br>---------------------------------------------------------<br>" +
+            "&nbsp|&nbspL°&nbsp&nbsp|&nbspKN°&nbsp|&nbspSG°&nbsp|&nbspGG°&nbsp|&nbspK°&nbsp&nbsp|&nbspGG°&nbsp|&nbspSG°&nbsp|&nbspKN°&nbsp|&nbspL°&nbsp&nbsp|&nbsp	a" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspR°&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspB°&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	b" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbspP°&nbsp&nbsp|&nbsp	c" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	d" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	e" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	f" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbspP&nbsp&nbsp&nbsp|&nbsp	g" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspB&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbspR&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp	h" +
+            "<br>---------------------------------------------------------" +
+            "<br>&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspK&nbsp&nbsp&nbsp|&nbspGG&nbsp&nbsp|&nbspSG&nbsp&nbsp|&nbspKN&nbsp&nbsp|&nbspL&nbsp&nbsp&nbsp|&nbsp	i" +
+            "<br>---------------------------------------------------------" +
+            "<br>Captured:&nbsp" +
+            "<br></p>")
+      }
     }
   }
 }
