@@ -12,7 +12,7 @@ case class PlayerProfile(id: Int, name: String, first: Boolean)
 
 case class PlayerContainerProfile(id: Int)
 
-case class PieceOnBoardProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean, playerID: Int)
+case class PieceOnBoardProfile(id: Int, name: String, positionRow: Int, positionColumn: Int, hasPromotion: Boolean, isFirstOwner: Boolean, playerID: Int)
 
 case class PieceContainerProfile(id: Int, name: String, hasPromotion: Boolean, isFirstOwner: Boolean, containerID: Int)
 
@@ -24,13 +24,17 @@ class PieceOnBoardSession(tag: Tag) extends Table[PieceOnBoardProfile](tag, "PIE
 
   def name: Rep[String] = column[String]("name")
 
+  def positionRow: Rep[Int] = column[Int]("positionRow")
+
+  def positionColumn: Rep[Int] = column[Int]("positionColumn")
+
   def hasPromotion: Rep[Boolean] = column[Boolean]("hasPromotion")
 
   def isFirstOwner: Rep[Boolean] = column[Boolean]("isFirstOwner")
 
   def playerID: Rep[Int] = column[Int]("playerID")
 
-  def * : ProvenShape[PieceOnBoardProfile] = (id, name, hasPromotion, isFirstOwner, playerID) <> (PieceOnBoardProfile.tupled, PieceOnBoardProfile.unapply) // scalastyle:ignore
+  def * : ProvenShape[PieceOnBoardProfile] = (id, name, positionRow, positionColumn, hasPromotion, isFirstOwner, playerID) <> (PieceOnBoardProfile.tupled, PieceOnBoardProfile.unapply) // scalastyle:ignore
 
   def player: ForeignKeyQuery[PlayerSession, PlayerProfile] = foreignKey("player_fk", playerID, TableQuery[PlayerSession])(_.id)
 
@@ -49,7 +53,7 @@ class PieceContainerSession(tag: Tag) extends Table[PieceContainerProfile](tag, 
 
   def * : ProvenShape[PieceContainerProfile] = (id, name, hasPromotion, isFirstOwner, containerID) <> (PieceContainerProfile.tupled, PieceContainerProfile.unapply) // scalastyle:ignore
 
-  def container: ForeignKeyQuery[PlayerContainerSession, PlayerContainerProfile] = foreignKey("player_fk", containerID, TableQuery[PlayerContainerSession])(_.id) // scalastyle:ignore
+  def container: ForeignKeyQuery[PlayerContainerSession, PlayerContainerProfile] = foreignKey("container_fk", containerID, TableQuery[PlayerContainerSession])(_.id) // scalastyle:ignore
 
 }
 
