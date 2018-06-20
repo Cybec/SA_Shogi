@@ -19,7 +19,7 @@ import play.api.libs.json._
 
 class MongoDB extends DAOInterface {
   val SERVER = "192.168.99.100"
-  //  val SERVER = "0.0.0.0"
+//    val SERVER = "0.0.0.0"
   val PORT = 27017
   val DATABASE = "GameSession"
   val COLLECTION = "GameSave"

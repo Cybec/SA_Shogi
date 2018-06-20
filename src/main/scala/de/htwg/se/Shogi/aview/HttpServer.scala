@@ -39,6 +39,18 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
             boardToHtml
           }
         } ~
+        path("save") {
+          get {
+            controller.save
+            boardToHtml
+          }
+        } ~
+        path("load") {
+          get {
+            controller.load
+            boardToHtml
+          }
+        } ~
         path("pmv" / Segment) {
           command =>
             {
@@ -51,7 +63,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
         path("mv" / Segment / Segment) {
           (current, dest) =>
             {
-              put {
+              get {
                 controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case MoveResult.invalidMove => invalidMoveToHtml
                   case MoveResult.validMove => {
@@ -69,7 +81,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
         path("mv" / Segment / Segment / "y") {
           (_, dest) =>
             {
-              put {
+              get {
                 //TODO: Check if promotable only after move
                 controller.promotePiece((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
                 boardToHtml
@@ -96,7 +108,7 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
         path("mvcp" / Segment / Segment) {
           (conqueredPiece, dest) =>
             {
-              put {
+              get {
                 controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case true => boardToHtml
                   case false => {
