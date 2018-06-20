@@ -1,19 +1,27 @@
 package de.htwg.se.Shogi.model.boardComponent.boardBaseImpl
 
-import com.google.inject.Inject
 import com.google.inject.name.Named
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
 import de.htwg.se.Shogi.model.playerComponent.Player
+import net.codingwell.scalaguice.InjectorExtensions._
+import akka.actor.ActorSystem
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
+import akka.stream.ActorMaterializer
 
-class BoardInj @Inject() (@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
+class BoardInj @Inject()(@Named("DefaultSize") boardSize: Int) extends Board(boardSize, PieceFactory.getEmptyPiece)
 
 case class Board(
-    board: Vector[Vector[PieceInterface]],
-    containerPlayer_0: List[PieceInterface],
-    containerPlayer_1: List[PieceInterface]
-) extends BoardInterface {
+                  board: Vector[Vector[PieceInterface]],
+                  containerPlayer_0: List[PieceInterface],
+                  containerPlayer_1: List[PieceInterface]
+                ) extends BoardInterface {
   override def createNewBoard(): BoardInterface = new Board(size, PieceFactory.getEmptyPiece)
 
   def this(size: Int, filling: PieceInterface) =
@@ -176,3 +184,94 @@ case class Board(
 
   override def toHtml: String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n", "<br>").replace(" ", "&nbsp") + "</p>"
 }
+
+object BoardServer {
+  val PORT = 8081
+
+  implicit val system = ActorSystem("Controller")
+  implicit val materializer = ActorMaterializer()
+  val injector: Injector = Guice.createInjector(new ShogiModule)
+  val board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
+
+  def main(args: Array[String]): Unit = {
+    server
+  }
+
+  private def server: Unit = {
+    val route: Route = {
+      get {
+        path("createNewBoard") {
+          board.createNewBoard()
+          complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+        } ~
+        path("getContainer") {
+          complete(HttpEntity(ContentTypes.`application/json`, getContainer))
+        }
+      }
+      }
+    }
+
+
+  //GET
+  private def getContainer:String = {
+    board.getContainer._1.mkString(",") + board.getContainer._2.mkString(",")
+      }
+  private def getFromPlayerContainer(player: Player): String = {
+
+      ""
+  }
+  private def getPiecesInColumn(column: Int, stateTurn: Boolean): String = {
+    ""
+  }
+}
+
+//          path("getContainer") {
+//            var container = board.getContainer()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("setContainer") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("addToPlayerContainer") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("getFromPlayerContainer") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("replaceCell") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("getPiecesInColumn") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("getAllPiecesInColumnOrdered") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("getEmptyCellsInColumn") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("toArray") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("size") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("cell") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          } ~
+//          path("toHtml") {
+//            board.createNewBoard()
+//            complete(HttpEntity(ContentTypes.`application/json`, board.toString))
+//          }
+//      }
+//    }
