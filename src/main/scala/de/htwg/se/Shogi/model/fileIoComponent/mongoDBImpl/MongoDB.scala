@@ -4,21 +4,21 @@ import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.MongoClient
 import com.mongodb.casbah.commons.MongoDBObject
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.Controller
-import org.mongodb.scala.{MongoCredential, ServerAddress}
-import play.api.libs.json.{JsValue, Json}
+import org.mongodb.scala.{ MongoCredential, ServerAddress }
+import play.api.libs.json.{ JsValue, Json }
 import com.google.inject.name.Names
-import com.google.inject.{Guice, Injector}
+import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
-import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
+import de.htwg.se.Shogi.{ ShogiModule, ShogiModuleConf }
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
 
 class MongoDB extends DAOInterface {
-  val SERVER = "0.0.0.0"
+  val SERVER = "192.168.99.100"
   val PORT = 27017
   val DATABASE = "GameSession"
   val COLLECTION = "GameSave"
@@ -29,10 +29,10 @@ class MongoDB extends DAOInterface {
   val db = mongoClient.getDB(DATABASE).getCollection(COLLECTION)
 
   /**
-    * Loads the saved game
-    *
-    * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
-    */
+   * Loads the saved game
+   *
+   * @return Returning an Option with the loaded Board, playerTurn and the two PLayers
+   */
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     var loadReturnOption: Option[(BoardInterface, Boolean, Player, Player)] = None
     val document = db.find().sort(new BasicDBObject("_id", -1)).toArray().get(0)
@@ -97,7 +97,6 @@ class MongoDB extends DAOInterface {
     }
   }
 
-
   def getConqueredPieces(jsArray: Array[JsValue], istFirst: Boolean): List[PieceInterface] = {
     var stringList: List[String] = List[String]()
     var pieceList: List[PieceInterface] = List[PieceInterface]()
@@ -114,13 +113,13 @@ class MongoDB extends DAOInterface {
   }
 
   /**
-    * Saving the current game
-    *
-    * @param board    current Board
-    * @param state    current Player Turn (true=player_1/false=player_2)
-    * @param player_1 Player_1
-    * @param player_2 Player_2
-    */
+   * Saving the current game
+   *
+   * @param board    current Board
+   * @param state    current Player Turn (true=player_1/false=player_2)
+   * @param player_1 Player_1
+   * @param player_2 Player_2
+   */
   override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {
     def pieceBuilder(piece: PieceInterface): MongoDBObject = {
       val piece_result = MongoDBObject.newBuilder
