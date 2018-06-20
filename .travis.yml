@@ -28,7 +28,7 @@ before_install:
 script:
   - netstat -antp
   - cd docker
-  - docker-compose -f down
+  - docker-compose down
   - docker-compose -f ShogiDB.yml up -d
   - cd ..
   - docker ps
