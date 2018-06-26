@@ -30,14 +30,14 @@ Hauptziel der Vorlesung ist es, die Entwicklung eines Softwareprojektes in einer
 
 Es beinhaltet
 
-- Codeabdekkung
-- Pattern
-- Komponenten und Dependency Injection
-- Speichern und Laden Funktionen
-- Logger
-- Folgende Prinizipien der Softwareentwicklung (SOLID):
-	- Single Responsibility Principle (SRP)
-	- Open-Closed Principle (OCP)
-	- Liskov Substitution Principle (LSP)
-	- Interface Segregation Principle (ISP)
-	- Dependency Inversion Principle (DIP)
+- Monads
+- Futures
+- Actor Model
+- Docker
+- AKKA HTTP
+- Microservices
+- Slick
+- MongoDB
+- Performance Testing
+- Performance Profiling
+- Architecture Patterns
