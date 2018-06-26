@@ -1,17 +1,17 @@
 package de.htwg.se.Shogi.model.fileIoComponent.fileIoXmlImpl
 
 import com.google.inject.name.Names
-import com.google.inject.{Guice, Injector}
+import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
-import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{PieceFactory, PiecesEnum}
+import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
-import de.htwg.se.Shogi.{ShogiModule, ShogiModuleConf}
+import de.htwg.se.Shogi.{ ShogiModule, ShogiModuleConf }
 import net.codingwell.scalaguice.InjectorExtensions._
-import scala.xml.{Node, NodeSeq, PrettyPrinter}
+import scala.xml.{ Node, NodeSeq, PrettyPrinter }
 
-class FileIO extends FileIOInterface {
+class FileIO extends DAOInterface {
 
   override def load: Option[(BoardInterface, Boolean, Player, Player)] = {
     var boardOption: Option[(BoardInterface, Boolean, Player, Player)] = None
@@ -73,14 +73,16 @@ class FileIO extends FileIOInterface {
 
     for (x <- nodeSeq) yield (x \\ "piece").foreach(i => stringList = stringList :+ (i \\ "@pieceName").text.toString)
 
-    for (x: String <- stringList;
-         pieceEnum <- PiecesEnum.withNameOpt(x)) yield {
+    for (
+      x: String <- stringList;
+      pieceEnum <- PiecesEnum.withNameOpt(x)
+    ) yield {
       pieceList = pieceList :+ PieceFactory.apply(pieceEnum, first)
     }
     pieceList
   }
 
-  def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = saveString(board, state, player_1, player_2)
+  override def save(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = saveString(board, state, player_1, player_2)
 
   def saveString(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Unit = {
     import java.io._
@@ -94,24 +96,26 @@ class FileIO extends FileIOInterface {
   }
 
   def boardToXml(board: BoardInterface, state: Boolean, player_1: Player, player_2: Player): Node = {
-    <board size={board.size.toString} state={state.toString} playerFirstName={player_1.name} playerSecondName={player_2.name}>
+    <board size={ board.size.toString } state={ state.toString } playerFirstName={ player_1.name } playerSecondName={ player_2.name }>
       <playerFirstConquered>
-        {for (piece <- board.getContainer._1) yield conqueredToXml(piece)}
+        { for (piece <- board.getContainer._1) yield conqueredToXml(piece) }
       </playerFirstConquered>
       <playerSecondConquered>
-        {for (piece <- board.getContainer._2) yield conqueredToXml(piece)}
-      </playerSecondConquered>{for {
-      row <- 0 until board.size
-      col <- 0 until board.size
-    } yield cellToXml(board, row, col)}
+        { for (piece <- board.getContainer._2) yield conqueredToXml(piece) }
+      </playerSecondConquered>{
+        for {
+          row <- 0 until board.size
+          col <- 0 until board.size
+        } yield cellToXml(board, row, col)
+      }
     </board>
   }
 
   def cellToXml(board: BoardInterface, row: Int, col: Int): Node = {
     board.cell(col, row) match {
       case Some(piece) =>
-        <cell row={row.toString} col={col.toString}>
-          <piece pieceName={piece.name} firstPlayer={piece.isFirstOwner.toString}/>
+        <cell row={ row.toString } col={ col.toString }>
+          <piece pieceName={ piece.name } firstPlayer={ piece.isFirstOwner.toString }/>
         </cell>
       case None =>
         <cell row="Error" col="Error">
@@ -121,6 +125,6 @@ class FileIO extends FileIOInterface {
   }
 
   def conqueredToXml(piece: PieceInterface): Node = {
-      <piece pieceName={piece.name} firstPlayer={piece.isFirstOwner.toString}/>
+    <piece pieceName={ piece.name } firstPlayer={ piece.isFirstOwner.toString }/>
   }
 }

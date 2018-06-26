@@ -5,8 +5,9 @@ import com.google.inject.name.Names
 import com.google.inject.{ Guice, Inject, Injector }
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent._
+import de.htwg.se.Shogi.controller.controllerComponent.simulationBaseImpl.Simulator
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
-import de.htwg.se.Shogi.model.fileIoComponent.FileIOInterface
+import de.htwg.se.Shogi.model.fileIoComponent.DAOInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
 import de.htwg.se.Shogi.model.pieceComponent.pieceBaseImpl.{ PieceFactory, PiecesEnum }
 import de.htwg.se.Shogi.model.playerComponent.Player
@@ -15,12 +16,15 @@ import net.codingwell.scalaguice.InjectorExtensions._
 
 class Controller @Inject() extends RoundState with ControllerInterface {
   val injector: Injector = Guice.createInjector(new ShogiModule)
-  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+  val fileIo: DAOInterface = injector.instance[DAOInterface]
   var board: BoardInterface = injector.instance[BoardInterface](Names.named("normal")).createNewBoard()
   val playerOnesTurn: RoundState = PlayerOneRound(this)
   val playerTwosTurn: RoundState = PlayerTwoRound(this)
   var player_1: Player = Player("Player1", first = true)
   var player_2: Player = Player("Player2", first = false)
+  // TODO: Actorsystem im Controller?
+  val system = ActorSystem("MySystem")
+  val actor = system.actorOf(Props[Simulator], "SimluationActor")
 
   private val undoManager = new UndoManager
 
@@ -193,7 +197,7 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   override def setCurrentStat(newState: RoundState): Unit = currentState = newState
 
   override def startSimulation: Unit = {
-    //actor ! Simulator.Simulate(this)
+    actor ! Simulator.Simulate(this)
   }
 
   override def boardToHtml: String = board.toHtml

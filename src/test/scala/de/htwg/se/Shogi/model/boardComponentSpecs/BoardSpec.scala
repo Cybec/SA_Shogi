@@ -1,4 +1,4 @@
-package de.htwg.se.Shogi.model
+package de.htwg.se.Shogi.model.boardComponentSpecs
 
 import com.google.inject.Guice
 import com.google.inject.name.Names

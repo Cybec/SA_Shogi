@@ -4,10 +4,9 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Route, StandardRoute}
+import akka.http.scaladsl.server.{ Route, StandardRoute }
 import akka.stream.ActorMaterializer
 import de.htwg.se.Shogi.controller.controllerComponent._
-
 
 class HttpServer(controller: ControllerInterface, tui: Tui) {
   implicit val system = ActorSystem("my-system")
@@ -15,46 +14,60 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
   implicit val executionContext = system.dispatcher
   val port = 8080
   val route: Route =
-      pathPrefix("shogi") {
-        path("empty") {
+    pathPrefix("shogi") {
+      path("empty") {
+        get {
+          controller.createEmptyBoard()
+          boardToHtml
+        }
+      } ~
+        path("new") {
           get {
-            controller.createEmptyBoard()
+            controller.createNewBoard()
             boardToHtml
           }
         } ~
-          path("new") {
-            get {
-              controller.createNewBoard()
-              boardToHtml
-            }
-          } ~
-          path("undo") {
-            get {
-              controller.undoCommand
-              boardToHtml
-            }
-          } ~
-          path("redo") {
-            get {
-              controller.redoCommand
-              boardToHtml
-            }
-          } ~
-          path("pmv" / Segment) {
-            command => {
+        path("undo") {
+          get {
+            controller.undoCommand
+            boardToHtml
+          }
+        } ~
+        path("redo") {
+          get {
+            controller.redoCommand
+            boardToHtml
+          }
+        } ~
+        path("save") {
+          get {
+            controller.save
+            boardToHtml
+          }
+        } ~
+        path("load") {
+          get {
+            controller.load
+            boardToHtml
+          }
+        } ~
+        path("pmv" / Segment) {
+          command =>
+            {
               get {
                 val list = controller.getPossibleMoves(command.charAt(0).asDigit, command.charAt(1).asDigit)
                 movesToHtml(list)
               }
             }
-          } ~
-          path("mv" / Segment / Segment) {
-            (current, dest) => {
-              put {
+        } ~
+        path("mv" / Segment / Segment) {
+          (current, dest) =>
+            {
+              get {
                 controller.movePiece((current.charAt(0).asDigit, current.charAt(1).asDigit), (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case MoveResult.invalidMove => invalidMoveToHtml
                   case MoveResult.validMove => {
-                    if(controller.promotable((dest.charAt(0).asDigit, dest.charAt(1).asDigit))) {
+                    if (controller.promotable((dest.charAt(0).asDigit, dest.charAt(1).asDigit))) {
                       complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "Do you want to promote your piece at destination " + dest + "? /y for yes!<br>" + controller.boardToHtml))
                     } else {
                       boardToHtml
@@ -64,34 +77,38 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
                 }
               }
             }
-          } ~
-          path("mv" / Segment / Segment / "y") {
-            (_, dest) => {
-              put {
+        } ~
+        path("mv" / Segment / Segment / "y") {
+          (_, dest) =>
+            {
+              get {
                 //TODO: Check if promotable only after move
                 controller.promotePiece((dest.charAt(0).asDigit, dest.charAt(1).asDigit))
                 boardToHtml
               }
             }
-          } ~
-          path("mv" / Segment / "shogi" / "winner") { _ => {
+        } ~
+        path("mv" / Segment / "shogi" / "winner") { _ =>
+          {
             get {
               //TODO: Check if King is actually slain
               complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>YOU WON!!!!!!!!!!</h1>" + controller.boardToHtml))
             }
           }
-          } ~
-          path("pmvcp" / Segment) {
-            conqueredPiece => {
+        } ~
+        path("pmvcp" / Segment) {
+          conqueredPiece =>
+            {
               get {
                 val list = controller.getPossibleMovesConqueredPiece(conqueredPiece)
                 movesToHtml(list)
               }
             }
-          } ~
-          path("mvcp" / Segment / Segment) {
-            (conqueredPiece, dest) => {
-              put {
+        } ~
+        path("mvcp" / Segment / Segment) {
+          (conqueredPiece, dest) =>
+            {
+              get {
                 controller.moveConqueredPiece(conqueredPiece, (dest.charAt(0).asDigit, dest.charAt(1).asDigit)) match {
                   case true => boardToHtml
                   case false => {
@@ -100,13 +117,13 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
                 }
               }
             }
-          } ~
-          pathEndOrSingleSlash {
-            get {
-              boardToHtml
-            }
+        } ~
+        pathEndOrSingleSlash {
+          get {
+            boardToHtml
           }
-      }
+        }
+    }
   /* For testing Exception handling in Akka Http
 path("divide" / IntNumber / IntNumber) { (a, b) =>
   handleExceptions(myExceptionHandler) {

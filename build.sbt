@@ -42,5 +42,18 @@ libraryDependencies += "org.jsoup" % "jsoup" % "1.9.1"
 
 parallelExecution in Test := false
 
+
+libraryDependencies += "com.typesafe.slick" %% "slick" % "3.2.0"
+libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.2.0"
+libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "3.2.1"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.34"
+libraryDependencies += "com.typesafe" % "config" % "1.3.1"
+
+libraryDependencies += "org.mongodb" %% "casbah" % "3.1.1"
+libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.2.0"
+libraryDependencies += "org.mongodb" % "mongo-java-driver" % "3.6.0"
+libraryDependencies += "org.mongodb.scala" %% "mongo-scala-bson" % "2.1.0"
+
+
 //Excluded packages and files in coveralls (in REGEX) (hier nur die aview)
 coverageExcludedPackages := "<empty>;.*aview.*"
