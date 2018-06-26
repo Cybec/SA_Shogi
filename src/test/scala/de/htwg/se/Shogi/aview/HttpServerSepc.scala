@@ -5,6 +5,7 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.google.inject.{ Guice, Injector }
 import de.htwg.se.Shogi.ShogiModule
 import de.htwg.se.Shogi.controller.controllerComponent.ControllerInterface
+import org.jsoup.Jsoup
 
 class HttpServerSepc extends WordSpec with Matchers with ScalatestRouteTest {
   //  val injector: Injector = Guice.createInjector(new ShogiModule)
