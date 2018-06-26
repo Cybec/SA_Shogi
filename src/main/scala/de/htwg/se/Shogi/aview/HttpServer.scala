@@ -124,12 +124,6 @@ class HttpServer(controller: ControllerInterface, tui: Tui) {
           }
         }
     }
-  /* For testing Exception handling in Akka Http
-path("divide" / IntNumber / IntNumber) { (a, b) =>
-  handleExceptions(myExceptionHandler) {
-    complete(s"The result is ${a / b}")
-  }
-}*/
 
   def movesToHtml(moveList: List[(Int, Int)]): StandardRoute = {
     complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Shogi</h1>" + tui.possibleMovesAsHtml(moveList) + controller.boardToHtml))
@@ -147,10 +141,4 @@ path("divide" / IntNumber / IntNumber) { (a, b) =>
       .flatMap(_.unbind())
       .onComplete(_ => system.terminate())
   }
-
-  /* Exception handler in Akka Http
-  val myExceptionHandler = ExceptionHandler {
-    case _: Exception =>
-        redirect("/shogi", StatusCodes.PermanentRedirect)
-      }*/
 }
