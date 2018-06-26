@@ -1,8 +1,8 @@
 package de.htwg.se.Shogi.aview
 
 import com.typesafe.scalalogging.LazyLogging
-import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{ StartNewGame, UpdateAll }
-import de.htwg.se.Shogi.controller.controllerComponent.{ ControllerInterface, MoveResult }
+import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.{Move, NewGame, StartNewGame, UpdateAll}
+import de.htwg.se.Shogi.controller.controllerComponent.{ControllerInterface, MoveResult}
 
 import scala.swing.Reactor
 
@@ -173,19 +173,46 @@ class Tui(controller: ControllerInterface) extends Reactor with State with LazyL
     'i' -> 8
   )
 
+//  def processInputLine(input: String): Unit = {
+//    if (input.length > 0) {
+//      printString("Input was: " + input)
+//      val inputArray = input.split("\\ ", -1)
+//
+//      val possibleMovesConqueredPiece = new PossibleMovesConqueredPiece(None)
+//      val moveConqueredPiece = new MoveConqueredPiece(Some(possibleMovesConqueredPiece))
+//      val possibleMoves = new PossibleMoves(Some(moveConqueredPiece))
+//      val movePiece = new MovePiece(Some(possibleMoves))
+//      val newGame = new New(Some(movePiece))
+//      val quit = new Quit(Some(newGame))
+//
+//      quit.handleEvent(Event(inputArray(0), inputArray))
+//    }
+//  }
+
   def processInputLine(input: String): Unit = {
     if (input.length > 0) {
       printString("Input was: " + input)
       val inputArray = input.split("\\ ", -1)
-
-      val possibleMovesConqueredPiece = new PossibleMovesConqueredPiece(None)
-      val moveConqueredPiece = new MoveConqueredPiece(Some(possibleMovesConqueredPiece))
-      val possibleMoves = new PossibleMoves(Some(moveConqueredPiece))
-      val movePiece = new MovePiece(Some(possibleMoves))
-      val newGame = new New(Some(movePiece))
-      val quit = new Quit(Some(newGame))
-
-      quit.handleEvent(Event(inputArray(0), inputArray))
+      inputArray(0) match {
+//      val possibleMovesConqueredPiece = new PossibleMovesConqueredPiece (None)
+//      val moveConqueredPiece = new MoveConqueredPiece (Some (possibleMovesConqueredPiece) )
+//      val possibleMoves = new PossibleMoves (Some (moveConqueredPiece) )
+//      val movePiece = new MovePiece (Some (possibleMoves) )
+//      val newGame = new New (Some (movePiece) )
+//      val quit = new Quit (Some (newGame) )
+        case "q" => System.exit(0)
+        case "n" => {
+          controller.actor ! NewGame(controller)
+          setGameState(newGame)
+        }
+        case "mv" => {
+          parseArguments(inputArray) match {
+            case Some(value) => { controller.actor ! Move(value.head, value.tail.head, controller)
+            }
+            case _ => printString("Could not read input")
+          }
+        }
+      }
     }
   }
 

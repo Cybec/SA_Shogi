@@ -1,5 +1,6 @@
 package de.htwg.se.Shogi.controller.controllerComponent
 
+import akka.actor.ActorRef
 import de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl.RoundState
 import de.htwg.se.Shogi.model.boardComponent.BoardInterface
 import de.htwg.se.Shogi.model.pieceComponent.PieceInterface
@@ -211,4 +212,6 @@ trait ControllerInterface extends scala.swing.Publisher {
    * @return board as Html
    */
   def boardToHtml: String
+
+  var actor: ActorRef
 }

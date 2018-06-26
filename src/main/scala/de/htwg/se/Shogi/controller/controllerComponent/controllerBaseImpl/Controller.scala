@@ -1,8 +1,9 @@
 package de.htwg.se.Shogi.controller.controllerComponent.controllerBaseImpl
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
+import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
@@ -17,19 +18,21 @@ import de.htwg.se.Shogi.model.playerComponent.Player
 import de.htwg.se.Shogi.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
 
-import scala.concurrent.Future
+case class NewGame(controller: ControllerInterface)
+case class Move(currentPos: (Int, Int), destination: (Int, Int), controller: ControllerInterface)
 
-object Controller {
-  def main(args: Array[String]): Unit= {
-    new Controller
+class ControllerActor extends Actor {
+  override def receive: Receive = {
+    case NewGame(controller) => {
+      controller.createNewBoard()
+    }
+    case Move(currentPos, destination, controller) => {
+      controller.movePiece(currentPos,destination)
+    }
   }
 }
 
 class Controller @Inject() extends RoundState with ControllerInterface {
-  private val MODEL_PORT = 8081
-  private val MODEL_IP = "localhost"
-  val server = new ModelHttp(MODEL_IP, MODEL_PORT)
-
 
   val injector: Injector = Guice.createInjector(new ShogiModule)
   val fileIo: DAOInterface = injector.instance[DAOInterface]
@@ -40,7 +43,7 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   var player_2: Player = Player("Player2", first = false)
   // TODO: Actorsystem im Controller?
   val system = ActorSystem("MySystem")
-  val actor = system.actorOf(Props[Simulator], "SimluationActor")
+  override var actor: ActorRef = system.actorOf(Props[ControllerActor], "SimluationActor")
 
   private val undoManager = new UndoManager
 
@@ -217,24 +220,7 @@ class Controller @Inject() extends RoundState with ControllerInterface {
   }
 
   override def boardToHtml: String = board.toHtml
-}
-
-private class ModelHttp(ip:String, port:Int){
-  implicit val system = ActorSystem("CONTROLLER")
-  implicit val executionContext = system.dispatcher
-  implicit val materializer = ActorMaterializer()
-
-
-  def call(route: String, method: HttpMethod = HttpMethods.GET, entity: RequestEntity = HttpEntity.Empty): Future[HttpResponse] =
-    Http().singleRequest(HttpRequest(method, Uri("http://%s:%d/%s".format(ip, port, route)), Nil, entity))
-
-
-
-
-
-
-
-
 
 
 }
+
